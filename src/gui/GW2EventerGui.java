@@ -103,6 +103,16 @@ public class GW2EventerGui extends javax.swing.JFrame {
     private static final String LANG_TIP1_ES = "<html><font color=\"white\">You can click on each X, number or 'B'<br>for sound select and looted options for the<br>specific event.</font></html>";
     private static final String LANG_TIP1_FR = "<html><font color=\"white\">You can click on each X, number or 'B'<br>for sound select and looted options for the<br>specific event.</font></html>";
     
+    private static final String LANG_DONATE1_DE = "Ich weise darauf hin, dass PayPal folgenden Betrag von jeder Spende behält:";
+    private static final String LANG_DONATE1_EN = "Please be aware, that PayPal takes away the following amount of each donation:";
+    private static final String LANG_DONATE1_ES = "Please be aware, that PayPal takes away the following amount of each donation:";
+    private static final String LANG_DONATE1_FR = "Please be aware, that PayPal takes away the following amount of each donation:";
+    
+    private static final String LANG_DONATE2_DE = "<html>Ich freue mich über jede Spende. Aber bitte spenden Sie keine Beträge unter 1€,<br>da PayPal sonst fast 50% des gespendeten Betrages abzieht.<br><br>Vielen Dank.</html>";
+    private static final String LANG_DONATE2_EN = "<html>I appreciate every single donation. But please don't donate under 1€,<br>otherwise PayPal would take away almost 50% of your donated amount.<br><br>Thank you.</html>";
+    private static final String LANG_DONATE2_ES = "<html>I appreciate every single donation. But please don't donate under 1€,<br>otherwise PayPal would take away almost 50% of your donated amount.<br><br>Thank you.</html>";
+    private static final String LANG_DONATE2_FR = "<html>I appreciate every single donation. But please don't donate under 1€,<br>otherwise PayPal would take away almost 50% of your donated amount.<br><br>Thank you.</html>";
+    
     public static final int EVENT_COUNT = 23;
     
     private static final String VERSION = "1.0";
@@ -124,6 +134,8 @@ public class GW2EventerGui extends javax.swing.JFrame {
     public boolean preventSystemSleep;
     
     private PushGui pushGui;
+    private DonateGui donateGui;
+    private InfoGui infoGui;
     
     private Date lastPush;
     
@@ -156,8 +168,6 @@ public class GW2EventerGui extends javax.swing.JFrame {
         this.workingButton = this.jButtonRefresh;
         this.refreshSelector = this.jCheckBoxAutoRefresh;
         
-        String selectedLang = (String) this.jComboBoxLanguage.getModel().getSelectedItem();
-        
         this.addWindowListener(new WindowAdapter() {
             
             @Override
@@ -168,47 +178,19 @@ public class GW2EventerGui extends javax.swing.JFrame {
             }
         });
         
-        switch (selectedLang) {
-            case "DE":
-                this.jButtonRefresh.setText(LANG_RELOAD_BTN_DE);
-                this.jCheckBoxAutoRefresh.setText(LANG_AUTO_REFRESH_DE);
-                this.jCheckBoxPlaySounds.setText(LANG_PLAY_SOUNDS_DE);
-                this.jCheckBoxSystemSleep.setText(LANG_PREVENT_SLEEP_DE);
-                this.jLabelServer.setText(LANG_NOT_RUNNING_DE);
-                this.jLabelWorking.setText(LANG_WORKING_DE);
-                this.jLabelTips.setText(LANG_TIP1_DE);
-                break;
-            case "EN":
-                this.jButtonRefresh.setText(LANG_RELOAD_BTN_EN);
-                this.jCheckBoxAutoRefresh.setText(LANG_AUTO_REFRESH_EN);
-                this.jCheckBoxPlaySounds.setText(LANG_PLAY_SOUNDS_EN);
-                this.jCheckBoxSystemSleep.setText(LANG_PREVENT_SLEEP_EN);
-                this.jLabelServer.setText(LANG_NOT_RUNNING_EN);
-                this.jLabelWorking.setText(LANG_WORKING_EN);
-                this.jLabelTips.setText(LANG_TIP1_EN);
-                break;
-            case "ES":
-                this.jButtonRefresh.setText(LANG_RELOAD_BTN_ES);
-                this.jCheckBoxAutoRefresh.setText(LANG_AUTO_REFRESH_ES);
-                this.jCheckBoxPlaySounds.setText(LANG_PLAY_SOUNDS_ES);
-                this.jCheckBoxSystemSleep.setText(LANG_PREVENT_SLEEP_ES);
-                this.jLabelServer.setText(LANG_NOT_RUNNING_ES);
-                this.jLabelWorking.setText(LANG_WORKING_ES);
-                this.jLabelTips.setText(LANG_TIP1_ES);
-                break;
-            case "FR":
-                this.jButtonRefresh.setText(LANG_RELOAD_BTN_FR);
-                this.jCheckBoxAutoRefresh.setText(LANG_AUTO_REFRESH_FR);
-                this.jCheckBoxPlaySounds.setText(LANG_PLAY_SOUNDS_FR);
-                this.jCheckBoxSystemSleep.setText(LANG_PREVENT_SLEEP_FR);
-                this.jLabelServer.setText(LANG_NOT_RUNNING_FR);
-                this.jLabelWorking.setText(LANG_WORKING_FR);
-                this.jLabelTips.setText(LANG_TIP1_FR);
-                break;
-        }
+        this.pushGui = new PushGui(this, true, "", "");
+        this.pushGui.setIconImage(guiIcon);
+        
+        this.donateGui = new DonateGui(this, true);
+        this.donateGui.setIconImage(guiIcon);
+        
+        this.infoGui = new InfoGui(this, true);
+        this.infoGui.setIconImage(guiIcon);
         
         this.language = "en";
         this.worldID = "2206"; //Millersund [DE]
+        
+        this.setTranslations();
         
         this.eventLabels = new ArrayList();
         this.eventLabelsTimer = new ArrayList();
@@ -252,9 +234,6 @@ public class GW2EventerGui extends javax.swing.JFrame {
                 this.jCheckBoxPlaySounds.isSelected(), this.workingButton,
                 this.refreshSelector, this.eventLabelsTimer, this.jComboBoxLanguage);
         }
-        
-        this.pushGui = new PushGui(this, true, "", "");
-        this.pushGui.setIconImage(guiIcon);
         
         this.preventSleepMode();
         this.runUpdateService();
@@ -847,6 +826,58 @@ public class GW2EventerGui extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
     
+    private void setTranslations() {
+        
+        String selectedLang = (String) this.jComboBoxLanguage.getModel().getSelectedItem();
+        
+        switch (selectedLang) {
+            case "DE":
+                this.jButtonRefresh.setText(LANG_RELOAD_BTN_DE);
+                this.jCheckBoxAutoRefresh.setText(LANG_AUTO_REFRESH_DE);
+                this.jCheckBoxPlaySounds.setText(LANG_PLAY_SOUNDS_DE);
+                this.jCheckBoxSystemSleep.setText(LANG_PREVENT_SLEEP_DE);
+                this.jLabelServer.setText(LANG_NOT_RUNNING_DE);
+                this.jLabelWorking.setText(LANG_WORKING_DE);
+                this.jLabelTips.setText(LANG_TIP1_DE);
+                this.donateGui.setText1(LANG_DONATE1_DE);
+                this.donateGui.setText2(LANG_DONATE2_DE);
+                break;
+            case "EN":
+                this.jButtonRefresh.setText(LANG_RELOAD_BTN_EN);
+                this.jCheckBoxAutoRefresh.setText(LANG_AUTO_REFRESH_EN);
+                this.jCheckBoxPlaySounds.setText(LANG_PLAY_SOUNDS_EN);
+                this.jCheckBoxSystemSleep.setText(LANG_PREVENT_SLEEP_EN);
+                this.jLabelServer.setText(LANG_NOT_RUNNING_EN);
+                this.jLabelWorking.setText(LANG_WORKING_EN);
+                this.jLabelTips.setText(LANG_TIP1_EN);
+                this.donateGui.setText1(LANG_DONATE1_EN);
+                this.donateGui.setText2(LANG_DONATE2_EN);
+                break;
+            case "ES":
+                this.jButtonRefresh.setText(LANG_RELOAD_BTN_ES);
+                this.jCheckBoxAutoRefresh.setText(LANG_AUTO_REFRESH_ES);
+                this.jCheckBoxPlaySounds.setText(LANG_PLAY_SOUNDS_ES);
+                this.jCheckBoxSystemSleep.setText(LANG_PREVENT_SLEEP_ES);
+                this.jLabelServer.setText(LANG_NOT_RUNNING_ES);
+                this.jLabelWorking.setText(LANG_WORKING_ES);
+                this.jLabelTips.setText(LANG_TIP1_ES);
+                this.donateGui.setText1(LANG_DONATE1_ES);
+                this.donateGui.setText2(LANG_DONATE2_ES);
+                break;
+            case "FR":
+                this.jButtonRefresh.setText(LANG_RELOAD_BTN_FR);
+                this.jCheckBoxAutoRefresh.setText(LANG_AUTO_REFRESH_FR);
+                this.jCheckBoxPlaySounds.setText(LANG_PLAY_SOUNDS_FR);
+                this.jCheckBoxSystemSleep.setText(LANG_PREVENT_SLEEP_FR);
+                this.jLabelServer.setText(LANG_NOT_RUNNING_FR);
+                this.jLabelWorking.setText(LANG_WORKING_FR);
+                this.jLabelTips.setText(LANG_TIP1_FR);
+                this.donateGui.setText1(LANG_DONATE1_FR);
+                this.donateGui.setText2(LANG_DONATE2_FR);
+                break;
+        }
+    }
+    
     public void setLastPushDate(Date lastPush) {
         
         this.lastPush = lastPush;
@@ -1116,6 +1147,14 @@ public class GW2EventerGui extends javax.swing.JFrame {
         this.apiManager.showSoundSelectGui(this, event);
     }    
     
+    public void showDonateGui() {
+        
+        this.donateGui.setLocationRelativeTo(this);
+        this.donateGui.setResizable(false);
+        this.donateGui.pack();
+        this.donateGui.setVisible(true);
+    }  
+    
     private void showPushGui(String title, String content, int height) {
         
         this.pushGui.setNewTitle(title);
@@ -1186,46 +1225,7 @@ public class GW2EventerGui extends javax.swing.JFrame {
         this.jButtonRefresh.setEnabled(false);
         this.jComboBoxLanguage.setEnabled(false);
         
-        String selectedLang = (String) this.jComboBoxLanguage.getSelectedItem();
-        
-        switch (selectedLang) {
-            case "DE":
-                this.jButtonRefresh.setText(LANG_RELOAD_BTN_DE);
-                this.jCheckBoxAutoRefresh.setText(LANG_AUTO_REFRESH_DE);
-                this.jCheckBoxPlaySounds.setText(LANG_PLAY_SOUNDS_DE);
-                this.jCheckBoxSystemSleep.setText(LANG_PREVENT_SLEEP_DE);
-                this.jLabelServer.setText(LANG_NOT_RUNNING_DE);
-                this.jLabelWorking.setText(LANG_WORKING_DE);
-                this.jLabelTips.setText(LANG_TIP1_DE);
-                break;
-            case "EN":
-                this.jButtonRefresh.setText(LANG_RELOAD_BTN_EN);
-                this.jCheckBoxAutoRefresh.setText(LANG_AUTO_REFRESH_EN);
-                this.jCheckBoxPlaySounds.setText(LANG_PLAY_SOUNDS_EN);
-                this.jCheckBoxSystemSleep.setText(LANG_PREVENT_SLEEP_EN);
-                this.jLabelServer.setText(LANG_NOT_RUNNING_EN);
-                this.jLabelWorking.setText(LANG_WORKING_EN);
-                this.jLabelTips.setText(LANG_TIP1_EN);
-                break;
-            case "ES":
-                this.jButtonRefresh.setText(LANG_RELOAD_BTN_ES);
-                this.jCheckBoxAutoRefresh.setText(LANG_AUTO_REFRESH_ES);
-                this.jCheckBoxPlaySounds.setText(LANG_PLAY_SOUNDS_ES);
-                this.jCheckBoxSystemSleep.setText(LANG_PREVENT_SLEEP_ES);
-                this.jLabelServer.setText(LANG_NOT_RUNNING_ES);
-                this.jLabelWorking.setText(LANG_WORKING_ES);
-                this.jLabelTips.setText(LANG_TIP1_ES);
-                break;
-            case "FR":
-                this.jButtonRefresh.setText(LANG_RELOAD_BTN_FR);
-                this.jCheckBoxAutoRefresh.setText(LANG_AUTO_REFRESH_FR);
-                this.jCheckBoxPlaySounds.setText(LANG_PLAY_SOUNDS_FR);
-                this.jCheckBoxSystemSleep.setText(LANG_PREVENT_SLEEP_FR);
-                this.jLabelServer.setText(LANG_NOT_RUNNING_FR);
-                this.jLabelWorking.setText(LANG_WORKING_FR);
-                this.jLabelTips.setText(LANG_TIP1_FR);
-                break;
-        }
+        this.setTranslations();
         
         if (this.apiManager == null) {
             
@@ -1392,26 +1392,15 @@ public class GW2EventerGui extends javax.swing.JFrame {
 
     private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
 
-        InfoGui dialog = new InfoGui(this, true); 
-        
-        dialog.setLocationRelativeTo(this);
-        dialog.setResizable(false);
-        dialog.setIconImage(guiIcon);
-        
-        dialog.setVisible(true);
+        this.infoGui.setLocationRelativeTo(this);
+        this.infoGui.setResizable(false);
+        this.infoGui.pack();
+        this.infoGui.setVisible(true);
     }//GEN-LAST:event_jLabel1MouseClicked
 
     private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
 
-        Desktop desktop = Desktop.isDesktopSupported() ? Desktop.getDesktop() : null;
-        
-        if (desktop != null && desktop.isSupported(Desktop.Action.BROWSE)) {
-            try {
-                desktop.browse(new URI("https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=R9A5ZF7U7G7LC"));
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
+        this.showDonateGui();
     }//GEN-LAST:event_jLabel3MouseClicked
 
     private void labelEvent23MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelEvent23MouseClicked

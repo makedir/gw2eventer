@@ -33,12 +33,16 @@ import java.net.URI;
  */
 public class InfoGui extends javax.swing.JDialog {
 
+    GW2EventerGui parentGui;
+    
     /**
      * Creates new form InfoGui
      */
     public InfoGui(java.awt.Frame parent, boolean modal) {
         
         super(parent, modal);
+        
+        this.parentGui = (GW2EventerGui) parent;
         
         initComponents();
     }
@@ -92,20 +96,13 @@ public class InfoGui extends javax.swing.JDialog {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 
-        dispose();
+        this.setVisible(false);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
 
-        Desktop desktop = Desktop.isDesktopSupported() ? Desktop.getDesktop() : null;
-        
-        if (desktop != null && desktop.isSupported(Desktop.Action.BROWSE)) {
-            try {
-                desktop.browse(new URI("https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=R9A5ZF7U7G7LC"));
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
+        this.parentGui.showDonateGui();
+        this.setVisible(false);
     }//GEN-LAST:event_jLabel4MouseClicked
 
 
