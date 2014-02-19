@@ -936,7 +936,7 @@ public class GW2EventerGui extends javax.swing.JFrame {
                         } else {
                             try {
                                 request.releaseConnection();
-                                Thread.sleep(10000);
+                                Thread.sleep(20000);
                             } catch (InterruptedException ex) {
                                 Logger.getLogger(EventAllReader.class.getName()).log(Level.SEVERE, null, ex);
                             }
@@ -947,7 +947,7 @@ public class GW2EventerGui extends javax.swing.JFrame {
                                     Level.SEVERE, null, ex);
                             
                             request.releaseConnection();
-                            Thread.sleep(10000);
+                            Thread.sleep(20000);
                         } catch (InterruptedException ex1) {
                             Logger.getLogger(EventAllReader.class.getName()).log(Level.SEVERE, null, ex1);
                             
@@ -1040,7 +1040,7 @@ public class GW2EventerGui extends javax.swing.JFrame {
                         } else {
                             try {
                                 request.releaseConnection();
-                                Thread.sleep(10000);
+                                Thread.sleep(20000);
                             } catch (InterruptedException ex) {
                                 Logger.getLogger(EventAllReader.class.getName()).log(Level.SEVERE, null, ex);
                             }
@@ -1051,7 +1051,7 @@ public class GW2EventerGui extends javax.swing.JFrame {
                                     Level.SEVERE, null, ex);
                             
                             request.releaseConnection();
-                            Thread.sleep(10000);
+                            Thread.sleep(20000);
                         } catch (InterruptedException ex1) {
                             Logger.getLogger(EventAllReader.class.getName()).log(Level.SEVERE, null, ex1);
                             
