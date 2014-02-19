@@ -860,6 +860,7 @@ public class GW2EventerGui extends javax.swing.JFrame {
               
                 //HashMap result = new HashMap();
                 String date = "";
+                String enabled = "false";
                 String title = "";
                 String message = "";
                 
@@ -903,8 +904,26 @@ public class GW2EventerGui extends javax.swing.JFrame {
                                     JSONObject obj2 = (JSONObject) array.get(i);
                                     //result.put(obj2.get("version"), obj2.get("changelog"));
                                     date = (String) obj2.get("date");
+                                    enabled = (String) obj2.get("enabled");
                                     title = (String) obj2.get("title");
                                     message = (String) obj2.get("message");
+                                }
+                                
+                                if (!date.equals("") && enabled.equals("true")) {
+
+                                    try {
+
+                                        Date dateData = new Date(Long.parseLong(date));
+                                        //long stampNow = dateNow.getTime();
+
+                                        if (!dateData.equals(getLastPushDate())) {
+
+                                            setLastPushDate(dateData);
+                                            showPushGui(title, message);
+                                        }
+                                    } catch (java.lang.NumberFormatException ex) {
+                                        //
+                                    }
                                 }
                             } catch (ParseException ex) {
                                 
@@ -914,23 +933,6 @@ public class GW2EventerGui extends javax.swing.JFrame {
                             
                             request.releaseConnection();
                             //this.interrupt();
-                            
-                            if (!date.equals("")) {
-                                
-                                try {
-                                    
-                                    Date dateData = new Date(Long.parseLong(date));
-                                    //long stampNow = dateNow.getTime();
-
-                                    if (!dateData.equals(getLastPushDate())) {
-
-                                        setLastPushDate(dateData);
-                                        showPushGui(title, message);
-                                    }
-                                } catch (java.lang.NumberFormatException ex) {
-                                    //
-                                }
-                            }
                         } else {
                             try {
                                 request.releaseConnection();
