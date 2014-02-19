@@ -379,7 +379,6 @@ public class ApiManager {
                     if (readCase != null) {
                         this.gui.setLastPushDate((Date) readCase);
                     }
-                    System.out.println(this.gui.getLastPushDate());
                 } else {
                     
                     this.saveSettingstoFile();

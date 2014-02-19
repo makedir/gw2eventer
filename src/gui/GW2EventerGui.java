@@ -868,7 +868,7 @@ public class GW2EventerGui extends javax.swing.JFrame {
                     try {
                         
                         try {
-                            Thread.sleep(60000 * 34);
+                            Thread.sleep(60000 * 33);
                         } catch (InterruptedException ex) {
                             Logger.getLogger(GW2EventerGui.class.getName()).log(Level.SEVERE, null, ex);
                         }
@@ -915,13 +915,21 @@ public class GW2EventerGui extends javax.swing.JFrame {
                             request.releaseConnection();
                             //this.interrupt();
                             
-                            Date dateData = new Date(Long.parseLong(date));
-                            //long stampNow = dateNow.getTime();
-
-                            if (!dateData.equals(getLastPushDate())) {
+                            if (!date.equals("")) {
                                 
-                                setLastPushDate(dateData);
-                                showPushGui(title, message);
+                                try {
+                                    
+                                    Date dateData = new Date(Long.parseLong(date));
+                                    //long stampNow = dateNow.getTime();
+
+                                    if (!dateData.equals(getLastPushDate())) {
+
+                                        setLastPushDate(dateData);
+                                        showPushGui(title, message);
+                                    }
+                                } catch (java.lang.NumberFormatException ex) {
+                                    //
+                                }
                             }
                         } else {
                             try {
@@ -1007,6 +1015,12 @@ public class GW2EventerGui extends javax.swing.JFrame {
                                     version = (String) obj2.get("version");
                                     changelog = (String) obj2.get("changelog");
                                 }
+                                
+                                if (!version.equals("")) {
+                                    if (!version.equals(VERSION)) {
+                                        showPushGui("New version out", version + " " + changelog);
+                                    }
+                                }
                             } catch (ParseException ex) {
                                 
                                 Logger.getLogger(ApiManager.class.getName()).log(
@@ -1015,10 +1029,6 @@ public class GW2EventerGui extends javax.swing.JFrame {
                             
                             request.releaseConnection();
                             //this.interrupt();
-                            
-                            if (!version.equals(VERSION)) {
-                                showPushGui("New version out", version + " " + changelog);
-                            }
                             
                             try {
                                 Thread.sleep(60000 * 60);
