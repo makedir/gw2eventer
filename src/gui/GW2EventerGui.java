@@ -126,7 +126,7 @@ public class GW2EventerGui extends javax.swing.JFrame {
      * Creates new form GW2EventerGui
      */
     public GW2EventerGui() {
-        
+       
         this.guiIcon = new ImageIcon(
                 ClassLoader.getSystemResource("media/icon.png")).getImage();
         
@@ -227,7 +227,7 @@ public class GW2EventerGui extends javax.swing.JFrame {
                 
                 this.eventLabelsTimer.add(l);
                 
-            } catch (    NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException ex) {
+            } catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException ex) {
                 Logger.getLogger(GW2EventerGui.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
@@ -1051,6 +1051,11 @@ public class GW2EventerGui extends javax.swing.JFrame {
         };
         
         t.start();
+    }
+    
+    public void setNewApiManager(ApiManager apiManager) {
+        
+        this.apiManager = apiManager;
     }
     
     private void showSoundSelector(int event) {

@@ -345,6 +345,9 @@ public class ApiManager {
                     readCase = (String) objectinputstream.readObject();
                     
                     if (readCase != null) {
+                        
+                        this.gui.setNewApiManager(this);
+                        
                         this.jComboBoxLanguage.setSelectedItem((String) readCase);
                         this.jComboBoxLanguage.setVisible(false);
                         this.jComboBoxLanguage.setVisible(true);
@@ -376,6 +379,7 @@ public class ApiManager {
                     if (readCase != null) {
                         this.gui.setLastPushDate((Date) readCase);
                     }
+                    System.out.println(this.gui.getLastPushDate());
                 } else {
                     
                     this.saveSettingstoFile();
