@@ -954,7 +954,7 @@ public class GW2EventerGui extends javax.swing.JFrame {
                                         if (!dateData.equals(getLastPushDate())) {
 
                                             setLastPushDate(dateData);
-                                            showPushGui(title, message);
+                                            showPushGui(title, message, 100);
                                         }
                                     } catch (java.lang.NumberFormatException ex) {
                                         //
@@ -1055,7 +1055,13 @@ public class GW2EventerGui extends javax.swing.JFrame {
                                 
                                 if (!version.equals("")) {
                                     if (!version.equals(VERSION)) {
-                                        showPushGui("New version out", version + " " + changelog);
+                                        
+                                        String mesTmp = "<html>Version: " + version
+                                                + "<p>Get it at http://gw2eventer.com</p>"
+                                                + "</html>";
+                                        
+                                        
+                                        showPushGui("New version is out", mesTmp, 110);
                                     }
                                 }
                             } catch (ParseException ex) {
@@ -1110,12 +1116,13 @@ public class GW2EventerGui extends javax.swing.JFrame {
         this.apiManager.showSoundSelectGui(this, event);
     }    
     
-    private void showPushGui(String title, String content) {
+    private void showPushGui(String title, String content, int height) {
         
         this.pushGui.setNewTitle(title);
         this.pushGui.setContent(content);
         this.pushGui.setLocationRelativeTo(this);
         this.pushGui.setResizable(false);
+        this.pushGui.setPreferredSize(new Dimension(300, height));
         this.pushGui.pack();
         this.pushGui.setVisible(true);
     }  

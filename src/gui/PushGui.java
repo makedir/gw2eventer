@@ -71,17 +71,17 @@ public class PushGui extends JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(300, 100));
-        getContentPane().setLayout(new java.awt.GridLayout(2, 0));
 
         jPanel1.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
 
         jLabelContent.setText("Empty.");
         jPanel1.add(jLabelContent);
 
-        getContentPane().add(jPanel1);
+        getContentPane().add(jPanel1, java.awt.BorderLayout.LINE_START);
 
         jPanel2.setMinimumSize(new java.awt.Dimension(59, 28));
         jPanel2.setPreferredSize(new java.awt.Dimension(390, 28));
+        jPanel2.setLayout(new java.awt.GridBagLayout());
 
         jButtonOK.setText("OK");
         jButtonOK.addActionListener(new java.awt.event.ActionListener() {
@@ -89,9 +89,9 @@ public class PushGui extends JDialog {
                 jButtonOKActionPerformed(evt);
             }
         });
-        jPanel2.add(jButtonOK);
+        jPanel2.add(jButtonOK, new java.awt.GridBagConstraints());
 
-        getContentPane().add(jPanel2);
+        getContentPane().add(jPanel2, java.awt.BorderLayout.PAGE_END);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
