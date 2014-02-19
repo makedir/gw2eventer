@@ -109,7 +109,7 @@ public class EventReader extends Thread {
             String worldName, boolean playSounds, HashMap allEvents,
             JButton workingButton, JCheckBox refreshSelector) {
 
-        setDaemon(true); //??
+        //setDaemon(true); //??
         
         this.playThread = null;
         

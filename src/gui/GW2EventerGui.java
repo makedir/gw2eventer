@@ -35,9 +35,14 @@ import java.awt.Robot;
 import java.awt.Toolkit;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.lang.reflect.Field;
 import java.net.URI;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -47,6 +52,15 @@ import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JSpinner;
 import javax.swing.text.DefaultFormatter;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.config.RequestConfig;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 /**
  *
@@ -86,6 +100,8 @@ public class GW2EventerGui extends javax.swing.JFrame {
     
     public static final int EVENT_COUNT = 23;
     
+    private static final String VERSION = "1.0";
+    
     private JButton workingButton;
     private JCheckBox refreshSelector;
     
@@ -101,6 +117,10 @@ public class GW2EventerGui extends javax.swing.JFrame {
     private String worldID;
     
     public boolean preventSystemSleep;
+    
+    private PushGui pushGui;
+    
+    private Date lastPush;
     
     /**
      * Creates new form GW2EventerGui
@@ -212,9 +232,11 @@ public class GW2EventerGui extends javax.swing.JFrame {
             }
         }
         
+        this.lastPush = new Date();
+        
         if (this.apiManager == null) {
             
-            this.apiManager = new ApiManager(this.jSpinnerRefreshTime,
+            this.apiManager = new ApiManager(this, this.jSpinnerRefreshTime,
                 this.jCheckBoxAutoRefresh.isSelected(), this.eventLabels,
                 this.language, this.worldID, this.homeWorlds,
                 this.jComboBoxHomeWorld, this.jLabelServer, this.jLabelWorking,
@@ -222,7 +244,12 @@ public class GW2EventerGui extends javax.swing.JFrame {
                 this.refreshSelector, this.eventLabelsTimer, this.jComboBoxLanguage);
         }
         
+        this.pushGui = new PushGui(this, true, "", "");
+        this.pushGui.setIconImage(guiIcon);
+        
         this.preventSleepMode();
+        this.runUpdateService();
+        this.runPushService();
     }
 
     /**
@@ -805,10 +832,241 @@ public class GW2EventerGui extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
     
+    public void setLastPushDate(Date lastPush) {
+        
+        this.lastPush = lastPush;
+    }
+    
+    public Date getLastPushDate() {
+        
+        return this.lastPush;
+    }
+    
+    private void runPushService() {
+        
+        Thread t = new Thread() {
+            
+          @Override public void run() {
+              
+                RequestConfig requestConfig = RequestConfig.custom().setConnectTimeout(10 * 1000).build();
+                HttpClient client = HttpClientBuilder.create().setDefaultRequestConfig(requestConfig).build();
+
+                HttpGet request = new HttpGet("http://mkdr.de/gw2/push");
+
+                HttpResponse response;
+
+                String line = "";
+                String out = "";
+              
+                //HashMap result = new HashMap();
+                String date = "";
+                String title = "";
+                String message = "";
+                
+                while (!this.isInterrupted()) {
+                    
+                    try {
+                        
+                        try {
+                            Thread.sleep(60000 * 34);
+                        } catch (InterruptedException ex) {
+                            Logger.getLogger(GW2EventerGui.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                        
+                        response = client.execute(request);
+                        
+                        if (response.getStatusLine().toString().contains("200")) {
+                            
+                            BufferedReader rd = new BufferedReader(new InputStreamReader(
+                                    response.getEntity().getContent(), Charset.forName("UTF-8")));
+                            
+                            line = "";
+                            out = "";
+                            
+                            while ((line = rd.readLine()) != null) {
+                                
+                                out = out + line;
+                            }
+
+                            JSONParser parser = new JSONParser();
+                            
+                            Object obj;
+                            
+                            try {
+
+                                obj = parser.parse(out);
+                                
+                                JSONArray array = (JSONArray) obj;
+                                
+                                for (int i = 0; i < array.size(); i++) {
+                                    
+                                    JSONObject obj2 = (JSONObject) array.get(i);
+                                    //result.put(obj2.get("version"), obj2.get("changelog"));
+                                    date = (String) obj2.get("date");
+                                    title = (String) obj2.get("title");
+                                    message = (String) obj2.get("message");
+                                }
+                            } catch (ParseException ex) {
+                                
+                                Logger.getLogger(ApiManager.class.getName()).log(
+                                        Level.SEVERE, null, ex);
+                            }
+                            
+                            request.releaseConnection();
+                            //this.interrupt();
+                            
+                            Date dateData = new Date(Long.parseLong(date));
+                            //long stampNow = dateNow.getTime();
+
+                            if (!dateData.equals(getLastPushDate())) {
+                                
+                                setLastPushDate(dateData);
+                                showPushGui(title, message);
+                            }
+                        } else {
+                            try {
+                                request.releaseConnection();
+                                Thread.sleep(10000);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(EventAllReader.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                        }
+                    } catch (IOException | IllegalStateException ex) {
+                        try {
+                            Logger.getLogger(EventReader.class.getName()).log(
+                                    Level.SEVERE, null, ex);
+                            
+                            request.releaseConnection();
+                            Thread.sleep(10000);
+                        } catch (InterruptedException ex1) {
+                            Logger.getLogger(EventAllReader.class.getName()).log(Level.SEVERE, null, ex1);
+                            
+                            this.interrupt();
+                        }
+                    }
+                }
+          }
+        };
+        
+        t.start();
+    }
+    
+    private void runUpdateService() {
+        
+        Thread t = new Thread() {
+            
+          @Override public void run() {
+              
+                RequestConfig requestConfig = RequestConfig.custom().setConnectTimeout(10 * 1000).build();
+                HttpClient client = HttpClientBuilder.create().setDefaultRequestConfig(requestConfig).build();
+
+                HttpGet request = new HttpGet("http://mkdr.de/gw2/version");
+
+                HttpResponse response;
+
+                String line = "";
+                String out = "";
+              
+                //HashMap result = new HashMap();
+                String version = "";
+                String changelog = "";
+                
+                while (!this.isInterrupted()) {
+                    
+                    try {
+                        
+                        response = client.execute(request);
+                        
+                        if (response.getStatusLine().toString().contains("200")) {
+                            
+                            BufferedReader rd = new BufferedReader(new InputStreamReader(
+                                    response.getEntity().getContent(), Charset.forName("UTF-8")));
+                            
+                            line = "";
+                            out = "";
+                            
+                            while ((line = rd.readLine()) != null) {
+                                
+                                out = out + line;
+                            }
+
+                            JSONParser parser = new JSONParser();
+                            
+                            Object obj;
+                            
+                            try {
+
+                                obj = parser.parse(out);
+                                
+                                JSONArray array = (JSONArray) obj;
+                                
+                                for (int i = 0; i < array.size(); i++) {
+                                    
+                                    JSONObject obj2 = (JSONObject) array.get(i);
+                                    //result.put(obj2.get("version"), obj2.get("changelog"));
+                                    version = (String) obj2.get("version");
+                                    changelog = (String) obj2.get("changelog");
+                                }
+                            } catch (ParseException ex) {
+                                
+                                Logger.getLogger(ApiManager.class.getName()).log(
+                                        Level.SEVERE, null, ex);
+                            }
+                            
+                            request.releaseConnection();
+                            //this.interrupt();
+                            
+                            if (!version.equals(VERSION)) {
+                                showPushGui("New version out", version + " " + changelog);
+                            }
+                            
+                            try {
+                                Thread.sleep(60000 * 60);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(GW2EventerGui.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                        } else {
+                            try {
+                                request.releaseConnection();
+                                Thread.sleep(10000);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(EventAllReader.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                        }
+                    } catch (IOException | IllegalStateException ex) {
+                        try {
+                            Logger.getLogger(EventReader.class.getName()).log(
+                                    Level.SEVERE, null, ex);
+                            
+                            request.releaseConnection();
+                            Thread.sleep(10000);
+                        } catch (InterruptedException ex1) {
+                            Logger.getLogger(EventAllReader.class.getName()).log(Level.SEVERE, null, ex1);
+                            
+                            this.interrupt();
+                        }
+                    }
+                }
+          }
+        };
+        
+        t.start();
+    }
+    
     private void showSoundSelector(int event) {
         
         this.apiManager.showSoundSelectGui(this, event);
     }    
+    
+    private void showPushGui(String title, String content) {
+        
+        this.pushGui.setNewTitle(title);
+        this.pushGui.setContent(content);
+        this.pushGui.setLocationRelativeTo(this);
+        this.pushGui.setResizable(false);
+        this.pushGui.pack();
+        this.pushGui.setVisible(true);
+    }  
     
     private void preventSleepMode() {
         
@@ -900,7 +1158,7 @@ public class GW2EventerGui extends javax.swing.JFrame {
         
         if (this.apiManager == null) {
             
-            this.apiManager = new ApiManager(this.jSpinnerRefreshTime,
+            this.apiManager = new ApiManager(this, this.jSpinnerRefreshTime,
                 this.jCheckBoxAutoRefresh.isSelected(), this.eventLabels,
                 this.language, this.worldID, this.homeWorlds,
                 this.jComboBoxHomeWorld, this.jLabelServer, this.jLabelWorking,

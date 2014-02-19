@@ -32,6 +32,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -84,7 +85,9 @@ public class ApiManager {
     
     private ArrayList eventLabelsTimer;
     
-    public ApiManager(JSpinner refreshSpinner,
+    private GW2EventerGui gui;
+    
+    public ApiManager(GW2EventerGui gui, JSpinner refreshSpinner,
             boolean autoStart, ArrayList eventLabels,
             String language, String worldID, HashMap homeWorlds,
             JComboBox jComboBoxHomeWorlds, JLabel labelServer,
@@ -92,6 +95,8 @@ public class ApiManager {
             JCheckBox refreshSelector, ArrayList eventLabelsTimer,
             JComboBox jComboBoxLanguage) {
 
+        this.gui = gui;
+        
         this.refreshSpinner = refreshSpinner;
         this.refreshTime = (Integer)this.refreshSpinner.getValue();
         
@@ -300,6 +305,7 @@ public class ApiManager {
             oos.writeObject(this.jComboBoxLanguage.getSelectedItem());
             oos.writeObject(this.eventPlaySounds);
             oos.writeObject("" + this.refreshTime);
+            oos.writeObject(this.gui.getLastPushDate());
         } catch (Exception ex) {
             
             ex.printStackTrace();
@@ -362,6 +368,13 @@ public class ApiManager {
                         int intWert = Integer.parseInt((String) readCase);
                         this.refreshTime = intWert;
                         this.refreshSpinner.setValue(intWert);
+                    }
+                    
+                    readCase = null;
+                    readCase = (Date) objectinputstream.readObject();
+                    
+                    if (readCase != null) {
+                        this.gui.setLastPushDate((Date) readCase);
                     }
                 } else {
                     
