@@ -98,6 +98,11 @@ public class GW2EventerGui extends javax.swing.JFrame {
     private static final String LANG_WORKING_ES = "please wait...";
     private static final String LANG_WORKING_FR = "please wait...";
     
+    private static final String LANG_TIP1_DE = "<html><font color=\"white\">Klicken Sie auf eines der X, Nummer oder 'B'<br>für Sound und 'looted' Optionen für das<br>jeweilige Event.</font></html>";
+    private static final String LANG_TIP1_EN = "<html><font color=\"white\">You can click on each X, number or 'B'<br>for sound select and looted options for the<br>specific event.</font></html>";
+    private static final String LANG_TIP1_ES = "<html><font color=\"white\">You can click on each X, number or 'B'<br>for sound select and looted options for the<br>specific event.</font></html>";
+    private static final String LANG_TIP1_FR = "<html><font color=\"white\">You can click on each X, number or 'B'<br>for sound select and looted options for the<br>specific event.</font></html>";
+    
     public static final int EVENT_COUNT = 23;
     
     private static final String VERSION = "1.0";
@@ -171,6 +176,7 @@ public class GW2EventerGui extends javax.swing.JFrame {
                 this.jCheckBoxSystemSleep.setText(LANG_PREVENT_SLEEP_DE);
                 this.jLabelServer.setText(LANG_NOT_RUNNING_DE);
                 this.jLabelWorking.setText(LANG_WORKING_DE);
+                this.jLabelTips.setText(LANG_TIP1_DE);
                 break;
             case "EN":
                 this.jButtonRefresh.setText(LANG_RELOAD_BTN_EN);
@@ -179,6 +185,7 @@ public class GW2EventerGui extends javax.swing.JFrame {
                 this.jCheckBoxSystemSleep.setText(LANG_PREVENT_SLEEP_EN);
                 this.jLabelServer.setText(LANG_NOT_RUNNING_EN);
                 this.jLabelWorking.setText(LANG_WORKING_EN);
+                this.jLabelTips.setText(LANG_TIP1_EN);
                 break;
             case "ES":
                 this.jButtonRefresh.setText(LANG_RELOAD_BTN_ES);
@@ -187,6 +194,7 @@ public class GW2EventerGui extends javax.swing.JFrame {
                 this.jCheckBoxSystemSleep.setText(LANG_PREVENT_SLEEP_ES);
                 this.jLabelServer.setText(LANG_NOT_RUNNING_ES);
                 this.jLabelWorking.setText(LANG_WORKING_ES);
+                this.jLabelTips.setText(LANG_TIP1_ES);
                 break;
             case "FR":
                 this.jButtonRefresh.setText(LANG_RELOAD_BTN_FR);
@@ -195,6 +203,7 @@ public class GW2EventerGui extends javax.swing.JFrame {
                 this.jCheckBoxSystemSleep.setText(LANG_PREVENT_SLEEP_FR);
                 this.jLabelServer.setText(LANG_NOT_RUNNING_FR);
                 this.jLabelWorking.setText(LANG_WORKING_FR);
+                this.jLabelTips.setText(LANG_TIP1_FR);
                 break;
         }
         
@@ -250,6 +259,7 @@ public class GW2EventerGui extends javax.swing.JFrame {
         this.preventSleepMode();
         this.runUpdateService();
         this.runPushService();
+        this.runTips();
     }
 
     /**
@@ -323,6 +333,7 @@ public class GW2EventerGui extends javax.swing.JFrame {
         labelTimer3 = new javax.swing.JLabel();
         labelTimer2 = new javax.swing.JLabel();
         labelTimer1 = new javax.swing.JLabel();
+        jLabelTips = new javax.swing.JLabel();
         backGround = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -824,6 +835,10 @@ public class GW2EventerGui extends javax.swing.JFrame {
         labelTimer1.setEnabled(false);
         jPanel4.add(labelTimer1, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 185, -1, -1));
 
+        jLabelTips.setText("<html><font color=\"white\">You can click on each X or number\n<br>for sound select and looted options.</font></html>");
+        jLabelTips.setToolTipText("");
+        jPanel4.add(jLabelTips, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, -1, 60));
+
         backGround.setIcon(new javax.swing.ImageIcon(getClass().getResource("/media/v3.jpg"))); // NOI18N
         jPanel4.add(backGround, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
@@ -840,6 +855,26 @@ public class GW2EventerGui extends javax.swing.JFrame {
     public Date getLastPushDate() {
         
         return this.lastPush;
+    }
+    
+    private void runTips() {
+        
+        Thread t = new Thread() {
+            
+          @Override public void run() {
+              
+              try {
+                  
+                  Thread.sleep(20000);
+                  
+                  jLabelTips.setVisible(false);
+              } catch (InterruptedException ex) {
+                  Logger.getLogger(GW2EventerGui.class.getName()).log(Level.SEVERE, null, ex);
+              }
+          }
+        };
+        
+        t.start();
     }
     
     private void runPushService() {
@@ -1154,6 +1189,7 @@ public class GW2EventerGui extends javax.swing.JFrame {
                 this.jCheckBoxSystemSleep.setText(LANG_PREVENT_SLEEP_DE);
                 this.jLabelServer.setText(LANG_NOT_RUNNING_DE);
                 this.jLabelWorking.setText(LANG_WORKING_DE);
+                this.jLabelTips.setText(LANG_TIP1_DE);
                 break;
             case "EN":
                 this.jButtonRefresh.setText(LANG_RELOAD_BTN_EN);
@@ -1162,6 +1198,7 @@ public class GW2EventerGui extends javax.swing.JFrame {
                 this.jCheckBoxSystemSleep.setText(LANG_PREVENT_SLEEP_EN);
                 this.jLabelServer.setText(LANG_NOT_RUNNING_EN);
                 this.jLabelWorking.setText(LANG_WORKING_EN);
+                this.jLabelTips.setText(LANG_TIP1_EN);
                 break;
             case "ES":
                 this.jButtonRefresh.setText(LANG_RELOAD_BTN_ES);
@@ -1170,6 +1207,16 @@ public class GW2EventerGui extends javax.swing.JFrame {
                 this.jCheckBoxSystemSleep.setText(LANG_PREVENT_SLEEP_ES);
                 this.jLabelServer.setText(LANG_NOT_RUNNING_ES);
                 this.jLabelWorking.setText(LANG_WORKING_ES);
+                this.jLabelTips.setText(LANG_TIP1_ES);
+                break;
+            case "FR":
+                this.jButtonRefresh.setText(LANG_RELOAD_BTN_FR);
+                this.jCheckBoxAutoRefresh.setText(LANG_AUTO_REFRESH_FR);
+                this.jCheckBoxPlaySounds.setText(LANG_PLAY_SOUNDS_FR);
+                this.jCheckBoxSystemSleep.setText(LANG_PREVENT_SLEEP_FR);
+                this.jLabelServer.setText(LANG_NOT_RUNNING_FR);
+                this.jLabelWorking.setText(LANG_WORKING_FR);
+                this.jLabelTips.setText(LANG_TIP1_FR);
                 break;
         }
         
@@ -1429,6 +1476,7 @@ public class GW2EventerGui extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabelSeconds;
     private javax.swing.JLabel jLabelServer;
+    private javax.swing.JLabel jLabelTips;
     private javax.swing.JLabel jLabelWorking;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
