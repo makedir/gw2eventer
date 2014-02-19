@@ -62,7 +62,7 @@
       <SubComponents>
         <Component class="javax.swing.JLabel" name="jLabelSentence1">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Please be aware, that PayPal takes away the following amount of each donation:"/>
+            <Property name="text" type="java.lang.String" value="Please know, that PayPal takes away the following amount of each donation:"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel3">
@@ -75,7 +75,7 @@
         </Component>
         <Component class="javax.swing.JLabel" name="jLabelSentence2">
           <Properties>
-            <Property name="text" type="java.lang.String" value="&lt;html&gt;I appreciate every single donation. But please don&apos;t donate under 1&#x20ac;,&lt;br&gt;otherwise PayPal would take away almost 50% of your donated amount.&lt;br&gt;&lt;br&gt;Thank you.&lt;/html&gt;"/>
+            <Property name="text" type="java.lang.String" value="&lt;html&gt;I appreciate every single donation. But please don&apos;t donate under 1&#x20ac;,&lt;br&gt;otherwise PayPal would take away almost 50% of your donated money.&lt;br&gt;&lt;br&gt;Thank you.&lt;/html&gt;"/>
           </Properties>
         </Component>
       </SubComponents>

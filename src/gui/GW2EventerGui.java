@@ -103,15 +103,15 @@ public class GW2EventerGui extends javax.swing.JFrame {
     private static final String LANG_TIP1_ES = "<html><font color=\"white\">You can click on each X, number or 'B'<br>for sound select and looted options for the<br>specific event.</font></html>";
     private static final String LANG_TIP1_FR = "<html><font color=\"white\">You can click on each X, number or 'B'<br>for sound select and looted options for the<br>specific event.</font></html>";
     
-    private static final String LANG_DONATE1_DE = "Ich weise darauf hin, dass PayPal folgenden Betrag von jeder Spende behält:";
+    private static final String LANG_DONATE1_DE = "Ich weise darauf hin, dass PayPal folgenden Betrag von jeder Spende abzieht:";
     private static final String LANG_DONATE1_EN = "Please be aware, that PayPal takes away the following amount of each donation:";
     private static final String LANG_DONATE1_ES = "Please be aware, that PayPal takes away the following amount of each donation:";
     private static final String LANG_DONATE1_FR = "Please be aware, that PayPal takes away the following amount of each donation:";
     
-    private static final String LANG_DONATE2_DE = "<html>Ich freue mich über jede Spende. Aber bitte spenden Sie keine Beträge unter 1€,<br>da PayPal sonst fast 50% des gespendeten Betrages abzieht.<br><br>Vielen Dank.</html>";
-    private static final String LANG_DONATE2_EN = "<html>I appreciate every single donation. But please don't donate under 1€,<br>otherwise PayPal would take away almost 50% of your donated amount.<br><br>Thank you.</html>";
-    private static final String LANG_DONATE2_ES = "<html>I appreciate every single donation. But please don't donate under 1€,<br>otherwise PayPal would take away almost 50% of your donated amount.<br><br>Thank you.</html>";
-    private static final String LANG_DONATE2_FR = "<html>I appreciate every single donation. But please don't donate under 1€,<br>otherwise PayPal would take away almost 50% of your donated amount.<br><br>Thank you.</html>";
+    private static final String LANG_DONATE2_DE = "<html>Ich freue mich über jede Spende. Aber bitte spenden Sie keine Beträge unter 1€,<br>da PayPal sonst fast 50% Ihres gespendeten Geldes behält.<br><br>Vielen Dank.</html>";
+    private static final String LANG_DONATE2_EN = "<html>I appreciate every single donation. But please don't donate under 1€,<br>otherwise PayPal would take away almost 50% of your donated money.<br><br>Thank you.</html>";
+    private static final String LANG_DONATE2_ES = "<html>I appreciate every single donation. But please don't donate under 1€,<br>otherwise PayPal would take away almost 50% of your donated money.<br><br>Thank you.</html>";
+    private static final String LANG_DONATE2_FR = "<html>I appreciate every single donation. But please don't donate under 1€,<br>otherwise PayPal would take away almost 50% of your donated money.<br><br>Thank you.</html>";
     
     public static final int EVENT_COUNT = 23;
     

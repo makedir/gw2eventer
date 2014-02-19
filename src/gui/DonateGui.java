@@ -61,12 +61,12 @@ public class DonateGui extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Buy me a coffee :-)");
 
-        jLabelSentence1.setText("Please be aware, that PayPal takes away the following amount of each donation:");
+        jLabelSentence1.setText("Please know, that PayPal takes away the following amount of each donation:");
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         jLabel3.setText("PayPal: 1,2% + 0,35€");
 
-        jLabelSentence2.setText("<html>I appreciate every single donation. But please don't donate under 1€,<br>otherwise PayPal would take away almost 50% of your donated amount.<br><br>Thank you.</html>");
+        jLabelSentence2.setText("<html>I appreciate every single donation. But please don't donate under 1€,<br>otherwise PayPal would take away almost 50% of your donated money.<br><br>Thank you.</html>");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
