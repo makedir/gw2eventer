@@ -97,6 +97,7 @@ public class DonateGui extends javax.swing.JDialog {
         jPanel1.setLayout(new java.awt.GridBagLayout());
 
         jLabelDonate.setIcon(new javax.swing.ImageIcon(getClass().getResource("/media/paypal-button.png"))); // NOI18N
+        jLabelDonate.setText(" ");
         jLabelDonate.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jLabelDonateMouseClicked(evt);
