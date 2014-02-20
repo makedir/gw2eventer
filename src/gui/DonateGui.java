@@ -78,6 +78,7 @@ public class DonateGui extends javax.swing.JDialog {
 
         jTextFieldMail.setEditable(false);
         jTextFieldMail.setText("makedir@gmail.com");
+        jTextFieldMail.setToolTipText("PayPal eMail");
 
         jLabelSentence3.setText("Another way is to send me a gift just via normal PayPal sending money:");
 
