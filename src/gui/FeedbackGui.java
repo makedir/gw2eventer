@@ -76,7 +76,7 @@ public class FeedbackGui extends javax.swing.JDialog {
 
     public void showGui() {
         
-        this.jTextFieldFrom.setText("");
+        //this.jTextFieldFrom.setText("");
         this.jTextFieldSubject.setText("");
         this.jTextAreaMessage.setText("");
         
@@ -167,7 +167,7 @@ public class FeedbackGui extends javax.swing.JDialog {
 
         jTextAreaMessage.setColumns(20);
         jTextAreaMessage.setRows(5);
-        jTextAreaMessage.setPreferredSize(new java.awt.Dimension(200, 94));
+        jTextAreaMessage.setPreferredSize(null);
         jScrollPane1.setViewportView(jTextAreaMessage);
 
         jPanel3.add(jScrollPane1, java.awt.BorderLayout.PAGE_END);
@@ -253,6 +253,19 @@ public class FeedbackGui extends javax.swing.JDialog {
 
                     try {
                         wasSent = true;
+                        
+                        BufferedReader rd = new BufferedReader(new InputStreamReader(
+                        response.getEntity().getContent(), Charset.forName("UTF-8")));
+
+                        String line = "";
+                        String out = "";
+
+                        while ((line = rd.readLine()) != null) {
+
+                            out = out + line;
+                        }
+                        
+                        System.out.println(out);
                     } finally {
                         instream.close();
                     }
