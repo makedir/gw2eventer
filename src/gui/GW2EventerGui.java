@@ -136,6 +136,7 @@ public class GW2EventerGui extends javax.swing.JFrame {
     private PushGui pushGui;
     private DonateGui donateGui;
     private InfoGui infoGui;
+    private FeedbackGui feedbackGui;
     
     private Date lastPush;
     
@@ -186,6 +187,9 @@ public class GW2EventerGui extends javax.swing.JFrame {
         
         this.infoGui = new InfoGui(this, true);
         this.infoGui.setIconImage(guiIcon);
+        
+        this.feedbackGui = new FeedbackGui(this, true);
+        this.feedbackGui.setIconImage(guiIcon);
         
         this.language = "en";
         this.worldID = "2206"; //Millersund [DE]
@@ -262,6 +266,7 @@ public class GW2EventerGui extends javax.swing.JFrame {
         jCheckBoxSystemSleep = new javax.swing.JCheckBox();
         jPanel2 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jLabelWorking = new javax.swing.JLabel();
@@ -405,6 +410,14 @@ public class GW2EventerGui extends javax.swing.JFrame {
             }
         });
         jPanel2.add(jLabel3);
+
+        jLabel2.setText("Feedback");
+        jLabel2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel2MouseClicked(evt);
+            }
+        });
+        jPanel2.add(jLabel2);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -1166,6 +1179,13 @@ public class GW2EventerGui extends javax.swing.JFrame {
         this.pushGui.setVisible(true);
     }  
     
+    private void showFeedbackGui() {
+        
+        this.feedbackGui.setLocationRelativeTo(this);
+        this.feedbackGui.pack();
+        this.feedbackGui.setVisible(true);
+    }  
+    
     private void preventSleepMode() {
         
         Thread t = new Thread() {
@@ -1408,6 +1428,11 @@ public class GW2EventerGui extends javax.swing.JFrame {
         this.showSoundSelector(23);
     }//GEN-LAST:event_labelEvent23MouseClicked
 
+    private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
+
+        this.showFeedbackGui();
+    }//GEN-LAST:event_jLabel2MouseClicked
+
     private void resetLabels() {
         
         for (int i = 0; i < this.eventLabels.size(); i++) {
@@ -1469,6 +1494,7 @@ public class GW2EventerGui extends javax.swing.JFrame {
     private javax.swing.JComboBox jComboBoxHomeWorld;
     private javax.swing.JComboBox jComboBoxLanguage;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabelSeconds;
     private javax.swing.JLabel jLabelServer;
