@@ -67,7 +67,7 @@ public class DonateGui extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Buy me a coffee :-)");
-        setPreferredSize(new java.awt.Dimension(450, 260));
+        setPreferredSize(new java.awt.Dimension(470, 260));
 
         jLabelSentence1.setText("Please know, that PayPal takes away the following amount of each donation:");
 
