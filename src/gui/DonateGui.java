@@ -66,15 +66,15 @@ public class DonateGui extends javax.swing.JDialog {
         jButtonCancle = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Buy me a coffee :-)");
-        setPreferredSize(new java.awt.Dimension(470, 260));
+        setTitle("Buy me a coffee, or two, or three ;-)");
+        setPreferredSize(new java.awt.Dimension(470, 320));
 
         jLabelSentence1.setText("Please know, that PayPal takes away the following amount of each donation:");
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         jLabel3.setText("PayPal: 1,2% + 0,35€");
 
-        jLabelSentence2.setText("<html>I appreciate every single donation. But please don't donate under 1€,<br>otherwise PayPal would take away almost 50% of your donated money.<br><br>Thank you.</html>");
+        jLabelSentence2.setText("<html>I appreciate every single donation. But please don't donate under 1€,<br>otherwise PayPal would take away almost 37% of your donated money.\n<br>Or even more.\n<br><br>If you donate for example 35cent, I would get nothing of your donation\n<br>and PayPal would take 100% of it.<br><br>Thank you.</html>");
 
         jTextFieldMail.setEditable(false);
         jTextFieldMail.setText("makedir@gmail.com");
@@ -112,8 +112,8 @@ public class DonateGui extends javax.swing.JDialog {
                 .addContainerGap()
                 .addComponent(jLabelSentence1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabelSentence2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabelSentence3)

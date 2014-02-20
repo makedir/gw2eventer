@@ -108,10 +108,10 @@ public class GW2EventerGui extends javax.swing.JFrame {
     private static final String LANG_DONATE1_ES = "Please know, that PayPal takes away the following amount of each donation:";
     private static final String LANG_DONATE1_FR = "Please know, that PayPal takes away the following amount of each donation:";
     
-    private static final String LANG_DONATE2_DE = "<html>Ich freue mich über jede Spende. Aber bitte spenden Sie keine Beträge unter 1€,<br>da PayPal sonst fast 50% Ihres gespendeten Geldes behält.<br><br>Vielen Dank.</html>";
-    private static final String LANG_DONATE2_EN = "<html>I appreciate every single donation. But please don't donate under 1€,<br>otherwise PayPal would take away almost 50% of your donated money.<br><br>Thank you.</html>";
-    private static final String LANG_DONATE2_ES = "<html>I appreciate every single donation. But please don't donate under 1€,<br>otherwise PayPal would take away almost 50% of your donated money.<br><br>Thank you.</html>";
-    private static final String LANG_DONATE2_FR = "<html>I appreciate every single donation. But please don't donate under 1€,<br>otherwise PayPal would take away almost 50% of your donated money.<br><br>Thank you.</html>";
+    private static final String LANG_DONATE2_DE = "<html>Ich freue mich über jede Spende. Aber bitte spenden Sie keine<br>Beträge unter 1€, da PayPal sonst fast 37% Ihres gespendeten Geldes behält.<br>Oder noch mehr.<br><br>Wenn Sie z.B. 35cent spenden, würde ich nichts von Ihrem Geld erhalten<br>und PayPal 100%.<br><br>Vielen Dank.</html>";
+    private static final String LANG_DONATE2_EN = "<html>I appreciate every single donation. But please don't donate under 1€,<br>otherwise PayPal would take away almost 37% of your donated money.<br>Or even more.<br><br>If you donate for example 35cent, I would get nothing of your donation<br>and PayPal would take 100% of it.<br><br>Thank you.</html>";
+    private static final String LANG_DONATE2_ES = "<html>I appreciate every single donation. But please don't donate under 1€,<br>otherwise PayPal would take away almost 37% of your donated money.<br>Or even more.<br><br>If you donate for example 35cent, I would get nothing of your donation<br>and PayPal would take 100% of it.<br><br>Thank you.</html>";
+    private static final String LANG_DONATE2_FR = "<html>I appreciate every single donation. But please don't donate under 1€,<br>otherwise PayPal would take away almost 37% of your donated money.<br>Or even more.<br><br>If you donate for example 35cent, I would get nothing of your donation<br>and PayPal would take 100% of it.<br><br>Thank you.</html>";
     
     private static final String LANG_DONATE3_DE = "Sie können auch einfach die Geld-Senden Funktion von PayPal nutzen:";
     private static final String LANG_DONATE3_EN = "Another way is to send me a gift just via normal PayPal sending money:";
