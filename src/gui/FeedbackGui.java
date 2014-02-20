@@ -53,6 +53,12 @@ import org.apache.http.message.BasicNameValuePair;
  */
 public class FeedbackGui extends javax.swing.JDialog {
 
+    private String langErrorSendTitle;
+    private String langErrorSendMessage;
+    private String langErrorInputTitle;
+    private String langErrorInputFrom;
+    private String langErrorInputMessage;
+    
     /**
      * Creates new form FeedbackGui
      */
@@ -60,8 +66,44 @@ public class FeedbackGui extends javax.swing.JDialog {
         
         super(parent, modal);
         initComponents();
+        
+        this.langErrorSendTitle = "";
+        this.langErrorSendMessage = "";
+        this.langErrorInputTitle = "";
+        this.langErrorInputFrom = "";
+        this.langErrorInputMessage = "";
     }
 
+    public void showGui() {
+        
+        this.jTextFieldFrom.setText("");
+        this.jTextFieldSubject.setText("");
+        this.jTextAreaMessage.setText("");
+        
+        this.setVisible(true);
+    }
+    
+    public void setTranslations(String title, String feedback, String from,
+            String subject, String message, String sendBtn, String cancleBtn,
+            String errorSendTitle, String errorSendMessage, String errorInputTitle,
+            String errorInputFrom, String errorInputMessage) {
+        
+        this.setTitle(title);
+        
+        this.jLabelFeedback.setText(feedback);
+        this.jLabelFrom.setText(from);
+        this.jLabelSubject.setText(subject);
+        this.jLabelMessage.setText(message);
+        this.jButtonSend.setText(sendBtn);
+        this.jButtonCancle.setText(cancleBtn);
+        
+        this.langErrorSendTitle = errorSendTitle;
+        this.langErrorSendMessage = errorSendMessage;
+        this.langErrorInputTitle = errorInputTitle;
+        this.langErrorInputFrom = errorInputFrom;
+        this.langErrorInputMessage = errorInputMessage;
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -71,16 +113,16 @@ public class FeedbackGui extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel4 = new javax.swing.JLabel();
+        jLabelFeedback = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
+        jLabelFrom = new javax.swing.JLabel();
         jTextFieldFrom = new javax.swing.JTextField();
         jPanel4 = new javax.swing.JPanel();
-        jLabel3 = new javax.swing.JLabel();
+        jLabelSubject = new javax.swing.JLabel();
         jTextFieldSubject = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        jLabelMessage = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextAreaMessage = new javax.swing.JTextArea();
         jPanel1 = new javax.swing.JPanel();
@@ -91,26 +133,26 @@ public class FeedbackGui extends javax.swing.JDialog {
         setTitle("Leave a feedback/bug report");
         setResizable(false);
 
-        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
-        jLabel4.setText("Leave a feedback");
-        jLabel4.setPreferredSize(new java.awt.Dimension(93, 33));
-        getContentPane().add(jLabel4, java.awt.BorderLayout.PAGE_START);
+        jLabelFeedback.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        jLabelFeedback.setText("Leave a feedback");
+        jLabelFeedback.setPreferredSize(new java.awt.Dimension(93, 33));
+        getContentPane().add(jLabelFeedback, java.awt.BorderLayout.PAGE_START);
 
         jPanel2.setPreferredSize(new java.awt.Dimension(400, 200));
         jPanel2.setLayout(new java.awt.BorderLayout());
 
         jPanel5.setLayout(new java.awt.BorderLayout());
 
-        jLabel2.setText("eMail/From:");
-        jPanel5.add(jLabel2, java.awt.BorderLayout.PAGE_START);
+        jLabelFrom.setText("eMail/From:");
+        jPanel5.add(jLabelFrom, java.awt.BorderLayout.PAGE_START);
         jPanel5.add(jTextFieldFrom, java.awt.BorderLayout.CENTER);
 
         jPanel2.add(jPanel5, java.awt.BorderLayout.PAGE_START);
 
         jPanel4.setLayout(new java.awt.BorderLayout());
 
-        jLabel3.setText("Subject:");
-        jPanel4.add(jLabel3, java.awt.BorderLayout.CENTER);
+        jLabelSubject.setText("Subject:");
+        jPanel4.add(jLabelSubject, java.awt.BorderLayout.CENTER);
 
         jTextFieldSubject.setPreferredSize(new java.awt.Dimension(100, 22));
         jPanel4.add(jTextFieldSubject, java.awt.BorderLayout.PAGE_END);
@@ -120,8 +162,8 @@ public class FeedbackGui extends javax.swing.JDialog {
         jPanel3.setPreferredSize(new java.awt.Dimension(200, 120));
         jPanel3.setLayout(new java.awt.BorderLayout());
 
-        jLabel1.setText("Message:");
-        jPanel3.add(jLabel1, java.awt.BorderLayout.CENTER);
+        jLabelMessage.setText("Message:");
+        jPanel3.add(jLabelMessage, java.awt.BorderLayout.CENTER);
 
         jTextAreaMessage.setColumns(20);
         jTextAreaMessage.setRows(5);
@@ -167,14 +209,14 @@ public class FeedbackGui extends javax.swing.JDialog {
         if (this.jTextFieldFrom.getText().equals("")) {
             
             JOptionPane.showMessageDialog(this,
-                "From can't be left empty.",
-                "Input error",
+                this.langErrorInputFrom,
+                this.langErrorInputTitle,
                 JOptionPane.WARNING_MESSAGE);
         } else if (this.jTextAreaMessage.getText().equals("")) {
             
             JOptionPane.showMessageDialog(this,
-                "Message can't be left empty.",
-                "Input error",
+                this.langErrorInputMessage,
+                this.langErrorInputTitle,
                 JOptionPane.WARNING_MESSAGE);
         } else {     
             
@@ -219,8 +261,8 @@ public class FeedbackGui extends javax.swing.JDialog {
                 Logger.getLogger(FeedbackGui.class.getName()).log(Level.SEVERE, null, ex);
                 
                 JOptionPane.showMessageDialog(this,
-                    "Message couldn't be sent.",
-                    "http error",
+                    this.langErrorSendMessage,
+                    this.langErrorSendTitle,
                     JOptionPane.WARNING_MESSAGE);
             } finally {
                 
@@ -235,10 +277,10 @@ public class FeedbackGui extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonCancle;
     private javax.swing.JButton jButtonSend;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabelFeedback;
+    private javax.swing.JLabel jLabelFrom;
+    private javax.swing.JLabel jLabelMessage;
+    private javax.swing.JLabel jLabelSubject;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;

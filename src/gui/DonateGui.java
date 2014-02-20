@@ -25,6 +25,9 @@
 package gui;
 
 import java.awt.Desktop;
+import java.awt.Toolkit;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.StringSelection;
 import java.net.URI;
 
 /**
@@ -37,6 +40,7 @@ public class DonateGui extends javax.swing.JDialog {
      * Creates new form DonateGui
      */
     public DonateGui(java.awt.Frame parent, boolean modal) {
+        
         super(parent, modal);
         initComponents();
     }
@@ -54,12 +58,16 @@ public class DonateGui extends javax.swing.JDialog {
         jLabelSentence1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabelSentence2 = new javax.swing.JLabel();
+        jTextFieldMail = new javax.swing.JTextField();
+        jLabelSentence3 = new javax.swing.JLabel();
+        jButtonClipboard = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabelDonate = new javax.swing.JLabel();
         jButtonCancle = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Buy me a coffee :-)");
+        setPreferredSize(new java.awt.Dimension(450, 260));
 
         jLabelSentence1.setText("Please know, that PayPal takes away the following amount of each donation:");
 
@@ -67,6 +75,18 @@ public class DonateGui extends javax.swing.JDialog {
         jLabel3.setText("PayPal: 1,2% + 0,35€");
 
         jLabelSentence2.setText("<html>I appreciate every single donation. But please don't donate under 1€,<br>otherwise PayPal would take away almost 50% of your donated money.<br><br>Thank you.</html>");
+
+        jTextFieldMail.setEditable(false);
+        jTextFieldMail.setText("makedir@gmail.com");
+
+        jLabelSentence3.setText("Another way is to send me a gift just via normal PayPal sending money:");
+
+        jButtonClipboard.setText("Copy to clipboard");
+        jButtonClipboard.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonClipboardActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -77,7 +97,12 @@ public class DonateGui extends javax.swing.JDialog {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabelSentence1)
                     .addComponent(jLabel3)
-                    .addComponent(jLabelSentence2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabelSentence2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabelSentence3)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jTextFieldMail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButtonClipboard)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -89,10 +114,16 @@ public class DonateGui extends javax.swing.JDialog {
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabelSentence2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabelSentence3)
+                .addGap(1, 1, 1)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTextFieldMail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonClipboard))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        getContentPane().add(jPanel2, java.awt.BorderLayout.PAGE_START);
+        getContentPane().add(jPanel2, java.awt.BorderLayout.LINE_START);
 
         jPanel1.setLayout(new java.awt.GridBagLayout());
 
@@ -123,14 +154,13 @@ public class DonateGui extends javax.swing.JDialog {
         this.setVisible(false);
     }//GEN-LAST:event_jButtonCancleActionPerformed
 
-    public void setText1(String txt) {
+    public void setTranslations(String txt1, String txt2, String txt3, String saveClipboard, String cancle) {
         
-        this.jLabelSentence1.setText(txt);
-    }
-    
-    public void setText2(String txt) {
-        
-        this.jLabelSentence2.setText(txt);
+        this.jLabelSentence1.setText(txt1);
+        this.jLabelSentence2.setText(txt2);
+        this.jLabelSentence3.setText(txt3);
+        this.jButtonClipboard.setText(saveClipboard);
+        this.jButtonCancle.setText(cancle);
     }
     
     private void jLabelDonateMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelDonateMouseClicked
@@ -148,14 +178,24 @@ public class DonateGui extends javax.swing.JDialog {
         this.setVisible(false);
     }//GEN-LAST:event_jLabelDonateMouseClicked
 
+    private void jButtonClipboardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonClipboardActionPerformed
+
+        StringSelection stringSelection = new StringSelection(this.jTextFieldMail.getText());
+        Clipboard clpbrd = Toolkit.getDefaultToolkit().getSystemClipboard();
+        clpbrd.setContents(stringSelection, null);
+    }//GEN-LAST:event_jButtonClipboardActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonCancle;
+    private javax.swing.JButton jButtonClipboard;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabelDonate;
     private javax.swing.JLabel jLabelSentence1;
     private javax.swing.JLabel jLabelSentence2;
+    private javax.swing.JLabel jLabelSentence3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JTextField jTextFieldMail;
     // End of variables declaration//GEN-END:variables
 }

@@ -113,6 +113,76 @@ public class GW2EventerGui extends javax.swing.JFrame {
     private static final String LANG_DONATE2_ES = "<html>I appreciate every single donation. But please don't donate under 1€,<br>otherwise PayPal would take away almost 50% of your donated money.<br><br>Thank you.</html>";
     private static final String LANG_DONATE2_FR = "<html>I appreciate every single donation. But please don't donate under 1€,<br>otherwise PayPal would take away almost 50% of your donated money.<br><br>Thank you.</html>";
     
+    private static final String LANG_DONATE3_DE = "Sie können auch einfach die Geld-Senden Funktion von PayPal nutzen:";
+    private static final String LANG_DONATE3_EN = "Another way is to send me a gift just via normal PayPal sending money:";
+    private static final String LANG_DONATE3_ES = "Another way is to send me a gift just via normal PayPal sending money:";
+    private static final String LANG_DONATE3_FR = "Another way is to send me a gift just via normal PayPal sending money:";
+    
+    private static final String LANG_COPY_CLIP_DE = "In Zwischenablage kopieren";
+    private static final String LANG_COPY_CLIP_EN = "Copy to clipboard";
+    private static final String LANG_COPY_CLIP_ES = "Copy to clipboard";
+    private static final String LANG_COPY_CLIP_FR = "Copy to clipboard";
+    
+    private static final String LANG_FEEDBACK_FEEDBACK_DE = "Teilen Sie Ihre Meinung mit";
+    private static final String LANG_FEEDBACK_FEEDBACK_EN = "Leave a feedback";
+    private static final String LANG_FEEDBACK_FEEDBACK_ES = "Leave a feedback";
+    private static final String LANG_FEEDBACK_FEEDBACK_FR = "Leave a feedback";
+    
+    private static final String LANG_FEEDBACK_TITLE_DE = "Feedback/bug report";
+    private static final String LANG_FEEDBACK_TITLE_EN = "Feedback/bug report";
+    private static final String LANG_FEEDBACK_TITLE_ES = "Feedback/bug report";
+    private static final String LANG_FEEDBACK_TITLE_FR = "Feedback/bug report";
+    
+    private static final String LANG_FEEDBACK_FROM_DE = "eMail/Von";
+    private static final String LANG_FEEDBACK_FROM_EN = "e-Mail/From";
+    private static final String LANG_FEEDBACK_FROM_ES = "e-Mail/From";
+    private static final String LANG_FEEDBACK_FROM_FR = "e-Mail/From";
+    
+    private static final String LANG_FEEDBACK_SUBJECT_DE = "Betreff";
+    private static final String LANG_FEEDBACK_SUBJECT_EN = "Subject";
+    private static final String LANG_FEEDBACK_SUBJECT_ES = "Subject";
+    private static final String LANG_FEEDBACK_SUBJECT_FR = "Subject";
+    
+    private static final String LANG_FEEDBACK_MESSAGE_DE = "Nachricht";
+    private static final String LANG_FEEDBACK_MESSAGE_EN = "Mesesage";
+    private static final String LANG_FEEDBACK_MESSAGE_ES = "Mesesage";
+    private static final String LANG_FEEDBACK_MESSAGE_FR = "Mesesage";
+    
+    private static final String LANG_SEND_BTN_DE = "Senden";
+    private static final String LANG_SEND_BTN_EN = "Send";
+    private static final String LANG_SEND_BTN_ES = "Send";
+    private static final String LANG_SEND_BTN_FR = "Send";
+    
+    private static final String LANG_CANCLE_BTN_DE = "Abbrechen";
+    private static final String LANG_CANCLE_BTN_EN = "Cancle";
+    private static final String LANG_CANCLE_BTN_ES = "Cancle";
+    private static final String LANG_CANCLE_BTN_FR = "Cancle";
+    
+    private static final String LANG_SEND_ERROR_TITLE_DE = "Verbindungs Fehler";
+    private static final String LANG_SEND_ERROR_TITLE_EN = "Connection error";
+    private static final String LANG_SEND_ERROR_TITLE_ES = "Connection error";
+    private static final String LANG_SEND_ERROR_TITLE_FR = "Connection error";
+    
+    private static final String LANG_SEND_ERROR_MSG_DE = "Nachricht konnte nicht gesendet werden.";
+    private static final String LANG_SEND_ERROR_MSG_EN = "There was an error sending the message.";
+    private static final String LANG_SEND_ERROR_MSG_ES = "There was an error sending the message.";
+    private static final String LANG_SEND_ERROR_MSG_FR = "There was an error sending the message.";
+    
+    private static final String LANG_INPUT_ERROR_TITLE_DE = "Eingabe Fehler";
+    private static final String LANG_INPUT_ERROR_TITLE_EN = "Input error";
+    private static final String LANG_INPUT_ERROR_TITLE_ES = "Input error";
+    private static final String LANG_INPUT_ERROR_TITLE_FR = "Input error";
+    
+    private static final String LANG_INPUT_ERROR_FROM_DE = "Von-Feld darf nicht leer bleiben.";
+    private static final String LANG_INPUT_ERROR_FROM_EN = "From can't be left empty.";
+    private static final String LANG_INPUT_ERROR_FROM_ES = "From can't be left empty.";
+    private static final String LANG_INPUT_ERROR_FROM_FR = "From can't be left empty.";
+    
+    private static final String LANG_INPUT_ERROR_MSG_DE = "Nachricht-Feld darf nicht leer bleiben.";
+    private static final String LANG_INPUT_ERROR_MSG_EN = "Message can't be left empty.";
+    private static final String LANG_INPUT_ERROR_MSG_ES = "Message can't be left empty.";
+    private static final String LANG_INPUT_ERROR_MSG_FR = "Message can't be left empty.";
+    
     public static final int EVENT_COUNT = 23;
     
     private static final String VERSION = "1.0";
@@ -843,51 +913,37 @@ public class GW2EventerGui extends javax.swing.JFrame {
         
         String selectedLang = (String) this.jComboBoxLanguage.getModel().getSelectedItem();
         
-        switch (selectedLang) {
-            case "DE":
-                this.jButtonRefresh.setText(LANG_RELOAD_BTN_DE);
-                this.jCheckBoxAutoRefresh.setText(LANG_AUTO_REFRESH_DE);
-                this.jCheckBoxPlaySounds.setText(LANG_PLAY_SOUNDS_DE);
-                this.jCheckBoxSystemSleep.setText(LANG_PREVENT_SLEEP_DE);
-                this.jLabelServer.setText(LANG_NOT_RUNNING_DE);
-                this.jLabelWorking.setText(LANG_WORKING_DE);
-                this.jLabelTips.setText(LANG_TIP1_DE);
-                this.donateGui.setText1(LANG_DONATE1_DE);
-                this.donateGui.setText2(LANG_DONATE2_DE);
-                break;
-            case "EN":
-                this.jButtonRefresh.setText(LANG_RELOAD_BTN_EN);
-                this.jCheckBoxAutoRefresh.setText(LANG_AUTO_REFRESH_EN);
-                this.jCheckBoxPlaySounds.setText(LANG_PLAY_SOUNDS_EN);
-                this.jCheckBoxSystemSleep.setText(LANG_PREVENT_SLEEP_EN);
-                this.jLabelServer.setText(LANG_NOT_RUNNING_EN);
-                this.jLabelWorking.setText(LANG_WORKING_EN);
-                this.jLabelTips.setText(LANG_TIP1_EN);
-                this.donateGui.setText1(LANG_DONATE1_EN);
-                this.donateGui.setText2(LANG_DONATE2_EN);
-                break;
-            case "ES":
-                this.jButtonRefresh.setText(LANG_RELOAD_BTN_ES);
-                this.jCheckBoxAutoRefresh.setText(LANG_AUTO_REFRESH_ES);
-                this.jCheckBoxPlaySounds.setText(LANG_PLAY_SOUNDS_ES);
-                this.jCheckBoxSystemSleep.setText(LANG_PREVENT_SLEEP_ES);
-                this.jLabelServer.setText(LANG_NOT_RUNNING_ES);
-                this.jLabelWorking.setText(LANG_WORKING_ES);
-                this.jLabelTips.setText(LANG_TIP1_ES);
-                this.donateGui.setText1(LANG_DONATE1_ES);
-                this.donateGui.setText2(LANG_DONATE2_ES);
-                break;
-            case "FR":
-                this.jButtonRefresh.setText(LANG_RELOAD_BTN_FR);
-                this.jCheckBoxAutoRefresh.setText(LANG_AUTO_REFRESH_FR);
-                this.jCheckBoxPlaySounds.setText(LANG_PLAY_SOUNDS_FR);
-                this.jCheckBoxSystemSleep.setText(LANG_PREVENT_SLEEP_FR);
-                this.jLabelServer.setText(LANG_NOT_RUNNING_FR);
-                this.jLabelWorking.setText(LANG_WORKING_FR);
-                this.jLabelTips.setText(LANG_TIP1_FR);
-                this.donateGui.setText1(LANG_DONATE1_FR);
-                this.donateGui.setText2(LANG_DONATE2_FR);
-                break;
+        try {
+
+            this.jButtonRefresh.setText((String) getClass().getDeclaredField("LANG_RELOAD_BTN_" + selectedLang).get(null));
+            this.jCheckBoxAutoRefresh.setText((String) getClass().getDeclaredField("LANG_AUTO_REFRESH_" + selectedLang).get(null));
+            this.jCheckBoxPlaySounds.setText((String) getClass().getDeclaredField("LANG_PLAY_SOUNDS_" + selectedLang).get(null));
+            this.jCheckBoxSystemSleep.setText((String) getClass().getDeclaredField("LANG_PREVENT_SLEEP_" + selectedLang).get(null));
+            this.jLabelServer.setText((String) getClass().getDeclaredField("LANG_NOT_RUNNING_" + selectedLang).get(null));
+            this.jLabelWorking.setText((String) getClass().getDeclaredField("LANG_WORKING_" + selectedLang).get(null));
+            this.jLabelTips.setText((String) getClass().getDeclaredField("LANG_TIP1_" + selectedLang).get(null));
+            
+            this.donateGui.setTranslations((String) getClass().getDeclaredField("LANG_DONATE1_" + selectedLang).get(null),
+                    (String) getClass().getDeclaredField("LANG_DONATE2_" + selectedLang).get(null),
+                    (String) getClass().getDeclaredField("LANG_DONATE3_" + selectedLang).get(null),
+                    (String) getClass().getDeclaredField("LANG_COPY_CLIP_" + selectedLang).get(null),
+                    (String) getClass().getDeclaredField("LANG_CANCLE_BTN_" + selectedLang).get(null));
+            
+            this.feedbackGui.setTranslations((String) getClass().getDeclaredField("LANG_FEEDBACK_TITLE_" + selectedLang).get(null),
+                    (String) getClass().getDeclaredField("LANG_FEEDBACK_FEEDBACK_" + selectedLang).get(null),
+                    (String) getClass().getDeclaredField("LANG_FEEDBACK_FROM_" + selectedLang).get(null),
+                    (String) getClass().getDeclaredField("LANG_FEEDBACK_SUBJECT_" + selectedLang).get(null),
+                    (String) getClass().getDeclaredField("LANG_FEEDBACK_MESSAGE_" + selectedLang).get(null),
+                    (String) getClass().getDeclaredField("LANG_SEND_BTN_" + selectedLang).get(null),
+                    (String) getClass().getDeclaredField("LANG_CANCLE_BTN_" + selectedLang).get(null),
+                    (String) getClass().getDeclaredField("LANG_SEND_ERROR_TITLE_" + selectedLang).get(null),
+                    (String) getClass().getDeclaredField("LANG_SEND_ERROR_MSG_" + selectedLang).get(null),
+                    (String) getClass().getDeclaredField("LANG_INPUT_ERROR_TITLE_" + selectedLang).get(null),
+                    (String) getClass().getDeclaredField("LANG_INPUT_ERROR_FROM_" + selectedLang).get(null),
+                    (String) getClass().getDeclaredField("LANG_INPUT_ERROR_MSG_" + selectedLang).get(null));
+            
+        } catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException ex) {
+            Logger.getLogger(GW2EventerGui.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
@@ -1183,7 +1239,8 @@ public class GW2EventerGui extends javax.swing.JFrame {
         
         this.feedbackGui.setLocationRelativeTo(this);
         this.feedbackGui.pack();
-        this.feedbackGui.setVisible(true);
+        
+        this.feedbackGui.showGui();
     }  
     
     private void preventSleepMode() {
