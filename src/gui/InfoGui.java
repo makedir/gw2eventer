@@ -63,6 +63,7 @@ public class InfoGui extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("GW2 Eventer");
+        setModalityType(java.awt.Dialog.ModalityType.APPLICATION_MODAL);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/media/paypal-donate.png"))); // NOI18N

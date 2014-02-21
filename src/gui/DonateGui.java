@@ -67,6 +67,7 @@ public class DonateGui extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Buy me a coffee, or two, or three ;-)");
+        setModalityType(java.awt.Dialog.ModalityType.APPLICATION_MODAL);
         setPreferredSize(new java.awt.Dimension(470, 320));
 
         jLabelSentence1.setText("Please know, that PayPal takes away the following amount of each donation:");
@@ -124,7 +125,7 @@ public class DonateGui extends javax.swing.JDialog {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        getContentPane().add(jPanel2, java.awt.BorderLayout.LINE_START);
+        getContentPane().add(jPanel2, java.awt.BorderLayout.PAGE_START);
 
         jPanel1.setLayout(new java.awt.GridBagLayout());
 

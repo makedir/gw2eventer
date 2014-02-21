@@ -131,6 +131,7 @@ public class FeedbackGui extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Leave a feedback/bug report");
+        setModalityType(java.awt.Dialog.ModalityType.APPLICATION_MODAL);
         setResizable(false);
 
         jLabelFeedback.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
