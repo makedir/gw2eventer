@@ -214,7 +214,7 @@ public class GW2EventerGui extends javax.swing.JFrame {
     public GW2EventerGui() {
        
         this.guiIcon = new ImageIcon(
-                ClassLoader.getSystemResource("media/icon.png")).getImage();
+                getClass().getClassLoader().getSystemResource("media/icon.png")).getImage();
         
         initComponents();
         
