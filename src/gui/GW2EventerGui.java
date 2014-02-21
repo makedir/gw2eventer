@@ -25,31 +25,35 @@
 package gui;
 
 import java.awt.AWTException;
+import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Desktop;
 import java.awt.Dimension;
+import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.MouseInfo;
 import java.awt.Point;
 import java.awt.Robot;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.lang.reflect.Field;
-import java.net.URI;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.imageio.ImageIO;
+import javax.swing.AbstractAction;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.text.DefaultFormatter;
 import org.apache.http.HttpResponse;
@@ -185,7 +189,7 @@ public class GW2EventerGui extends javax.swing.JFrame {
     
     public static final int EVENT_COUNT = 23;
     
-    private static final String VERSION = "1.0";
+    private static final String VERSION = "1.1";
     
     private JButton workingButton;
     private JCheckBox refreshSelector;
@@ -311,7 +315,7 @@ public class GW2EventerGui extends javax.swing.JFrame {
         
         this.preventSleepMode();
         this.runUpdateService();
-        this.runPushService();
+        //this.runPushService();
         this.runTips();
     }
 
@@ -323,6 +327,7 @@ public class GW2EventerGui extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
 
         jPanel1 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
@@ -338,6 +343,8 @@ public class GW2EventerGui extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
+        backgroundPanel1 = new gui.BackgroundPanel();
+        jPanel5 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         jLabelWorking = new javax.swing.JLabel();
         jLabelServer = new javax.swing.JLabel();
@@ -392,9 +399,9 @@ public class GW2EventerGui extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("GW2 Eventer");
-        setBackground(new java.awt.Color(102, 102, 102));
         setIconImage(this.guiIcon);
-        setResizable(false);
+        setMinimumSize(new java.awt.Dimension(1100, 600));
+        setPreferredSize(new java.awt.Dimension(1280, 790));
 
         jPanel1.setMaximumSize(new java.awt.Dimension(1280, 33));
         jPanel1.setMinimumSize(new java.awt.Dimension(1280, 33));
@@ -504,6 +511,12 @@ public class GW2EventerGui extends javax.swing.JFrame {
         jPanel1.add(jPanel2);
 
         getContentPane().add(jPanel1, java.awt.BorderLayout.NORTH);
+
+        backgroundPanel1.setMinimumSize(new java.awt.Dimension(1280, 753));
+        backgroundPanel1.setPreferredSize(new java.awt.Dimension(1280, 753));
+        backgroundPanel1.setLayout(new java.awt.GridBagLayout());
+
+        jPanel5.setLayout(new java.awt.BorderLayout());
 
         jPanel4.setBackground(new java.awt.Color(51, 51, 51));
         jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -904,10 +917,233 @@ public class GW2EventerGui extends javax.swing.JFrame {
         backGround.setIcon(new javax.swing.ImageIcon(getClass().getResource("/media/v3.jpg"))); // NOI18N
         jPanel4.add(backGround, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
-        getContentPane().add(jPanel4, java.awt.BorderLayout.CENTER);
+        jPanel5.add(jPanel4, java.awt.BorderLayout.CENTER);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        backgroundPanel1.add(jPanel5, gridBagConstraints);
+
+        getContentPane().add(backgroundPanel1, java.awt.BorderLayout.CENTER);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void labelEvent23MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelEvent23MouseClicked
+
+        this.showSoundSelector(23);
+    }//GEN-LAST:event_labelEvent23MouseClicked
+
+    private void labelEvent22MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelEvent22MouseClicked
+
+        this.showSoundSelector(22);
+    }//GEN-LAST:event_labelEvent22MouseClicked
+
+    private void labelEvent21MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelEvent21MouseClicked
+
+        this.showSoundSelector(21);
+    }//GEN-LAST:event_labelEvent21MouseClicked
+
+    private void labelEvent20MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelEvent20MouseClicked
+
+        this.showSoundSelector(20);
+    }//GEN-LAST:event_labelEvent20MouseClicked
+
+    private void labelEvent19MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelEvent19MouseClicked
+
+        this.showSoundSelector(19);
+    }//GEN-LAST:event_labelEvent19MouseClicked
+
+    private void labelEvent18MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelEvent18MouseClicked
+
+        this.showSoundSelector(18);
+    }//GEN-LAST:event_labelEvent18MouseClicked
+
+    private void labelEvent17MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelEvent17MouseClicked
+
+        this.showSoundSelector(17);
+    }//GEN-LAST:event_labelEvent17MouseClicked
+
+    private void labelEvent16MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelEvent16MouseClicked
+
+        this.showSoundSelector(16);
+    }//GEN-LAST:event_labelEvent16MouseClicked
+
+    private void labelEvent15MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelEvent15MouseClicked
+
+        this.showSoundSelector(15);
+    }//GEN-LAST:event_labelEvent15MouseClicked
+
+    private void labelEvent14MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelEvent14MouseClicked
+
+        this.showSoundSelector(14);
+    }//GEN-LAST:event_labelEvent14MouseClicked
+
+    private void labelEvent13MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelEvent13MouseClicked
+
+        this.showSoundSelector(13);
+    }//GEN-LAST:event_labelEvent13MouseClicked
+
+    private void labelEvent12MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelEvent12MouseClicked
+
+        this.showSoundSelector(12);
+    }//GEN-LAST:event_labelEvent12MouseClicked
+
+    private void labelEvent11MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelEvent11MouseClicked
+
+        this.showSoundSelector(11);
+    }//GEN-LAST:event_labelEvent11MouseClicked
+
+    private void labelEvent10MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelEvent10MouseClicked
+
+        this.showSoundSelector(10);
+    }//GEN-LAST:event_labelEvent10MouseClicked
+
+    private void labelEvent9MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelEvent9MouseClicked
+
+        this.showSoundSelector(9);
+    }//GEN-LAST:event_labelEvent9MouseClicked
+
+    private void labelEvent8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelEvent8MouseClicked
+
+        this.showSoundSelector(8);
+    }//GEN-LAST:event_labelEvent8MouseClicked
+
+    private void labelEvent7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelEvent7MouseClicked
+
+        this.showSoundSelector(7);
+    }//GEN-LAST:event_labelEvent7MouseClicked
+
+    private void labelEvent6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelEvent6MouseClicked
+
+        this.showSoundSelector(6);
+    }//GEN-LAST:event_labelEvent6MouseClicked
+
+    private void labelEvent5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelEvent5MouseClicked
+
+        this.showSoundSelector(5);
+    }//GEN-LAST:event_labelEvent5MouseClicked
+
+    private void labelEvent4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelEvent4MouseClicked
+
+        this.showSoundSelector(4);
+    }//GEN-LAST:event_labelEvent4MouseClicked
+
+    private void labelEvent3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelEvent3MouseClicked
+
+        this.showSoundSelector(3);
+    }//GEN-LAST:event_labelEvent3MouseClicked
+
+    private void labelEvent2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelEvent2MouseClicked
+
+        this.showSoundSelector(2);
+    }//GEN-LAST:event_labelEvent2MouseClicked
+
+    private void labelEvent1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelEvent1MouseClicked
+
+        this.showSoundSelector(1);
+    }//GEN-LAST:event_labelEvent1MouseClicked
+
+    private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
+
+        this.infoGui.setLocationRelativeTo(this);
+        this.infoGui.setResizable(false);
+        this.infoGui.pack();
+        this.infoGui.setVisible(true);
+    }//GEN-LAST:event_jLabel1MouseClicked
+
+    private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
+
+        this.showFeedbackGui();
+    }//GEN-LAST:event_jLabel2MouseClicked
+
+    private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
+
+        this.showDonateGui();
+    }//GEN-LAST:event_jLabel3MouseClicked
+
+    private void jCheckBoxSystemSleepActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxSystemSleepActionPerformed
+
+        this.preventSystemSleep = this.jCheckBoxSystemSleep.isSelected();
+    }//GEN-LAST:event_jCheckBoxSystemSleepActionPerformed
+
+    private void jCheckBoxPlaySoundsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxPlaySoundsActionPerformed
+
+        this.apiManager.setPlaySounds(this.jCheckBoxPlaySounds.isSelected());
+    }//GEN-LAST:event_jCheckBoxPlaySoundsActionPerformed
+
+    private void jCheckBoxAutoRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxAutoRefreshActionPerformed
+
+        this.apiManager.eventReaderStop();
+
+        this.jLabelWorking.setVisible(true);
+        this.jCheckBoxAutoRefresh.setEnabled(false);
+        this.jButtonRefresh.setEnabled(false);
+
+        String homeWorldSelected = (String) this.homeWorlds.get((String) this.jComboBoxHomeWorld.getSelectedItem());
+
+        this.apiManager.setRefreshTime((Integer)this.jSpinnerRefreshTime.getValue());
+
+        this.apiManager.eventReaderStart((Integer)this.jSpinnerRefreshTime.getValue(),
+            this.jCheckBoxAutoRefresh.isSelected(), homeWorldSelected);
+
+        this.resetLabels();
+    }//GEN-LAST:event_jCheckBoxAutoRefreshActionPerformed
+
+    private void jButtonRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRefreshActionPerformed
+
+        this.apiManager.resetLooted();
+
+        this.apiManager.eventReaderStop();
+
+        this.jLabelWorking.setVisible(true);
+        this.jCheckBoxAutoRefresh.setEnabled(false);
+        this.jButtonRefresh.setEnabled(false);
+        this.jComboBoxLanguage.setEnabled(false);
+
+        String homeWorldSelected = (String) this.homeWorlds.get((String) this.jComboBoxHomeWorld.getSelectedItem());
+
+        this.apiManager.setRefreshTime((Integer)this.jSpinnerRefreshTime.getValue());
+
+        this.apiManager.eventReaderStart((Integer)this.jSpinnerRefreshTime.getValue(),
+            this.jCheckBoxAutoRefresh.isSelected(), homeWorldSelected);
+
+        this.resetLabels();
+    }//GEN-LAST:event_jButtonRefreshActionPerformed
+
+    private void jComboBoxLanguageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxLanguageActionPerformed
+
+        this.jLabelWorking.setVisible(true);
+        this.jCheckBoxAutoRefresh.setEnabled(false);
+        this.jButtonRefresh.setEnabled(false);
+        this.jComboBoxLanguage.setEnabled(false);
+
+        this.setTranslations();
+
+        if (this.apiManager == null) {
+
+            this.apiManager = new ApiManager(this, this.jSpinnerRefreshTime,
+                this.jCheckBoxAutoRefresh.isSelected(), this.eventLabels,
+                this.language, this.worldID, this.homeWorlds,
+                this.jComboBoxHomeWorld, this.jLabelServer, this.jLabelWorking,
+                this.jCheckBoxPlaySounds.isSelected(), this.workingButton,
+                this.refreshSelector, this.eventLabelsTimer, this.jComboBoxLanguage);
+        }
+
+        this.apiManager.homeWorldsReload((String) this.jComboBoxLanguage.getSelectedItem());
+        this.apiManager.allEventsReload((String) this.jComboBoxLanguage.getSelectedItem());
+    }//GEN-LAST:event_jComboBoxLanguageActionPerformed
+
+    private void jComboBoxHomeWorldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxHomeWorldActionPerformed
+
+        /*
+        this.apiManager.eventReaderStop();
+
+        String homeWorldSelected = (String) this.homeWorlds.get((String) this.jComboBoxHomeWorld.getSelectedItem());
+
+        this.apiManager.eventReaderStart((Integer)this.jSpinnerRefreshTime.getValue(),
+            this.jCheckBoxAutoRefresh.isSelected(), homeWorldSelected);*/
+    }//GEN-LAST:event_jComboBoxHomeWorldActionPerformed
     
     private void setTranslations() {
         
@@ -1274,222 +1510,6 @@ public class GW2EventerGui extends javax.swing.JFrame {
         t.start();
     }
     
-    private void jButtonRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRefreshActionPerformed
-
-        this.apiManager.resetLooted();
-        
-        this.apiManager.eventReaderStop();
-        
-        this.jLabelWorking.setVisible(true);
-        this.jCheckBoxAutoRefresh.setEnabled(false);
-        this.jButtonRefresh.setEnabled(false);
-        this.jComboBoxLanguage.setEnabled(false);
-        
-        String homeWorldSelected = (String) this.homeWorlds.get((String) this.jComboBoxHomeWorld.getSelectedItem());
-        
-        this.apiManager.setRefreshTime((Integer)this.jSpinnerRefreshTime.getValue());
-        
-        this.apiManager.eventReaderStart((Integer)this.jSpinnerRefreshTime.getValue(),
-                this.jCheckBoxAutoRefresh.isSelected(), homeWorldSelected);
-        
-        this.resetLabels();
-    }//GEN-LAST:event_jButtonRefreshActionPerformed
-
-    private void jComboBoxLanguageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxLanguageActionPerformed
-
-        this.jLabelWorking.setVisible(true);
-        this.jCheckBoxAutoRefresh.setEnabled(false);
-        this.jButtonRefresh.setEnabled(false);
-        this.jComboBoxLanguage.setEnabled(false);
-        
-        this.setTranslations();
-        
-        if (this.apiManager == null) {
-            
-            this.apiManager = new ApiManager(this, this.jSpinnerRefreshTime,
-                this.jCheckBoxAutoRefresh.isSelected(), this.eventLabels,
-                this.language, this.worldID, this.homeWorlds,
-                this.jComboBoxHomeWorld, this.jLabelServer, this.jLabelWorking,
-                this.jCheckBoxPlaySounds.isSelected(), this.workingButton,
-                this.refreshSelector, this.eventLabelsTimer, this.jComboBoxLanguage);
-        }
-        
-        this.apiManager.homeWorldsReload((String) this.jComboBoxLanguage.getSelectedItem());
-        this.apiManager.allEventsReload((String) this.jComboBoxLanguage.getSelectedItem());
-    }//GEN-LAST:event_jComboBoxLanguageActionPerformed
-
-    private void jComboBoxHomeWorldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxHomeWorldActionPerformed
-
-        /*
-        this.apiManager.eventReaderStop();
-        
-        String homeWorldSelected = (String) this.homeWorlds.get((String) this.jComboBoxHomeWorld.getSelectedItem());
-        
-        this.apiManager.eventReaderStart((Integer)this.jSpinnerRefreshTime.getValue(),
-                this.jCheckBoxAutoRefresh.isSelected(), homeWorldSelected);*/
-    }//GEN-LAST:event_jComboBoxHomeWorldActionPerformed
-
-    private void jCheckBoxAutoRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxAutoRefreshActionPerformed
-        
-        this.apiManager.eventReaderStop();
-        
-        this.jLabelWorking.setVisible(true);
-        this.jCheckBoxAutoRefresh.setEnabled(false);
-        this.jButtonRefresh.setEnabled(false);
-        
-        String homeWorldSelected = (String) this.homeWorlds.get((String) this.jComboBoxHomeWorld.getSelectedItem());
-        
-        this.apiManager.setRefreshTime((Integer)this.jSpinnerRefreshTime.getValue());
-        
-        this.apiManager.eventReaderStart((Integer)this.jSpinnerRefreshTime.getValue(),
-                this.jCheckBoxAutoRefresh.isSelected(), homeWorldSelected);
-        
-        this.resetLabels();
-    }//GEN-LAST:event_jCheckBoxAutoRefreshActionPerformed
-
-    private void jCheckBoxPlaySoundsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxPlaySoundsActionPerformed
-        
-        this.apiManager.setPlaySounds(this.jCheckBoxPlaySounds.isSelected());
-    }//GEN-LAST:event_jCheckBoxPlaySoundsActionPerformed
-
-    private void jCheckBoxSystemSleepActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxSystemSleepActionPerformed
-
-        this.preventSystemSleep = this.jCheckBoxSystemSleep.isSelected();
-    }//GEN-LAST:event_jCheckBoxSystemSleepActionPerformed
-
-    private void labelEvent1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelEvent1MouseClicked
-
-        this.showSoundSelector(1);
-    }//GEN-LAST:event_labelEvent1MouseClicked
-
-    private void labelEvent2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelEvent2MouseClicked
-
-        this.showSoundSelector(2);
-    }//GEN-LAST:event_labelEvent2MouseClicked
-
-    private void labelEvent3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelEvent3MouseClicked
-
-        this.showSoundSelector(3);
-    }//GEN-LAST:event_labelEvent3MouseClicked
-
-    private void labelEvent4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelEvent4MouseClicked
-
-        this.showSoundSelector(4);
-    }//GEN-LAST:event_labelEvent4MouseClicked
-
-    private void labelEvent5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelEvent5MouseClicked
-
-        this.showSoundSelector(5);
-    }//GEN-LAST:event_labelEvent5MouseClicked
-
-    private void labelEvent6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelEvent6MouseClicked
-
-        this.showSoundSelector(6);
-    }//GEN-LAST:event_labelEvent6MouseClicked
-
-    private void labelEvent7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelEvent7MouseClicked
-
-        this.showSoundSelector(7);
-    }//GEN-LAST:event_labelEvent7MouseClicked
-
-    private void labelEvent8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelEvent8MouseClicked
-
-        this.showSoundSelector(8);
-    }//GEN-LAST:event_labelEvent8MouseClicked
-
-    private void labelEvent9MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelEvent9MouseClicked
-
-        this.showSoundSelector(9);
-    }//GEN-LAST:event_labelEvent9MouseClicked
-
-    private void labelEvent10MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelEvent10MouseClicked
-
-        this.showSoundSelector(10);
-    }//GEN-LAST:event_labelEvent10MouseClicked
-
-    private void labelEvent14MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelEvent14MouseClicked
-
-        this.showSoundSelector(14);
-    }//GEN-LAST:event_labelEvent14MouseClicked
-
-    private void labelEvent11MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelEvent11MouseClicked
-
-        this.showSoundSelector(11);
-    }//GEN-LAST:event_labelEvent11MouseClicked
-
-    private void labelEvent12MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelEvent12MouseClicked
-
-        this.showSoundSelector(12);
-    }//GEN-LAST:event_labelEvent12MouseClicked
-
-    private void labelEvent13MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelEvent13MouseClicked
-
-        this.showSoundSelector(13);
-    }//GEN-LAST:event_labelEvent13MouseClicked
-
-    private void labelEvent15MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelEvent15MouseClicked
-
-        this.showSoundSelector(15);
-    }//GEN-LAST:event_labelEvent15MouseClicked
-
-    private void labelEvent16MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelEvent16MouseClicked
-
-        this.showSoundSelector(16);
-    }//GEN-LAST:event_labelEvent16MouseClicked
-
-    private void labelEvent17MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelEvent17MouseClicked
-
-        this.showSoundSelector(17);
-    }//GEN-LAST:event_labelEvent17MouseClicked
-
-    private void labelEvent18MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelEvent18MouseClicked
-
-        this.showSoundSelector(18);
-    }//GEN-LAST:event_labelEvent18MouseClicked
-
-    private void labelEvent19MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelEvent19MouseClicked
-
-        this.showSoundSelector(19);
-    }//GEN-LAST:event_labelEvent19MouseClicked
-
-    private void labelEvent20MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelEvent20MouseClicked
-
-        this.showSoundSelector(20);
-    }//GEN-LAST:event_labelEvent20MouseClicked
-
-    private void labelEvent21MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelEvent21MouseClicked
-
-        this.showSoundSelector(21);
-    }//GEN-LAST:event_labelEvent21MouseClicked
-
-    private void labelEvent22MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelEvent22MouseClicked
-
-        this.showSoundSelector(22);
-    }//GEN-LAST:event_labelEvent22MouseClicked
-
-    private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
-
-        this.infoGui.setLocationRelativeTo(this);
-        this.infoGui.setResizable(false);
-        this.infoGui.pack();
-        this.infoGui.setVisible(true);
-    }//GEN-LAST:event_jLabel1MouseClicked
-
-    private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
-
-        this.showDonateGui();
-    }//GEN-LAST:event_jLabel3MouseClicked
-
-    private void labelEvent23MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelEvent23MouseClicked
-        
-        this.showSoundSelector(23);
-    }//GEN-LAST:event_labelEvent23MouseClicked
-
-    private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
-
-        this.showFeedbackGui();
-    }//GEN-LAST:event_jLabel2MouseClicked
-
     private void resetLabels() {
         
         for (int i = 0; i < this.eventLabels.size(); i++) {
@@ -1544,6 +1564,7 @@ public class GW2EventerGui extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel backGround;
+    private gui.BackgroundPanel backgroundPanel1;
     private javax.swing.JButton jButtonRefresh;
     private javax.swing.JCheckBox jCheckBoxAutoRefresh;
     private javax.swing.JCheckBox jCheckBoxPlaySounds;
@@ -1561,6 +1582,7 @@ public class GW2EventerGui extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
     private javax.swing.JSpinner jSpinnerRefreshTime;
     private javax.swing.JLabel labelEvent1;
     private javax.swing.JLabel labelEvent10;
