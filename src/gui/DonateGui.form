@@ -45,7 +45,7 @@
                       <Component id="jLabelSentence2" alignment="0" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabelSentence3" min="-2" max="-2" attributes="0"/>
                       <Group type="102" alignment="0" attributes="0">
-                          <Component id="jTextFieldMail" min="-2" max="-2" attributes="0"/>
+                          <Component id="jTextFieldMail" min="-2" pref="139" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jButtonClipboard" min="-2" max="-2" attributes="0"/>
                       </Group>
