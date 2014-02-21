@@ -183,7 +183,7 @@ public class GW2EventerGui extends javax.swing.JFrame {
     
     public static final int EVENT_COUNT = 23;
     
-    private static final String VERSION = "1.1";
+    private static final String VERSION = "1.2";
     
     private JButton workingButton;
     private JCheckBox refreshSelector;
@@ -1042,7 +1042,7 @@ public class GW2EventerGui extends javax.swing.JFrame {
 
         this.infoGui.setLocationRelativeTo(this);
         this.infoGui.setResizable(false);
-        this.infoGui.pack();
+        //this.infoGui.pack();
         this.infoGui.setVisible(true);
     }//GEN-LAST:event_jLabel1MouseClicked
 
@@ -1450,7 +1450,7 @@ public class GW2EventerGui extends javax.swing.JFrame {
         
         this.donateGui.setLocationRelativeTo(this);
         this.donateGui.setResizable(false);
-        this.donateGui.pack();
+        //this.donateGui.pack();
         this.donateGui.setVisible(true);
     }  
     
@@ -1458,17 +1458,17 @@ public class GW2EventerGui extends javax.swing.JFrame {
         
         this.pushGui.setNewTitle(title);
         this.pushGui.setContent(content);
-        this.pushGui.setLocationRelativeTo(this);
+        this.pushGui.setLocationRelativeTo(null);
         this.pushGui.setResizable(false);
         this.pushGui.setPreferredSize(new Dimension(300, height));
-        this.pushGui.pack();
+        //this.pushGui.pack();
         this.pushGui.setVisible(true);
     }  
     
     private void showFeedbackGui() {
         
         this.feedbackGui.setLocationRelativeTo(this);
-        this.feedbackGui.pack();
+        //this.feedbackGui.pack();
         
         this.feedbackGui.showGui();
     }  
