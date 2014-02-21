@@ -27,6 +27,9 @@ package gui;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.io.IOException;
+import java.io.InputStream;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
@@ -39,13 +42,15 @@ public class BackgroundPanel extends JPanel {
     private Image bgImage;
     
     public BackgroundPanel() {
-       
+        
+        this.bgImage = null;
+        
         try {
             
-            this.bgImage = ImageIO.read(
-                    ClassLoader.getSystemResource("media/bg_k.png"));
-        } catch (IOException e) {
-            //
+            InputStream is = getClass().getClassLoader().getResourceAsStream("media/bg_k.png");
+            this.bgImage = ImageIO.read(is);
+        } catch (IOException ex) {
+            Logger.getLogger(BackgroundPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
