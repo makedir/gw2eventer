@@ -499,6 +499,15 @@ public class EventReader extends Thread {
                     
                     Logger.getLogger(ApiManager.class.getName()).log(
                             Level.SEVERE, null, ex);
+                    
+                    this.refreshSelector.setEnabled(false);
+                    this.workingButton.setEnabled(false);
+                    this.jComboBoxLanguage.setEnabled(false);
+                    this.labelWorking.setText("connection error. retrying in... 10.");
+                    this.labelWorking.setVisible(true);
+                    
+                    Thread.sleep(10000);
+                    continue;
                 }
                 
                 if (this.autoRefresh) {
