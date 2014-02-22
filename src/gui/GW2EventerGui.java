@@ -289,6 +289,15 @@ public class GW2EventerGui extends javax.swing.JFrame {
                 
                 this.eventLabels.add(l);
                 
+                final int ii = i;
+                
+                l.addMouseListener(new java.awt.event.MouseAdapter() {
+                    @Override
+                    public void mousePressed(java.awt.event.MouseEvent evt) {
+                            showSoundSelector(ii);
+                        }
+                });
+                
                 f = getClass().getDeclaredField("labelTimer" + i);
                 l = (JLabel) f.get(this);
                 l.setEnabled(true);
@@ -557,11 +566,6 @@ public class GW2EventerGui extends javax.swing.JFrame {
         labelEvent1.setToolTipText("123");
         labelEvent1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         labelEvent1.setEnabled(false);
-        labelEvent1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                labelEvent1MouseClicked(evt);
-            }
-        });
         jPanel4.add(labelEvent1, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 160, -1, -1));
 
         labelEvent2.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
@@ -569,11 +573,6 @@ public class GW2EventerGui extends javax.swing.JFrame {
         labelEvent2.setText("x");
         labelEvent2.setToolTipText("123");
         labelEvent2.setEnabled(false);
-        labelEvent2.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                labelEvent2MouseClicked(evt);
-            }
-        });
         jPanel4.add(labelEvent2, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 350, -1, -1));
 
         labelEvent3.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
@@ -581,11 +580,6 @@ public class GW2EventerGui extends javax.swing.JFrame {
         labelEvent3.setText("x");
         labelEvent3.setToolTipText("123");
         labelEvent3.setEnabled(false);
-        labelEvent3.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                labelEvent3MouseClicked(evt);
-            }
-        });
         jPanel4.add(labelEvent3, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 330, -1, -1));
 
         labelEvent4.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
@@ -593,11 +587,6 @@ public class GW2EventerGui extends javax.swing.JFrame {
         labelEvent4.setText("x");
         labelEvent4.setToolTipText("123");
         labelEvent4.setEnabled(false);
-        labelEvent4.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                labelEvent4MouseClicked(evt);
-            }
-        });
         jPanel4.add(labelEvent4, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 580, -1, -1));
 
         labelEvent5.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
@@ -606,11 +595,6 @@ public class GW2EventerGui extends javax.swing.JFrame {
         labelEvent5.setText("x");
         labelEvent5.setToolTipText("123");
         labelEvent5.setEnabled(false);
-        labelEvent5.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                labelEvent5MouseClicked(evt);
-            }
-        });
         jPanel4.add(labelEvent5, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 130, -1, -1));
 
         labelEvent6.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
@@ -620,11 +604,6 @@ public class GW2EventerGui extends javax.swing.JFrame {
         labelEvent6.setToolTipText("123");
         labelEvent6.setEnabled(false);
         labelEvent6.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        labelEvent6.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                labelEvent6MouseClicked(evt);
-            }
-        });
         jPanel4.add(labelEvent6, new org.netbeans.lib.awtextra.AbsoluteConstraints(1200, 410, -1, -1));
 
         labelEvent7.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
@@ -632,11 +611,6 @@ public class GW2EventerGui extends javax.swing.JFrame {
         labelEvent7.setText("x");
         labelEvent7.setToolTipText("123");
         labelEvent7.setEnabled(false);
-        labelEvent7.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                labelEvent7MouseClicked(evt);
-            }
-        });
         jPanel4.add(labelEvent7, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 40, -1, -1));
 
         labelEvent8.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
@@ -644,11 +618,6 @@ public class GW2EventerGui extends javax.swing.JFrame {
         labelEvent8.setText("x");
         labelEvent8.setToolTipText("123");
         labelEvent8.setEnabled(false);
-        labelEvent8.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                labelEvent8MouseClicked(evt);
-            }
-        });
         jPanel4.add(labelEvent8, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 410, -1, -1));
 
         labelEvent9.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
@@ -656,11 +625,6 @@ public class GW2EventerGui extends javax.swing.JFrame {
         labelEvent9.setText("x");
         labelEvent9.setToolTipText("123");
         labelEvent9.setEnabled(false);
-        labelEvent9.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                labelEvent9MouseClicked(evt);
-            }
-        });
         jPanel4.add(labelEvent9, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 340, -1, -1));
 
         labelEvent10.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
@@ -668,11 +632,6 @@ public class GW2EventerGui extends javax.swing.JFrame {
         labelEvent10.setText("x");
         labelEvent10.setToolTipText("123");
         labelEvent10.setEnabled(false);
-        labelEvent10.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                labelEvent10MouseClicked(evt);
-            }
-        });
         jPanel4.add(labelEvent10, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 610, -1, -1));
 
         labelEvent11.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
@@ -680,11 +639,6 @@ public class GW2EventerGui extends javax.swing.JFrame {
         labelEvent11.setText("x");
         labelEvent11.setToolTipText("123");
         labelEvent11.setEnabled(false);
-        labelEvent11.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                labelEvent11MouseClicked(evt);
-            }
-        });
         jPanel4.add(labelEvent11, new org.netbeans.lib.awtextra.AbsoluteConstraints(1100, 40, -1, -1));
 
         labelEvent12.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
@@ -692,11 +646,6 @@ public class GW2EventerGui extends javax.swing.JFrame {
         labelEvent12.setText("x");
         labelEvent12.setToolTipText("123");
         labelEvent12.setEnabled(false);
-        labelEvent12.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                labelEvent12MouseClicked(evt);
-            }
-        });
         jPanel4.add(labelEvent12, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 625, -1, -1));
 
         labelEvent13.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
@@ -704,11 +653,6 @@ public class GW2EventerGui extends javax.swing.JFrame {
         labelEvent13.setText("x");
         labelEvent13.setToolTipText("123");
         labelEvent13.setEnabled(false);
-        labelEvent13.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                labelEvent13MouseClicked(evt);
-            }
-        });
         jPanel4.add(labelEvent13, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 480, -1, -1));
 
         labelEvent14.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
@@ -716,11 +660,6 @@ public class GW2EventerGui extends javax.swing.JFrame {
         labelEvent14.setText("x");
         labelEvent14.setToolTipText("123");
         labelEvent14.setEnabled(false);
-        labelEvent14.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                labelEvent14MouseClicked(evt);
-            }
-        });
         jPanel4.add(labelEvent14, new org.netbeans.lib.awtextra.AbsoluteConstraints(1210, 160, -1, -1));
 
         labelEvent15.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
@@ -728,11 +667,6 @@ public class GW2EventerGui extends javax.swing.JFrame {
         labelEvent15.setText("x");
         labelEvent15.setToolTipText("123");
         labelEvent15.setEnabled(false);
-        labelEvent15.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                labelEvent15MouseClicked(evt);
-            }
-        });
         jPanel4.add(labelEvent15, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 560, -1, -1));
 
         labelEvent16.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
@@ -741,11 +675,6 @@ public class GW2EventerGui extends javax.swing.JFrame {
         labelEvent16.setToolTipText("123");
         labelEvent16.setEnabled(false);
         labelEvent16.setPreferredSize(new java.awt.Dimension(15, 28));
-        labelEvent16.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                labelEvent16MouseClicked(evt);
-            }
-        });
         jPanel4.add(labelEvent16, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 40, -1, -1));
 
         labelEvent17.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
@@ -753,11 +682,6 @@ public class GW2EventerGui extends javax.swing.JFrame {
         labelEvent17.setText("x");
         labelEvent17.setToolTipText("123");
         labelEvent17.setEnabled(false);
-        labelEvent17.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                labelEvent17MouseClicked(evt);
-            }
-        });
         jPanel4.add(labelEvent17, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 690, -1, -1));
 
         labelEvent18.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
@@ -765,11 +689,6 @@ public class GW2EventerGui extends javax.swing.JFrame {
         labelEvent18.setText("x");
         labelEvent18.setToolTipText("123");
         labelEvent18.setEnabled(false);
-        labelEvent18.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                labelEvent18MouseClicked(evt);
-            }
-        });
         jPanel4.add(labelEvent18, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 620, -1, -1));
 
         labelEvent19.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
@@ -777,11 +696,6 @@ public class GW2EventerGui extends javax.swing.JFrame {
         labelEvent19.setText("x");
         labelEvent19.setToolTipText("123");
         labelEvent19.setEnabled(false);
-        labelEvent19.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                labelEvent19MouseClicked(evt);
-            }
-        });
         jPanel4.add(labelEvent19, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 600, -1, -1));
 
         labelEvent20.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
@@ -789,11 +703,6 @@ public class GW2EventerGui extends javax.swing.JFrame {
         labelEvent20.setText("x");
         labelEvent20.setToolTipText("123");
         labelEvent20.setEnabled(false);
-        labelEvent20.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                labelEvent20MouseClicked(evt);
-            }
-        });
         jPanel4.add(labelEvent20, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 690, -1, -1));
 
         labelEvent21.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
@@ -801,11 +710,6 @@ public class GW2EventerGui extends javax.swing.JFrame {
         labelEvent21.setText("x");
         labelEvent21.setToolTipText("123");
         labelEvent21.setEnabled(false);
-        labelEvent21.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                labelEvent21MouseClicked(evt);
-            }
-        });
         jPanel4.add(labelEvent21, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 580, -1, -1));
 
         labelEvent22.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
@@ -813,11 +717,6 @@ public class GW2EventerGui extends javax.swing.JFrame {
         labelEvent22.setText("x");
         labelEvent22.setToolTipText("123");
         labelEvent22.setEnabled(false);
-        labelEvent22.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                labelEvent22MouseClicked(evt);
-            }
-        });
         jPanel4.add(labelEvent22, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 660, -1, -1));
 
         labelEvent23.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
@@ -825,11 +724,6 @@ public class GW2EventerGui extends javax.swing.JFrame {
         labelEvent23.setText("x");
         labelEvent23.setToolTipText("123");
         labelEvent23.setEnabled(false);
-        labelEvent23.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                labelEvent23MouseClicked(evt);
-            }
-        });
         jPanel4.add(labelEvent23, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 400, -1, -1));
 
         labelTimer23.setText("x min ago");
@@ -942,121 +836,6 @@ public class GW2EventerGui extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void labelEvent23MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelEvent23MouseClicked
-
-        this.showSoundSelector(23);
-    }//GEN-LAST:event_labelEvent23MouseClicked
-
-    private void labelEvent22MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelEvent22MouseClicked
-
-        this.showSoundSelector(22);
-    }//GEN-LAST:event_labelEvent22MouseClicked
-
-    private void labelEvent21MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelEvent21MouseClicked
-
-        this.showSoundSelector(21);
-    }//GEN-LAST:event_labelEvent21MouseClicked
-
-    private void labelEvent20MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelEvent20MouseClicked
-
-        this.showSoundSelector(20);
-    }//GEN-LAST:event_labelEvent20MouseClicked
-
-    private void labelEvent19MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelEvent19MouseClicked
-
-        this.showSoundSelector(19);
-    }//GEN-LAST:event_labelEvent19MouseClicked
-
-    private void labelEvent18MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelEvent18MouseClicked
-
-        this.showSoundSelector(18);
-    }//GEN-LAST:event_labelEvent18MouseClicked
-
-    private void labelEvent17MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelEvent17MouseClicked
-
-        this.showSoundSelector(17);
-    }//GEN-LAST:event_labelEvent17MouseClicked
-
-    private void labelEvent16MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelEvent16MouseClicked
-
-        this.showSoundSelector(16);
-    }//GEN-LAST:event_labelEvent16MouseClicked
-
-    private void labelEvent15MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelEvent15MouseClicked
-
-        this.showSoundSelector(15);
-    }//GEN-LAST:event_labelEvent15MouseClicked
-
-    private void labelEvent14MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelEvent14MouseClicked
-
-        this.showSoundSelector(14);
-    }//GEN-LAST:event_labelEvent14MouseClicked
-
-    private void labelEvent13MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelEvent13MouseClicked
-
-        this.showSoundSelector(13);
-    }//GEN-LAST:event_labelEvent13MouseClicked
-
-    private void labelEvent12MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelEvent12MouseClicked
-
-        this.showSoundSelector(12);
-    }//GEN-LAST:event_labelEvent12MouseClicked
-
-    private void labelEvent11MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelEvent11MouseClicked
-
-        this.showSoundSelector(11);
-    }//GEN-LAST:event_labelEvent11MouseClicked
-
-    private void labelEvent10MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelEvent10MouseClicked
-
-        this.showSoundSelector(10);
-    }//GEN-LAST:event_labelEvent10MouseClicked
-
-    private void labelEvent9MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelEvent9MouseClicked
-
-        this.showSoundSelector(9);
-    }//GEN-LAST:event_labelEvent9MouseClicked
-
-    private void labelEvent8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelEvent8MouseClicked
-
-        this.showSoundSelector(8);
-    }//GEN-LAST:event_labelEvent8MouseClicked
-
-    private void labelEvent7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelEvent7MouseClicked
-
-        this.showSoundSelector(7);
-    }//GEN-LAST:event_labelEvent7MouseClicked
-
-    private void labelEvent6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelEvent6MouseClicked
-
-        this.showSoundSelector(6);
-    }//GEN-LAST:event_labelEvent6MouseClicked
-
-    private void labelEvent5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelEvent5MouseClicked
-
-        this.showSoundSelector(5);
-    }//GEN-LAST:event_labelEvent5MouseClicked
-
-    private void labelEvent4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelEvent4MouseClicked
-
-        this.showSoundSelector(4);
-    }//GEN-LAST:event_labelEvent4MouseClicked
-
-    private void labelEvent3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelEvent3MouseClicked
-
-        this.showSoundSelector(3);
-    }//GEN-LAST:event_labelEvent3MouseClicked
-
-    private void labelEvent2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelEvent2MouseClicked
-
-        this.showSoundSelector(2);
-    }//GEN-LAST:event_labelEvent2MouseClicked
-
-    private void labelEvent1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelEvent1MouseClicked
-
-        this.showSoundSelector(1);
-    }//GEN-LAST:event_labelEvent1MouseClicked
 
     private void jCheckBoxSystemSleepActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxSystemSleepActionPerformed
 
