@@ -156,7 +156,7 @@ public class ApiManager {
         this.events.put("36E81760-7D92-458E-AA22-7CDE94112B8F", new String[]{"10","1/2","megadestroyer_pre"});
         this.events.put("C876757A-EF3E-4FBE-A484-07FF790D9B05", new String[]{"10","B","megadestroyer"});
         this.events.put("295E8D3B-8823-4960-A627-23E07575ED96", new String[]{"11","B","fireshaman"});
-        this.events.put("A0796EC5-191D-4389-9C09-E48829D1FDB2", new String[]{"12","B","eyeofzaithan"});
+        this.events.put("C7E5D6DD-EA2E-41A0-AA0B-357225FAC89E", new String[]{"12","B","eyeofzaithan"});
         this.events.put("E1CC6E63-EFFE-4986-A321-95C89EA58C07", new String[]{"13","B","karkaqueen"});
         this.events.put("F479B4CF-2E11-457A-B279-90822511B53B", new String[]{"13","B","karkaqueen"});
         this.events.put("5282B66A-126F-4DA4-8E9D-0D9802227B6D", new String[]{"13","B","karkaqueen"});
@@ -230,7 +230,7 @@ public class ApiManager {
         this.eventPlaySounds[8] = new boolean[]{false, true, false};
         this.eventPlaySounds[9] = new boolean[]{false, true, false};
         this.eventPlaySounds[10] = new boolean[]{false, true, false};
-        this.eventPlaySounds[11] = new boolean[]{false, true, false};
+        this.eventPlaySounds[11] = new boolean[]{false, false, false};
         this.eventPlaySounds[12] = new boolean[]{false, true, false};
         this.eventPlaySounds[13] = new boolean[]{false, true, false};
         this.eventPlaySounds[14] = new boolean[]{false, true, false};
