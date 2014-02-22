@@ -190,7 +190,7 @@ public class GW2EventerGui extends javax.swing.JFrame {
     
     public static final int EVENT_COUNT = 23;
     
-    private static final String VERSION = "1.2";
+    private static final String VERSION = "1.3";
     
     private JButton workingButton;
     private JCheckBox refreshSelector;
