@@ -26,6 +26,7 @@ package gui;
 
 import java.awt.AWTException;
 import java.awt.Color;
+import java.awt.Desktop;
 import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.MouseInfo;
@@ -38,6 +39,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.lang.reflect.Field;
+import java.net.URI;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Date;
@@ -208,6 +210,8 @@ public class GW2EventerGui extends javax.swing.JFrame {
     
     private Date lastPush;
     
+    private boolean updateInformed;
+    
     /**
      * Creates new form GW2EventerGui
      */
@@ -217,6 +221,9 @@ public class GW2EventerGui extends javax.swing.JFrame {
                 ClassLoader.getSystemResource("media/icon.png")).getImage();
         
         initComponents();
+        
+        this.jLabelNewVersion.setVisible(false);
+        this.updateInformed = false;
         
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         this.setLocation(screenSize.width/2-this.getSize().width/2,
@@ -340,6 +347,7 @@ public class GW2EventerGui extends javax.swing.JFrame {
         backgroundPanel1 = new gui.BackgroundPanel();
         jPanel5 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
+        jLabelNewVersion = new javax.swing.JLabel();
         jLabelWorking = new javax.swing.JLabel();
         jLabelServer = new javax.swing.JLabel();
         labelEvent1 = new javax.swing.JLabel();
@@ -476,16 +484,16 @@ public class GW2EventerGui extends javax.swing.JFrame {
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/media/paypal-button.png"))); // NOI18N
         jLabel3.setToolTipText("Buy me a coffee :-)");
         jLabel3.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel3MouseClicked(evt);
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jLabel3MousePressed(evt);
             }
         });
         jPanel2.add(jLabel3);
 
         jLabel2.setText("Feedback");
         jLabel2.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel2MouseClicked(evt);
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jLabel2MousePressed(evt);
             }
         });
         jPanel2.add(jLabel2);
@@ -496,8 +504,8 @@ public class GW2EventerGui extends javax.swing.JFrame {
         jLabel1.setToolTipText("Info");
         jLabel1.setPreferredSize(new java.awt.Dimension(20, 21));
         jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel1MouseClicked(evt);
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jLabel1MousePressed(evt);
             }
         });
         jPanel2.add(jLabel1);
@@ -514,6 +522,18 @@ public class GW2EventerGui extends javax.swing.JFrame {
 
         jPanel4.setBackground(new java.awt.Color(51, 51, 51));
         jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabelNewVersion.setBackground(new java.awt.Color(51, 51, 51));
+        jLabelNewVersion.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabelNewVersion.setForeground(new java.awt.Color(255, 255, 255));
+        jLabelNewVersion.setText("New version is out! Get it here.");
+        jLabelNewVersion.setOpaque(true);
+        jLabelNewVersion.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jLabelNewVersionMousePressed(evt);
+            }
+        });
+        jPanel4.add(jLabelNewVersion, new org.netbeans.lib.awtextra.AbsoluteConstraints(980, 10, -1, -1));
 
         jLabelWorking.setBackground(new java.awt.Color(255, 50, 50));
         jLabelWorking.setFont(new java.awt.Font("Tahoma", 3, 48)); // NOI18N
@@ -1038,24 +1058,6 @@ public class GW2EventerGui extends javax.swing.JFrame {
         this.showSoundSelector(1);
     }//GEN-LAST:event_labelEvent1MouseClicked
 
-    private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
-
-        this.infoGui.setLocationRelativeTo(this);
-        this.infoGui.setResizable(false);
-        //this.infoGui.pack();
-        this.infoGui.setVisible(true);
-    }//GEN-LAST:event_jLabel1MouseClicked
-
-    private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
-
-        this.showFeedbackGui();
-    }//GEN-LAST:event_jLabel2MouseClicked
-
-    private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
-
-        this.showDonateGui();
-    }//GEN-LAST:event_jLabel3MouseClicked
-
     private void jCheckBoxSystemSleepActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxSystemSleepActionPerformed
 
         this.preventSystemSleep = this.jCheckBoxSystemSleep.isSelected();
@@ -1138,6 +1140,37 @@ public class GW2EventerGui extends javax.swing.JFrame {
         this.apiManager.eventReaderStart((Integer)this.jSpinnerRefreshTime.getValue(),
             this.jCheckBoxAutoRefresh.isSelected(), homeWorldSelected);*/
     }//GEN-LAST:event_jComboBoxHomeWorldActionPerformed
+
+    private void jLabelNewVersionMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelNewVersionMousePressed
+
+        Desktop desktop = Desktop.isDesktopSupported() ? Desktop.getDesktop() : null;
+        
+        if (desktop != null && desktop.isSupported(Desktop.Action.BROWSE)) {
+            try {
+                desktop.browse(new URI("http://gw2eventer.com/"));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }//GEN-LAST:event_jLabelNewVersionMousePressed
+
+    private void jLabel3MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MousePressed
+
+        this.showDonateGui();
+    }//GEN-LAST:event_jLabel3MousePressed
+
+    private void jLabel1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MousePressed
+
+        this.infoGui.setLocationRelativeTo(this);
+        this.infoGui.setResizable(false);
+        //this.infoGui.pack();
+        this.infoGui.setVisible(true);
+    }//GEN-LAST:event_jLabel1MousePressed
+
+    private void jLabel2MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MousePressed
+
+        this.showFeedbackGui();
+    }//GEN-LAST:event_jLabel2MousePressed
     
     private void setTranslations() {
         
@@ -1386,12 +1419,19 @@ public class GW2EventerGui extends javax.swing.JFrame {
                                 if (!version.equals("")) {
                                     if (!version.equals(VERSION)) {
                                         
-                                        String mesTmp = "<html>Version: " + version
+                                        jLabelNewVersion.setVisible(true);
+                                        
+                                        if (updateInformed == false) {
+                                            
+                                            String mesTmp = "<html>Version: " + version
                                                 + "<p>Get it at http://gw2eventer.com</p>"
                                                 + "</html>";
                                         
                                         
-                                        showPushGui("New version is out", mesTmp, 110);
+                                            showPushGui("New version is out", mesTmp, 110);
+                                        }
+                                        
+                                        updateInformed = true;
                                     }
                                 }
                             } catch (ParseException ex) {
@@ -1411,7 +1451,7 @@ public class GW2EventerGui extends javax.swing.JFrame {
                         } else {
                             try {
                                 request.releaseConnection();
-                                Thread.sleep(20000);
+                                Thread.sleep(30000);
                             } catch (InterruptedException ex) {
                                 Logger.getLogger(EventAllReader.class.getName()).log(Level.SEVERE, null, ex);
                             }
@@ -1422,7 +1462,7 @@ public class GW2EventerGui extends javax.swing.JFrame {
                                     Level.SEVERE, null, ex);
                             
                             request.releaseConnection();
-                            Thread.sleep(20000);
+                            Thread.sleep(30000);
                         } catch (InterruptedException ex1) {
                             Logger.getLogger(EventAllReader.class.getName()).log(Level.SEVERE, null, ex1);
                             
@@ -1568,6 +1608,7 @@ public class GW2EventerGui extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabelNewVersion;
     private javax.swing.JLabel jLabelSeconds;
     private javax.swing.JLabel jLabelServer;
     private javax.swing.JLabel jLabelTips;

@@ -68,7 +68,6 @@ public class DonateGui extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Buy me a coffee, or two, or three ;-)");
         setModalityType(java.awt.Dialog.ModalityType.APPLICATION_MODAL);
-        setPreferredSize(new java.awt.Dimension(470, 320));
 
         jLabelSentence1.setText("Please know, that PayPal takes away the following amount of each donation:");
 
@@ -132,8 +131,8 @@ public class DonateGui extends javax.swing.JDialog {
         jLabelDonate.setIcon(new javax.swing.ImageIcon(getClass().getResource("/media/paypal-button.png"))); // NOI18N
         jLabelDonate.setText(" ");
         jLabelDonate.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabelDonateMouseClicked(evt);
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jLabelDonateMousePressed(evt);
             }
         });
         jPanel1.add(jLabelDonate, new java.awt.GridBagConstraints());
@@ -165,7 +164,14 @@ public class DonateGui extends javax.swing.JDialog {
         this.jButtonCancle.setText(cancle);
     }
     
-    private void jLabelDonateMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelDonateMouseClicked
+    private void jButtonClipboardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonClipboardActionPerformed
+
+        StringSelection stringSelection = new StringSelection(this.jTextFieldMail.getText());
+        Clipboard clpbrd = Toolkit.getDefaultToolkit().getSystemClipboard();
+        clpbrd.setContents(stringSelection, null);
+    }//GEN-LAST:event_jButtonClipboardActionPerformed
+
+    private void jLabelDonateMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelDonateMousePressed
 
         Desktop desktop = Desktop.isDesktopSupported() ? Desktop.getDesktop() : null;
         
@@ -178,14 +184,7 @@ public class DonateGui extends javax.swing.JDialog {
         }
         
         this.setVisible(false);
-    }//GEN-LAST:event_jLabelDonateMouseClicked
-
-    private void jButtonClipboardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonClipboardActionPerformed
-
-        StringSelection stringSelection = new StringSelection(this.jTextFieldMail.getText());
-        Clipboard clpbrd = Toolkit.getDefaultToolkit().getSystemClipboard();
-        clpbrd.setContents(stringSelection, null);
-    }//GEN-LAST:event_jButtonClipboardActionPerformed
+    }//GEN-LAST:event_jLabelDonateMousePressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
