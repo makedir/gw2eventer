@@ -183,6 +183,11 @@ public class GW2EventerGui extends javax.swing.JFrame {
     private static final String LANG_INPUT_ERROR_MSG_ES = "Message can't be left empty.";
     private static final String LANG_INPUT_ERROR_MSG_FR = "Message can't be left empty.";
     
+    private static final String LANG_NEWVERSION_DE = "Neue Version raus! Lade es hier.";
+    private static final String LANG_NEWVERSION_EN = "New version is out! Get it here.";
+    private static final String LANG_NEWVERSION_ES = "New version is out! Get it here.";
+    private static final String LANG_NEWVERSION_FR = "New version is out! Get it here.";
+    
     public static final int EVENT_COUNT = 23;
     
     private static final String VERSION = "1.2";
@@ -535,14 +540,16 @@ public class GW2EventerGui extends javax.swing.JFrame {
         jLabelNewVersion.setBackground(new java.awt.Color(51, 51, 51));
         jLabelNewVersion.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabelNewVersion.setForeground(new java.awt.Color(255, 255, 255));
+        jLabelNewVersion.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabelNewVersion.setText("New version is out! Get it here.");
+        jLabelNewVersion.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         jLabelNewVersion.setOpaque(true);
         jLabelNewVersion.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 jLabelNewVersionMousePressed(evt);
             }
         });
-        jPanel4.add(jLabelNewVersion, new org.netbeans.lib.awtextra.AbsoluteConstraints(980, 10, -1, -1));
+        jPanel4.add(jLabelNewVersion, new org.netbeans.lib.awtextra.AbsoluteConstraints(960, 0, 320, -1));
 
         jLabelWorking.setBackground(new java.awt.Color(255, 50, 50));
         jLabelWorking.setFont(new java.awt.Font("Tahoma", 3, 48)); // NOI18N
@@ -964,6 +971,7 @@ public class GW2EventerGui extends javax.swing.JFrame {
             this.jLabelServer.setText((String) getClass().getDeclaredField("LANG_NOT_RUNNING_" + selectedLang).get(null));
             this.jLabelWorking.setText((String) getClass().getDeclaredField("LANG_WORKING_" + selectedLang).get(null));
             this.jLabelTips.setText((String) getClass().getDeclaredField("LANG_TIP1_" + selectedLang).get(null));
+            this.jLabelNewVersion.setText((String) getClass().getDeclaredField("LANG_NEWVERSION_" + selectedLang).get(null));
             
             this.donateGui.setTranslations((String) getClass().getDeclaredField("LANG_DONATE1_" + selectedLang).get(null),
                     (String) getClass().getDeclaredField("LANG_DONATE2_" + selectedLang).get(null),
