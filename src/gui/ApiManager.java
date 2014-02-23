@@ -87,15 +87,18 @@ public class ApiManager {
     
     private GW2EventerGui gui;
     
+    private OverlayGui overlayGui;
+    
     public ApiManager(GW2EventerGui gui, JSpinner refreshSpinner,
             boolean autoStart, ArrayList eventLabels,
             String language, String worldID, HashMap homeWorlds,
             JComboBox jComboBoxHomeWorlds, JLabel labelServer,
             JLabel labelWorking, boolean playSounds, JButton workingButton,
             JCheckBox refreshSelector, ArrayList eventLabelsTimer,
-            JComboBox jComboBoxLanguage) {
+            JComboBox jComboBoxLanguage, OverlayGui overlayGui) {
 
         this.gui = gui;
+        this.overlayGui = overlayGui;
         
         this.refreshSpinner = refreshSpinner;
         this.refreshTime = (Integer)this.refreshSpinner.getValue();
@@ -267,7 +270,7 @@ public class ApiManager {
         
         this.eventReader = new EventReader(refreshTime, true, this.worldID,
                 (String) homeWorlds.get(worldID), this.playSounds,
-                this.allEvents, this.workingButton, this.refreshSelector);
+                this.allEvents, this.workingButton, this.refreshSelector, this.overlayGui);
         
         this.eventReader.setArrayList(this.activeEvents, this.events,
                 this.eventLabels, this.labelServer, this.jComboBoxHomeWorlds,
@@ -570,7 +573,7 @@ public class ApiManager {
         
         this.eventReader = new EventReader(refreshTime, autoRefresh,
                 worldID, (String) homeWorlds.get(worldID), this.playSounds,
-                this.allEvents, this.workingButton, this.refreshSelector);
+                this.allEvents, this.workingButton, this.refreshSelector, this.overlayGui);
         
         this.eventReader.setArrayList(this.activeEvents, this.events,
                 this.eventLabels, this.labelServer, this.jComboBoxHomeWorlds,

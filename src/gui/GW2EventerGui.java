@@ -49,8 +49,10 @@ import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JSpinner;
+import javax.swing.JTextField;
 import javax.swing.text.DefaultFormatter;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -188,9 +190,19 @@ public class GW2EventerGui extends javax.swing.JFrame {
     private static final String LANG_NEWVERSION_ES = "New version is out! Get it here.";
     private static final String LANG_NEWVERSION_FR = "New version is out! Get it here.";
     
+    private static final String LANG_OVERLAY_B_ACTIVE_DE = "Aktive Boss Events:";
+    private static final String LANG_OVERLAY_B_ACTIVE_EN = "Active boss events:";
+    private static final String LANG_OVERLAY_B_ACTIVE_ES = "Active boss events:";
+    private static final String LANG_OVERLAY_B_ACTIVE_FR = "Active boss events:";
+    
+    private static final String LANG_OVERLAY_PRE_ACTIVE_DE = "Aktive Pre Events:";
+    private static final String LANG_OVERLAY_PRE_ACTIVE_EN = "Active pre events:";
+    private static final String LANG_OVERLAY_PRE_ACTIVE_ES = "Active pre events:";
+    private static final String LANG_OVERLAY_PRE_ACTIVE_FR = "Active pre events:";
+    
     public static final int EVENT_COUNT = 23;
     
-    private static final String VERSION = "1.3";
+    private static final String VERSION = "1.4";
     
     private JButton workingButton;
     private JCheckBox refreshSelector;
@@ -216,6 +228,8 @@ public class GW2EventerGui extends javax.swing.JFrame {
     private Date lastPush;
     
     private boolean updateInformed;
+    
+    private OverlayGui overlayGui;
     
     /**
      * Creates new form GW2EventerGui
@@ -271,6 +285,9 @@ public class GW2EventerGui extends javax.swing.JFrame {
         this.feedbackGui = new FeedbackGui(this, true);
         this.feedbackGui.setIconImage(guiIcon);
         
+        this.overlayGui = new OverlayGui();
+        this.initOverlayGui();
+        
         this.language = "en";
         this.worldID = "2206"; //Millersund [DE]
         
@@ -292,6 +309,10 @@ public class GW2EventerGui extends javax.swing.JFrame {
                 l.setPreferredSize(new Dimension(70,28));
                 l.setToolTipText("");
                 
+                //int width2 = l.getX();
+                //int height2 = l.getY();
+                //System.out.println("$coords .= \"{\\\"x\\\": \\\""+ width2 + "\\\", \\\"y\\\": \\\""+ height2 + "\\\"},\\n\";");
+                
                 this.eventLabels.add(l);
                 
                 final int ii = i;
@@ -309,6 +330,10 @@ public class GW2EventerGui extends javax.swing.JFrame {
                 l.setVisible(false);
                 l.setForeground(Color.green);
                 
+                //int width2 = l.getX();
+                //int height2 = l.getY();
+                //System.out.println("$coords2 .= \"{\\\"x\\\": \\\""+ width2 + "\\\", \\\"y\\\": \\\""+ height2 + "\\\"},\\n\";");
+                
                 this.eventLabelsTimer.add(l);
                 
             } catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException ex) {
@@ -325,13 +350,15 @@ public class GW2EventerGui extends javax.swing.JFrame {
                 this.language, this.worldID, this.homeWorlds,
                 this.jComboBoxHomeWorld, this.jLabelServer, this.jLabelWorking,
                 this.jCheckBoxPlaySounds.isSelected(), this.workingButton,
-                this.refreshSelector, this.eventLabelsTimer, this.jComboBoxLanguage);
+                this.refreshSelector, this.eventLabelsTimer,
+                this.jComboBoxLanguage, this.overlayGui);
         }
         
         this.preventSleepMode();
         this.runUpdateService();
         //this.runPushService();
         this.runTips();
+        //this.runTest();
     }
 
     /**
@@ -354,6 +381,9 @@ public class GW2EventerGui extends javax.swing.JFrame {
         jCheckBoxAutoRefresh = new javax.swing.JCheckBox();
         jCheckBoxPlaySounds = new javax.swing.JCheckBox();
         jCheckBoxSystemSleep = new javax.swing.JCheckBox();
+        jCheckBoxOverlay = new javax.swing.JCheckBox();
+        jSpinnerOverlayX = new javax.swing.JSpinner();
+        jSpinnerOverlayY = new javax.swing.JSpinner();
         jPanel2 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -490,6 +520,30 @@ public class GW2EventerGui extends javax.swing.JFrame {
             }
         });
         jPanel3.add(jCheckBoxSystemSleep);
+
+        jCheckBoxOverlay.setText("Overlay");
+        jCheckBoxOverlay.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBoxOverlayActionPerformed(evt);
+            }
+        });
+        jPanel3.add(jCheckBoxOverlay);
+
+        jSpinnerOverlayX.setModel(new javax.swing.SpinnerNumberModel(20, 0, 1920, 20));
+        jSpinnerOverlayX.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                jSpinnerOverlayXPropertyChange(evt);
+            }
+        });
+        jPanel3.add(jSpinnerOverlayX);
+
+        jSpinnerOverlayY.setModel(new javax.swing.SpinnerNumberModel(120, 0, 1080, 20));
+        jSpinnerOverlayY.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                jSpinnerOverlayYPropertyChange(evt);
+            }
+        });
+        jPanel3.add(jSpinnerOverlayY);
 
         jPanel1.add(jPanel3);
 
@@ -909,7 +963,8 @@ public class GW2EventerGui extends javax.swing.JFrame {
                 this.language, this.worldID, this.homeWorlds,
                 this.jComboBoxHomeWorld, this.jLabelServer, this.jLabelWorking,
                 this.jCheckBoxPlaySounds.isSelected(), this.workingButton,
-                this.refreshSelector, this.eventLabelsTimer, this.jComboBoxLanguage);
+                this.refreshSelector, this.eventLabelsTimer,
+                this.jComboBoxLanguage, this.overlayGui);
         }
 
         this.apiManager.homeWorldsReload((String) this.jComboBoxLanguage.getSelectedItem());
@@ -957,6 +1012,33 @@ public class GW2EventerGui extends javax.swing.JFrame {
 
         this.showFeedbackGui();
     }//GEN-LAST:event_jLabel2MousePressed
+
+    private void jCheckBoxOverlayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxOverlayActionPerformed
+
+        if (this.jCheckBoxOverlay.isSelected()) {
+            
+            this.overlayGui.setVisible(true);
+        } else {
+            
+            this.overlayGui.setVisible(false);
+        }
+    }//GEN-LAST:event_jCheckBoxOverlayActionPerformed
+
+    private void jSpinnerOverlayXPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jSpinnerOverlayXPropertyChange
+
+        if (this.overlayGui != null) {
+            
+            this.overlayGui.setLocation((Integer) this.jSpinnerOverlayX.getValue(), (Integer) this.jSpinnerOverlayY.getValue()); this.overlayGui.setLocation((Integer) this.jSpinnerOverlayX.getValue(), (Integer) this.jSpinnerOverlayY.getValue());
+        }
+    }//GEN-LAST:event_jSpinnerOverlayXPropertyChange
+
+    private void jSpinnerOverlayYPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jSpinnerOverlayYPropertyChange
+
+        if (this.overlayGui != null) {
+            
+            this.overlayGui.setLocation((Integer) this.jSpinnerOverlayX.getValue(), (Integer) this.jSpinnerOverlayY.getValue()); this.overlayGui.setLocation((Integer) this.jSpinnerOverlayX.getValue(), (Integer) this.jSpinnerOverlayY.getValue());
+        }
+    }//GEN-LAST:event_jSpinnerOverlayYPropertyChange
     
     private void setTranslations() {
         
@@ -992,6 +1074,9 @@ public class GW2EventerGui extends javax.swing.JFrame {
                     (String) getClass().getDeclaredField("LANG_INPUT_ERROR_FROM_" + selectedLang).get(null),
                     (String) getClass().getDeclaredField("LANG_INPUT_ERROR_MSG_" + selectedLang).get(null));
             
+            this.overlayGui.setTranslations((String) getClass().getDeclaredField("LANG_OVERLAY_B_ACTIVE_" + selectedLang).get(null),
+                    (String) getClass().getDeclaredField("LANG_OVERLAY_PRE_ACTIVE_" + selectedLang).get(null));
+            
         } catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException ex) {
             Logger.getLogger(GW2EventerGui.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -1005,6 +1090,137 @@ public class GW2EventerGui extends javax.swing.JFrame {
     public Date getLastPushDate() {
         
         return this.lastPush;
+    }
+    
+    private void initOverlayGui() {
+        
+        this.overlayGui.setIconImage(guiIcon);
+        this.overlayGui.setSize(600, 400);
+        this.overlayGui.setVisible(false);
+        
+        //this.overlayGui.setLocationRelativeTo(null);
+        //this.overlayGui.setLocation(0, 200);
+        
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        this.overlayGui.setLocation(0, (screenSize.height/2-this.overlayGui.getSize().height/2) + 100);
+        
+        this.overlayGui.setBackground(new Color(0, 0, 0, 0));
+        this.overlayGui.setAlwaysOnTop(true);
+        //this.overlayGui.getRootPane().putClientProperty("apple.awt.draggableWindowBackground", false);
+
+        //this.overlayGui.getContentPane().setLayout(new java.awt.BorderLayout());
+        //this.overlayGui.getContentPane().add(new JTextField("text field north"), java.awt.BorderLayout.NORTH);
+        //this.overlayGui.getContentPane().add(new JTextField("text field south"), java.awt.BorderLayout.SOUTH);
+    }
+    
+    private void runTest() {
+        
+        Thread t = new Thread() {
+            
+          @Override public void run() {
+              
+                RequestConfig requestConfig = RequestConfig.custom().setConnectTimeout(10 * 1000).build();
+                HttpClient client = HttpClientBuilder.create().setDefaultRequestConfig(requestConfig).build();
+
+                HttpGet request = new HttpGet("http://mkdr.de/gw2/event_data");
+
+                HttpResponse response;
+
+                String line = "";
+                String out = "";
+              
+                String version = "";
+                
+                while (!this.isInterrupted()) {
+                    
+                    try {
+                        
+                        response = client.execute(request);
+                        
+                        if (response.getStatusLine().toString().contains("200")) {
+                            
+                            BufferedReader rd = new BufferedReader(new InputStreamReader(
+                                    response.getEntity().getContent(), Charset.forName("UTF-8")));
+                            
+                            line = "";
+                            out = "";
+                            
+                            while ((line = rd.readLine()) != null) {
+                                
+                                out = out + line;
+                            }
+
+                            JSONParser parser = new JSONParser();
+                            
+                            Object obj;
+                            
+                            try {
+
+                                obj = parser.parse(out);
+                                
+                                JSONArray array = (JSONArray) obj;
+                                
+                                JSONObject obj2 = (JSONObject) array.get(0);
+                                version = (String) obj2.get("version");
+                                
+                                JSONArray data = (JSONArray) obj2.get("data");
+                                obj2 = (JSONObject) data.get(0);
+                                
+                                //System.out.println(data.hashCode());
+                                
+                                JSONArray events = (JSONArray) obj2.get("events");
+                                JSONArray playdata = (JSONArray) obj2.get("playdata");
+                                JSONArray coords = (JSONArray) obj2.get("coords");
+                                
+                                for (int i = 0; i < events.size(); i++) {
+                                    
+                                    obj2 = (JSONObject) events.get(i);
+                                    
+                                    String id = (String) obj2.get("id");
+                                    JSONArray data2 = (JSONArray) obj2.get("data");
+                                    
+                                    //System.out.println(id);
+                                    
+                                    for (int j = 0; j < data2.size(); j++) {
+                                        //System.out.println((String) data2.get(j));
+                                    }
+                                }
+                                
+                                this.interrupt();
+                            } catch (ParseException ex) {
+                                
+                                Logger.getLogger(ApiManager.class.getName()).log(
+                                        Level.SEVERE, null, ex);
+                            }
+                            
+                            request.releaseConnection();
+                            //this.interrupt();
+                        } else {
+                            try {
+                                request.releaseConnection();
+                                Thread.sleep(20000);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(EventAllReader.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                        }
+                    } catch (IOException | IllegalStateException ex) {
+                        try {
+                            Logger.getLogger(EventReader.class.getName()).log(
+                                    Level.SEVERE, null, ex);
+                            
+                            request.releaseConnection();
+                            Thread.sleep(20000);
+                        } catch (InterruptedException ex1) {
+                            Logger.getLogger(EventAllReader.class.getName()).log(Level.SEVERE, null, ex1);
+                            
+                            this.interrupt();
+                        }
+                    }
+                }
+          }
+        };
+        
+        t.start();
     }
     
     private void runTips() {
@@ -1388,6 +1604,7 @@ public class GW2EventerGui extends javax.swing.JFrame {
     private gui.BackgroundPanel backgroundPanel1;
     private javax.swing.JButton jButtonRefresh;
     private javax.swing.JCheckBox jCheckBoxAutoRefresh;
+    private javax.swing.JCheckBox jCheckBoxOverlay;
     private javax.swing.JCheckBox jCheckBoxPlaySounds;
     private javax.swing.JCheckBox jCheckBoxSystemSleep;
     private javax.swing.JComboBox jComboBoxHomeWorld;
@@ -1405,6 +1622,8 @@ public class GW2EventerGui extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
+    private javax.swing.JSpinner jSpinnerOverlayX;
+    private javax.swing.JSpinner jSpinnerOverlayY;
     private javax.swing.JSpinner jSpinnerRefreshTime;
     private javax.swing.JLabel labelEvent1;
     private javax.swing.JLabel labelEvent10;

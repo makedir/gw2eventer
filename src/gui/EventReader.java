@@ -105,11 +105,15 @@ public class EventReader extends Thread {
     
     private boolean[] markedBs;
     
+    private OverlayGui overlayGui;
+    
     public EventReader(int refreshTime, boolean autoRefresh, String worldID,
             String worldName, boolean playSounds, HashMap allEvents,
-            JButton workingButton, JCheckBox refreshSelector) {
+            JButton workingButton, JCheckBox refreshSelector, OverlayGui overlayGui) {
 
         //setDaemon(true); //??
+        
+        this.overlayGui = overlayGui;
         
         this.playThread = null;
         
@@ -257,6 +261,9 @@ public class EventReader extends Thread {
                 HashMap mehrfachEvents = new HashMap();
                 playSoundsList.clear();
                 
+                this.overlayGui.clearActive();
+                String toolTip;
+                
                 try {
                     
                     obj = parser.parse(out);
@@ -325,11 +332,30 @@ public class EventReader extends Thread {
                                     
                                     activeLabel.setToolTipText((String) this.allEvents.get(obj2.get("event_id")));
                                     
+                                    toolTip = activeLabel.getToolTipText();
+
+                                    if (toolTip.length() > 35) {
+                                        toolTip = toolTip.substring(0, 35) + "...";
+                                    }
+                                    
                                     if (tmpEventName.equals("B")) {
 
                                         this.markedBs[activeLabelInt] = true;
                                         activeLabelTimer.setVisible(false);
-                                        this.timerStamps[activeLabelInt] = null;    
+                                        this.timerStamps[activeLabelInt] = null;
+                                        
+                                        if (this.eventPlaySounds[activeLabelInt][2]) {
+                                            this.overlayGui.addActiveB(toolTip, "yellow");
+                                        } else {
+                                            this.overlayGui.addActiveB(toolTip, "green");
+                                        }
+                                    } else {
+                                        
+                                        if (this.eventPlaySounds[activeLabelInt][2]) {
+                                            this.overlayGui.addActivePreEvent(toolTip, "yellow");
+                                        } else {
+                                            this.overlayGui.addActivePreEvent(toolTip, "green");
+                                        }   
                                     }
                                     
                                     //activeLabel.setSize(100, activeLabel.getSize().height);
@@ -423,6 +449,8 @@ public class EventReader extends Thread {
                     this.refreshSelector.setEnabled(true);
                     this.workingButton.setEnabled(true);
                     this.jComboBoxLanguage.setEnabled(true);
+                    
+                    this.overlayGui.renderActive();
                     
                     if (playSounds) {
                     
