@@ -89,6 +89,9 @@ public class ApiManager {
     
     private OverlayGui overlayGui;
     
+    private int overlayX;
+    private int overlayY;
+    
     public ApiManager(GW2EventerGui gui, JSpinner refreshSpinner,
             boolean autoStart, ArrayList eventLabels,
             String language, String worldID, HashMap homeWorlds,
@@ -99,6 +102,8 @@ public class ApiManager {
 
         this.gui = gui;
         this.overlayGui = overlayGui;
+        this.overlayX = 20;
+        this.overlayY = 120;
         
         this.refreshSpinner = refreshSpinner;
         this.refreshTime = (Integer)this.refreshSpinner.getValue();
@@ -283,6 +288,16 @@ public class ApiManager {
         }
     }
 
+    public void setOverayX(int newX) {
+        
+        this.overlayX = newX;
+    }
+    
+    public void setOverayY(int newY) {
+        
+        this.overlayY = newY;
+    }
+    
     public void resetLooted() {
         
         for (int i = 0; i < this.eventPlaySounds.length; i++) {
@@ -309,6 +324,8 @@ public class ApiManager {
             oos.writeObject(this.eventPlaySounds);
             oos.writeObject("" + this.refreshTime);
             oos.writeObject(this.gui.getLastPushDate());
+            oos.writeObject("" + this.overlayX);
+            oos.writeObject("" + this.overlayY);
         } catch (Exception ex) {
             
             ex.printStackTrace();
@@ -381,6 +398,24 @@ public class ApiManager {
                     
                     if (readCase != null) {
                         this.gui.setLastPushDate((Date) readCase);
+                    }
+                    
+                    readCase = null;
+                    readCase = (String) objectinputstream.readObject();
+                    
+                    if (readCase != null) {
+                        int parseInt = Integer.parseInt((String) readCase);
+                        this.overlayX = parseInt;
+                        this.gui.setOverlayX(parseInt);
+                    }
+                    
+                    readCase = null;
+                    readCase = (String) objectinputstream.readObject();
+                    
+                    if (readCase != null) {
+                        int parseInt = Integer.parseInt((String) readCase);
+                        this.overlayY = parseInt;
+                        this.gui.setOverlayY(parseInt);
                     }
                 } else {
                     

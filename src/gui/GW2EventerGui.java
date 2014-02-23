@@ -260,6 +260,14 @@ public class GW2EventerGui extends javax.swing.JFrame {
         DefaultFormatter formatter = (DefaultFormatter) jsEditor.getTextField().getFormatter();
         formatter.setAllowsInvalid(false);
 
+        jsEditor = (JSpinner.NumberEditor)this.jSpinnerOverlayX.getEditor();
+        formatter = (DefaultFormatter) jsEditor.getTextField().getFormatter();
+        formatter.setAllowsInvalid(false);
+        
+        jsEditor = (JSpinner.NumberEditor)this.jSpinnerOverlayY.getEditor();
+        formatter = (DefaultFormatter) jsEditor.getTextField().getFormatter();
+        formatter.setAllowsInvalid(false);
+        
         this.workingButton = this.jButtonRefresh;
         this.refreshSelector = this.jCheckBoxAutoRefresh;
         
@@ -361,6 +369,18 @@ public class GW2EventerGui extends javax.swing.JFrame {
         //this.runTest();
     }
 
+    public void setOverlayX(int newX) {
+        
+        this.jSpinnerOverlayX.setValue(newX);
+        this.overlayGui.setLocation(newX, this.overlayGui.getY());
+    }
+    
+    public void setOverlayY(int newY) {
+        
+        this.jSpinnerOverlayY.setValue(newY);
+        this.overlayGui.setLocation(this.overlayGui.getX(), newY);
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -530,6 +550,7 @@ public class GW2EventerGui extends javax.swing.JFrame {
         jPanel3.add(jCheckBoxOverlay);
 
         jSpinnerOverlayX.setModel(new javax.swing.SpinnerNumberModel(20, 0, 1920, 20));
+        jSpinnerOverlayX.setPreferredSize(new java.awt.Dimension(60, 22));
         jSpinnerOverlayX.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
             public void propertyChange(java.beans.PropertyChangeEvent evt) {
                 jSpinnerOverlayXPropertyChange(evt);
@@ -538,6 +559,7 @@ public class GW2EventerGui extends javax.swing.JFrame {
         jPanel3.add(jSpinnerOverlayX);
 
         jSpinnerOverlayY.setModel(new javax.swing.SpinnerNumberModel(120, 0, 1080, 20));
+        jSpinnerOverlayY.setPreferredSize(new java.awt.Dimension(60, 22));
         jSpinnerOverlayY.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
             public void propertyChange(java.beans.PropertyChangeEvent evt) {
                 jSpinnerOverlayYPropertyChange(evt);
@@ -1028,7 +1050,12 @@ public class GW2EventerGui extends javax.swing.JFrame {
 
         if (this.overlayGui != null) {
             
-            this.overlayGui.setLocation((Integer) this.jSpinnerOverlayX.getValue(), (Integer) this.jSpinnerOverlayY.getValue()); this.overlayGui.setLocation((Integer) this.jSpinnerOverlayX.getValue(), (Integer) this.jSpinnerOverlayY.getValue());
+            int width = (Integer) this.jSpinnerOverlayX.getValue();
+            int height = (Integer) this.jSpinnerOverlayY.getValue();
+            
+            this.apiManager.setOverayX(width);
+            this.apiManager.setOverayY(height);
+            this.overlayGui.setLocation(width, height);
         }
     }//GEN-LAST:event_jSpinnerOverlayXPropertyChange
 
@@ -1036,7 +1063,12 @@ public class GW2EventerGui extends javax.swing.JFrame {
 
         if (this.overlayGui != null) {
             
-            this.overlayGui.setLocation((Integer) this.jSpinnerOverlayX.getValue(), (Integer) this.jSpinnerOverlayY.getValue()); this.overlayGui.setLocation((Integer) this.jSpinnerOverlayX.getValue(), (Integer) this.jSpinnerOverlayY.getValue());
+            int width = (Integer) this.jSpinnerOverlayX.getValue();
+            int height = (Integer) this.jSpinnerOverlayY.getValue();
+            
+            this.apiManager.setOverayX(width);
+            this.apiManager.setOverayY(height);
+            this.overlayGui.setLocation(width, height);
         }
     }//GEN-LAST:event_jSpinnerOverlayYPropertyChange
     
