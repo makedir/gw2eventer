@@ -44,6 +44,8 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
@@ -238,6 +240,11 @@ public class GW2EventerGui extends javax.swing.JFrame {
     private int wvwOverlayX;
     private int wvwOverlayY;
     
+    private String matchId;
+    
+    private WvWMatchReader wvwMatchReader;
+    private HashMap matchIds;
+    
     /**
      * Creates new form GW2EventerGui
      */
@@ -247,6 +254,9 @@ public class GW2EventerGui extends javax.swing.JFrame {
                 ClassLoader.getSystemResource("media/icon.png")).getImage();
         
         initComponents();
+        
+        this.matchIds = new HashMap();
+        this.matchId = "2-6";
         
         this.jLabelNewVersion.setVisible(false);
         this.updateInformed = false;
@@ -379,6 +389,9 @@ public class GW2EventerGui extends javax.swing.JFrame {
                 this.refreshSelector, this.eventLabelsTimer,
                 this.jComboBoxLanguage, this.overlayGui);
         }
+        
+        this.wvwMatchReader = new WvWMatchReader(this.matchIds, this.jCheckBoxWvW);
+        this.wvwMatchReader.start();
         
         this.preventSleepMode();
         this.runUpdateService();
@@ -620,6 +633,7 @@ public class GW2EventerGui extends javax.swing.JFrame {
         jPanel3.add(jCheckBoxOverlay);
 
         jCheckBoxWvW.setText("WvW");
+        jCheckBoxWvW.setEnabled(false);
         jCheckBoxWvW.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jCheckBoxWvWActionPerformed(evt);
@@ -1163,7 +1177,29 @@ public class GW2EventerGui extends javax.swing.JFrame {
     
     public String getMatchId() {
         
-        return "2-6";
+        Iterator it = this.matchIds.entrySet().iterator();
+            
+        while (it.hasNext()) {
+
+            Map.Entry pairs = (Map.Entry) it.next();
+
+            String matchId = (String) pairs.getKey();
+            
+            String[] redServers = (String[]) pairs.getValue();
+            String redServerID = redServers[0];
+            String blueServerId = redServers[1];
+            String greenServerId = redServers[2];
+            
+            String homwWorldId = (String) this.homeWorlds.get(this.jComboBoxHomeWorld.getSelectedItem());
+            
+            if (homwWorldId.equals(redServerID) || homwWorldId.equals(blueServerId) || homwWorldId.equals(greenServerId)) {
+                
+                this.matchId = matchId;
+                break;
+            }
+        }
+        
+        return this.matchId;
     }
     
     private void initOverlayGui() {

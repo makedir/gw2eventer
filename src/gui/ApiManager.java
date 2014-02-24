@@ -284,6 +284,11 @@ public class ApiManager {
         }
     }
     
+    public String getMatchId() {
+        
+        return this.gui.getMatchId();
+    }
+    
     public void resetLooted() {
         
         for (int i = 0; i < this.eventPlaySounds.length; i++) {

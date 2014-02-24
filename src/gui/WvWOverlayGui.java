@@ -207,6 +207,8 @@ public class WvWOverlayGui extends javax.swing.JFrame {
         
         initComponents();
         
+        this.jLabelMatchId.setText("matchid:" + this.matchId);
+        
         this.eventTimerLabelCoherent.setCustomText("Time until data is coherent: ");
         
         this.showBorderlands(false);
@@ -401,8 +403,8 @@ public class WvWOverlayGui extends javax.swing.JFrame {
                 f = getClass().getDeclaredField("jLabelBorderlands" + i);
 
                 JLabel l = (JLabel) f.get(this);
-                int width = l.getWidth();
-                int height = l.getHeight();
+                int width = l.getX();
+                int height = l.getY();
                 
                 this.labelsBorderlands.add(l);
                 
@@ -660,6 +662,7 @@ public class WvWOverlayGui extends javax.swing.JFrame {
         jLabelBorderlands11 = new javax.swing.JLabel();
         jLabelBorderlands12 = new javax.swing.JLabel();
         eventTimerLabelCoherent = new gui.EventTimerLabel();
+        jLabelMatchId = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setAlwaysOnTop(true);
@@ -687,6 +690,7 @@ public class WvWOverlayGui extends javax.swing.JFrame {
 
         jButtonRefresh.setForeground(new java.awt.Color(255, 255, 255));
         jButtonRefresh.setText("Refresh");
+        jButtonRefresh.setEnabled(false);
         jButtonRefresh.setFocusable(false);
         jButtonRefresh.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButtonRefresh.setOpaque(false);
@@ -936,6 +940,10 @@ public class WvWOverlayGui extends javax.swing.JFrame {
         eventTimerLabelCoherent.setText("eventTimerLabel1");
         getContentPane().add(eventTimerLabelCoherent, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 370, -1, -1));
 
+        jLabelMatchId.setForeground(new java.awt.Color(255, 255, 255));
+        jLabelMatchId.setText("matchid:");
+        getContentPane().add(jLabelMatchId, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, -1, -1));
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -1137,6 +1145,7 @@ public class WvWOverlayGui extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelEternal7;
     private javax.swing.JLabel jLabelEternal8;
     private javax.swing.JLabel jLabelEternal9;
+    private javax.swing.JLabel jLabelMatchId;
     private javax.swing.JToolBar jToolBar1;
     // End of variables declaration//GEN-END:variables
 }
