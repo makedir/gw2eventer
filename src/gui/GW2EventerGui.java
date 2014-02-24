@@ -1069,13 +1069,11 @@ public class GW2EventerGui extends javax.swing.JFrame {
 
     private void jComboBoxHomeWorldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxHomeWorldActionPerformed
 
-        /*
-        this.apiManager.eventReaderStop();
-
-        String homeWorldSelected = (String) this.homeWorlds.get((String) this.jComboBoxHomeWorld.getSelectedItem());
-
-        this.apiManager.eventReaderStart((Integer)this.jSpinnerRefreshTime.getValue(),
-            this.jCheckBoxAutoRefresh.isSelected(), homeWorldSelected);*/
+        if (this.jComboBoxHomeWorld.getSelectedItem() != null) {
+            if (this.matchIds.size() > 0) {
+                this.setMatchId();
+            }
+        }
     }//GEN-LAST:event_jComboBoxHomeWorldActionPerformed
 
     private void jLabelNewVersionMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelNewVersionMousePressed
@@ -1117,6 +1115,9 @@ public class GW2EventerGui extends javax.swing.JFrame {
     private void jCheckBoxWvWActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxWvWActionPerformed
 
         if (this.jCheckBoxWvW.isSelected()) {
+            this.setMatchId();
+            
+            this.wvwOverlayGui.setMatchId(this.matchId);
             this.wvwOverlayGui.startGui();
         } else {
             this.wvwOverlayGui.deactivateGui();
@@ -1175,7 +1176,7 @@ public class GW2EventerGui extends javax.swing.JFrame {
         return this.lastPush;
     }
     
-    public String getMatchId() {
+    public void setMatchId() {
         
         Iterator it = this.matchIds.entrySet().iterator();
             
@@ -1190,14 +1191,17 @@ public class GW2EventerGui extends javax.swing.JFrame {
             String blueServerId = redServers[1];
             String greenServerId = redServers[2];
             
-            String homwWorldId = (String) this.homeWorlds.get(this.jComboBoxHomeWorld.getSelectedItem());
+            String homwWorldId = (String) this.homeWorlds.get((String) this.jComboBoxHomeWorld.getSelectedItem());
             
             if (homwWorldId.equals(redServerID) || homwWorldId.equals(blueServerId) || homwWorldId.equals(greenServerId)) {
-                
+                System.out.println(matchId);
                 this.matchId = matchId;
                 break;
             }
         }
+    }
+    
+    public String getMatchId() {
         
         return this.matchId;
     }

@@ -116,11 +116,13 @@ public class WvWOverlayGui extends javax.swing.JFrame {
         this.matchId = this.mainGui.getMatchId();
         
         this.ownerData = new HashMap();
-        this.ownerDataOld = null;
+        this.ownerDataOld = new HashMap();
         
+        /*
         this.wvwReader = new WvWReader(this);
         this.wvwReader.setResult(this.ownerData);
         this.wvwReader.setMatchId(this.matchId);
+        */
         
         this.idsToLabel = new HashMap();
         
@@ -207,7 +209,7 @@ public class WvWOverlayGui extends javax.swing.JFrame {
         
         initComponents();
         
-        this.jLabelMatchId.setText("matchid:" + this.matchId);
+        this.jLabelMatchId.setText("matchid: " + this.matchId);
         
         this.eventTimerLabelCoherent.setCustomText("Time until data is coherent: ");
         
@@ -215,46 +217,21 @@ public class WvWOverlayGui extends javax.swing.JFrame {
         this.initTimerandLabels();
     }
     
-    /*
-    public void switchMap(String map) {
+    public void setMatchId(String matchId) {
         
-        this.activeMap = map;
+        this.ownerDataOld.clear();
+        this.matchId = matchId;
         
-        switch (this.activeMap) {
-            case "Center":
-                this.showEternalTimer(true);
-                this.showRedBorderlandsTimer(false);
-                this.showBlueBorderlandsTimer(false);
-                this.showGreenBorderlandsTimer(false);
-                break;
-            case "RedHome":
-                this.showEternalTimer(false);
-                this.showRedBorderlandsTimer(true);
-                this.showBlueBorderlandsTimer(false);
-                this.showGreenBorderlandsTimer(false);
-                break;
-            case "BlueHome":
-                this.showEternalTimer(false);
-                this.showRedBorderlandsTimer(false);
-                this.showBlueBorderlandsTimer(true);
-                this.showGreenBorderlandsTimer(false);
-                break;
-            case "GreenHome":
-                this.showEternalTimer(false);
-                this.showRedBorderlandsTimer(false);
-                this.showBlueBorderlandsTimer(false);
-                this.showGreenBorderlandsTimer(true);
-                break;
-        }
-    }*/
+        this.jLabelMatchId.setText("matchid: " + matchId);
+    }
     
     public void refresh() {
         
-        if (this.ownerDataOld == null) {
+        Iterator it;
+        
+        if (this.ownerDataOld.isEmpty()) {
             
-            this.ownerDataOld = new HashMap();
-            
-            Iterator it = this.ownerData.entrySet().iterator();
+            it = this.ownerData.entrySet().iterator();
             
             while (it.hasNext()) {
 
@@ -267,7 +244,7 @@ public class WvWOverlayGui extends javax.swing.JFrame {
             }
         }
         
-        Iterator it = this.ownerData.entrySet().iterator();
+        it = this.ownerData.entrySet().iterator();
                     
         while (it.hasNext()) {
 
@@ -314,27 +291,9 @@ public class WvWOverlayGui extends javax.swing.JFrame {
                     currentTimer.startTimer();
                 }
                 
-                if (this.activeMap.equals(labelHome)) {
+                if (this.activeMap.equals(labelHome) && currentTimer.isTicking()) {
                     currentTimer.setVisible(true);
                 }
-                
-                /*
-                Field f;
-
-                try {
-                    f = getClass().getDeclaredField(labelType + owner);
-                    ImageIcon icon;
-
-                    try {
-                        icon = (ImageIcon) f.get(this);
-                        currentLabel.setIcon(icon);
-                    } catch (        IllegalArgumentException | IllegalAccessException ex) {
-                        Logger.getLogger(WvWOverlayGui.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                } catch (    NoSuchFieldException | SecurityException ex) {
-                    Logger.getLogger(WvWOverlayGui.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                */
             }
         }
         
@@ -352,20 +311,55 @@ public class WvWOverlayGui extends javax.swing.JFrame {
         }
     }
     
+    private void resetTimer() {
+        
+        for (int i = 0; i < this.timerLabelEternal.size(); i++) {
+            
+            EventTimerLabel timer = (EventTimerLabel) this.timerLabelEternal.get(i);
+            timer.resetTimer();
+        }
+        
+        for (int i = 0; i < this.timerLabelBorderlandsRed.size(); i++) {
+            
+            EventTimerLabel timer = (EventTimerLabel) this.timerLabelBorderlandsRed.get(i);
+            timer.resetTimer();
+        }
+        
+        for (int i = 0; i < this.timerLabelBorderlandsBlue.size(); i++) {
+            
+            EventTimerLabel timer = (EventTimerLabel) this.timerLabelBorderlandsBlue.get(i);
+            timer.resetTimer();
+        }
+        
+        for (int i = 0; i < this.timerLabelBorderlandsGreen.size(); i++) {
+            
+            EventTimerLabel timer = (EventTimerLabel) this.timerLabelBorderlandsGreen.get(i);
+            timer.resetTimer();
+        }
+    }
+    
     public void startGui() {
+        
+        this.ownerDataOld.clear();
+        this.resetTimer();
+        
+        this.ownerData = new HashMap();
+        
+        this.wvwReader = new WvWReader(this);
+        this.wvwReader.setResult(this.ownerData);
+        this.wvwReader.setMatchId(this.matchId);
         
         this.wvwReader.start();
         
         this.eventTimerLabelCoherent.startTimer();
         this.eventTimerLabelCoherent.setVisible(true);
+        
         this.setVisible(true);
     }
     
     public void deactivateGui() {
         
         this.wvwReader.interrupt();
-        
-        this.ownerDataOld = null;
         
         this.eventTimerLabelCoherent.resetTimer();
         this.setVisible(false);
@@ -464,38 +458,75 @@ public class WvWOverlayGui extends javax.swing.JFrame {
     
     private void showBorderlandsTimer(boolean show) {
         
-        ArrayList activeList = null;
-        
         switch (this.activeMap) {
             case "RedHome":
-                activeList = this.timerLabelBorderlandsRed;
+                this.showBorderlandsRedTimer(show);
+                this.showBorderlandsBlueTimer(false);
+                this.showBorderlandsGreenTimer(false);
                 break;
             case "BlueHome":
-                activeList = this.timerLabelBorderlandsBlue;
+                this.showBorderlandsRedTimer(false);
+                this.showBorderlandsBlueTimer(show);
+                this.showBorderlandsGreenTimer(false);
                 break;
             case "GreenHome":
-                activeList = this.timerLabelBorderlandsGreen;
+                this.showBorderlandsRedTimer(false);
+                this.showBorderlandsBlueTimer(false);
+                this.showBorderlandsGreenTimer(show);
+                break;
+            case "Center":
+                this.showBorderlandsRedTimer(false);
+                this.showBorderlandsBlueTimer(false);
+                this.showBorderlandsGreenTimer(false);
                 break;
         }
+    }
+    
+    private void showBorderlandsRedTimer(boolean show) {
         
-        if (activeList != null) {
-            
-            for (int i = 0; i < activeList.size(); i++) {
+        for (int i = 0; i < this.timerLabelBorderlandsRed.size(); i++) {
 
-                EventTimerLabel label = (EventTimerLabel) activeList.get(i);
+            EventTimerLabel label = (EventTimerLabel) this.timerLabelBorderlandsRed.get(i);
 
-                if (show && label.isTicking()) {
-                    label.setVisible(true);
-                } else {
-                    label.setVisible(false);
-                }
+            if (show && label.isTicking()) {
+                label.setVisible(true);
+            } else {
+                label.setVisible(false);
+            }
+        }
+    }
+    
+    private void showBorderlandsBlueTimer(boolean show) {
+        
+        for (int i = 0; i < this.timerLabelBorderlandsBlue.size(); i++) {
+
+            EventTimerLabel label = (EventTimerLabel) this.timerLabelBorderlandsBlue.get(i);
+
+            if (show && label.isTicking()) {
+                label.setVisible(true);
+            } else {
+                label.setVisible(false);
+            }
+        }
+    }
+    
+    private void showBorderlandsGreenTimer(boolean show) {
+        
+        for (int i = 0; i < this.timerLabelBorderlandsGreen.size(); i++) {
+
+            EventTimerLabel label = (EventTimerLabel) this.timerLabelBorderlandsGreen.get(i);
+
+            if (show && label.isTicking()) {
+                label.setVisible(true);
+            } else {
+                label.setVisible(false);
             }
         }
     }
     
     private void setEternalColors() {
         
-        if (this.ownerDataOld != null) {
+        if (!this.ownerDataOld.isEmpty()) {
             
             Field f;
             Iterator it = this.ownerDataOld.entrySet().iterator();
@@ -540,7 +571,7 @@ public class WvWOverlayGui extends javax.swing.JFrame {
     
     private void setBorderlandsColors() {
         
-        if (this.ownerDataOld != null) {
+        if (!this.ownerDataOld.isEmpty()) {
             
             Field f;
             Iterator it = this.ownerDataOld.entrySet().iterator();
@@ -1077,8 +1108,8 @@ public class WvWOverlayGui extends javax.swing.JFrame {
         switch (selection) {
             case "Eternal":
                 this.activeMap = "Center";
-                this.showBorderlands(false);
                 this.showEternal(true);
+                this.showBorderlands(false);
                 break;
             case "Red":
                 this.activeMap = "RedHome";

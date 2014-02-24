@@ -173,7 +173,7 @@ public class HomeWorldAllReader extends Thread {
                         this.workingButton.setEnabled(true);
                         this.homeWorlds.setEnabled(true);
                         this.jComboBoxLanguage.setEnabled(true);
-
+                        
                         this.apiManager.loadHomeWorldFromFile();
                     } catch (ParseException ex) {
 

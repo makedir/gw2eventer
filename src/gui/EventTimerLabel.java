@@ -41,11 +41,15 @@ public class EventTimerLabel extends JLabel implements ActionListener {
     
     private String customText;
     
-    private static final int COUNTER_SECONDS = 295;
+    private static final int COUNTER_SECONDS = 295; //295
+    
+    private boolean running;
     
     public EventTimerLabel() {
         
         super();
+        
+        this.running = false;
         
         this.customText = "";
         
@@ -65,7 +69,7 @@ public class EventTimerLabel extends JLabel implements ActionListener {
     
     public boolean isTicking() {
         
-        return this.timer.isRunning();
+        return this.running;
     }
     
     public void setCounter(int counter) {
@@ -78,12 +82,14 @@ public class EventTimerLabel extends JLabel implements ActionListener {
         if (this.counter > 0) {
             
             this.timer.start();
+            this.running = true;
             //this.setVisible(true);
         }
     }
     
     public void resetTimer() {
         
+        this.running = false;
         this.timer.stop();
         this.counter = COUNTER_SECONDS;
         this.setVisible(false);
@@ -96,7 +102,7 @@ public class EventTimerLabel extends JLabel implements ActionListener {
         
         this.setText(customText + this.getDurationString(this.counter));
         
-        if (this.counter == 0) {
+        if (this.counter <= 0) {
             
             this.resetTimer();
         }

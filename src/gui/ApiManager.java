@@ -470,6 +470,8 @@ public class ApiManager {
                         //this.jComboBoxHomeWorlds.setSelectedIndex(1);
                         this.jComboBoxHomeWorlds.setVisible(false);
                         this.jComboBoxHomeWorlds.setVisible(true);
+                        
+                        this.gui.setMatchId();
                     }
                 } else {
                     
