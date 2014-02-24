@@ -396,7 +396,12 @@ public class GW2EventerGui extends javax.swing.JFrame {
     public void setWvWOverlayVisible(boolean visible) {
         
         this.jCheckBoxWvW.setSelected(visible);
-        this.wvwOverlayGui.setVisible(visible);
+        
+        if (visible) {
+            this.wvwOverlayGui.startGui();
+        } else {
+            this.wvwOverlayGui.deactivateGui();
+        }
     }
     
     public void setWvWOverlayX(int newX) {
@@ -1097,7 +1102,11 @@ public class GW2EventerGui extends javax.swing.JFrame {
 
     private void jCheckBoxWvWActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxWvWActionPerformed
 
-        this.wvwOverlayGui.setVisible(this.jCheckBoxWvW.isSelected());
+        if (this.jCheckBoxWvW.isSelected()) {
+            this.wvwOverlayGui.startGui();
+        } else {
+            this.wvwOverlayGui.deactivateGui();
+        }
     }//GEN-LAST:event_jCheckBoxWvWActionPerformed
     
     private void setTranslations() {

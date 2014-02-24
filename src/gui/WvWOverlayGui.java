@@ -29,6 +29,7 @@ import java.awt.MouseInfo;
 import java.awt.Point;
 import java.awt.Robot;
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JLabel;
@@ -39,7 +40,12 @@ import javax.swing.JLabel;
  */
 public class WvWOverlayGui extends javax.swing.JFrame {
 
-    GW2EventerGui mainGui;
+    private GW2EventerGui mainGui;
+    
+    private ArrayList timerLabelEternal;
+    private ArrayList timerLabelBorderlandsRed;
+    private ArrayList timerLabelBorderlandsBlue;
+    private ArrayList timerLabelBorderlandsGreen;
     
     /**
      * Creates new form BorderlandsOverlayGui
@@ -47,12 +53,85 @@ public class WvWOverlayGui extends javax.swing.JFrame {
     public WvWOverlayGui(GW2EventerGui mainGui) {
         
         this.mainGui = mainGui;
+        this.timerLabelEternal = new ArrayList();
+        this.timerLabelBorderlandsRed = new ArrayList();
+        this.timerLabelBorderlandsBlue = new ArrayList();
+        this.timerLabelBorderlandsGreen = new ArrayList();
         
         initComponents();
         
         this.showBorderlands(false);
+        this.initTimer();
     }
 
+    public void startGui() {
+        
+        this.eventTimerLabelCoherent.startTimer();
+        this.eventTimerLabelCoherent.setVisible(true);
+        this.setVisible(true);
+    }
+    
+    public void deactivateGui() {
+        
+        this.eventTimerLabelCoherent.resetTimer();
+        this.setVisible(false);
+    }
+    
+    private void initTimer() {
+        
+        for (int i = 1; i <= 22; i++) {
+
+            Field f;
+
+            try {
+                f = getClass().getDeclaredField("jLabelEternal" + i);
+
+                JLabel l = (JLabel) f.get(this);
+                int width = l.getWidth();
+                int height = l.getHeight();
+                
+                EventTimerLabel eventTimerLabel = new EventTimerLabel();
+                this.timerLabelEternal.add(eventTimerLabel);
+                
+                getContentPane().add(eventTimerLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(width + 10, height - 10, -1, -1));
+            } catch (    NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException ex) {
+                Logger.getLogger(WvWOverlayGui.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        }
+        
+        for (int i = 1; i <= 13; i++) {
+
+            Field f;
+
+            try {
+                f = getClass().getDeclaredField("jLabelBorderlands" + i);
+
+                JLabel l = (JLabel) f.get(this);
+                int width = l.getWidth();
+                int height = l.getHeight();
+                
+                EventTimerLabel eventTimerLabel = new EventTimerLabel();
+                this.timerLabelBorderlandsRed.add(eventTimerLabel);
+                
+                getContentPane().add(eventTimerLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(width + 10, height - 10, -1, -1));
+                
+                eventTimerLabel = new EventTimerLabel();
+                this.timerLabelBorderlandsGreen.add(eventTimerLabel);
+                
+                getContentPane().add(eventTimerLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(width + 10, height - 10, -1, -1));
+                
+                eventTimerLabel = new EventTimerLabel();
+                this.timerLabelBorderlandsBlue.add(eventTimerLabel);
+                
+                getContentPane().add(eventTimerLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(width + 10, height - 10, -1, -1));
+            } catch (    NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException ex) {
+                Logger.getLogger(WvWOverlayGui.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        }
+    }
+    
     private void showEternal(boolean show) {
         
         for (int i = 1; i <= 22; i++) {
@@ -143,6 +222,8 @@ public class WvWOverlayGui extends javax.swing.JFrame {
         jLabelBorderlands13 = new javax.swing.JLabel();
         jLabelBorderlands11 = new javax.swing.JLabel();
         jLabelBorderlands12 = new javax.swing.JLabel();
+        jLabelCoherent = new javax.swing.JLabel();
+        eventTimerLabelCoherent = new gui.EventTimerLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setAlwaysOnTop(true);
@@ -380,6 +461,13 @@ public class WvWOverlayGui extends javax.swing.JFrame {
         jLabelBorderlands12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/media/wvw/camp_red.png"))); // NOI18N
         getContentPane().add(jLabelBorderlands12, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 260, -1, -1));
 
+        jLabelCoherent.setForeground(new java.awt.Color(255, 255, 255));
+        jLabelCoherent.setText("Time until data coherent:");
+        getContentPane().add(jLabelCoherent, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 370, -1, -1));
+
+        eventTimerLabelCoherent.setText("eventTimerLabel1");
+        getContentPane().add(eventTimerLabelCoherent, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 370, -1, -1));
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -532,6 +620,7 @@ public class WvWOverlayGui extends javax.swing.JFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private gui.EventTimerLabel eventTimerLabelCoherent;
     private javax.swing.JButton jButtonClose;
     private javax.swing.JButton jButtonDown;
     private javax.swing.JButton jButtonLeft;
@@ -554,6 +643,7 @@ public class WvWOverlayGui extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelBorderlands7;
     private javax.swing.JLabel jLabelBorderlands8;
     private javax.swing.JLabel jLabelBorderlands9;
+    private javax.swing.JLabel jLabelCoherent;
     private javax.swing.JLabel jLabelEternal1;
     private javax.swing.JLabel jLabelEternal10;
     private javax.swing.JLabel jLabelEternal11;
