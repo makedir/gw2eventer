@@ -24,9 +24,15 @@
 
 package gui;
 
+import java.awt.AWTException;
+import java.awt.MouseInfo;
+import java.awt.Point;
+import java.awt.Robot;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -37,10 +43,14 @@ public class OverlayGui extends javax.swing.JFrame {
     HashMap activeBEvents;
     HashMap activePreEvents;
     
+    GW2EventerGui mainGui;
+    
     /**
      * Creates new form OverlayGui
      */
-    public OverlayGui() {
+    public OverlayGui(GW2EventerGui mainGui) {
+        
+        this.mainGui = mainGui;
         
         this.activeBEvents = new HashMap();
         this.activePreEvents = new HashMap();
@@ -136,6 +146,16 @@ public class OverlayGui extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jToolBar1 = new javax.swing.JToolBar();
+        jLabel3 = new javax.swing.JLabel();
+        jButtonLeft = new javax.swing.JButton();
+        jButtonRight = new javax.swing.JButton();
+        jButtonUp = new javax.swing.JButton();
+        jButtonDown = new javax.swing.JButton();
+        jButtonMinimize = new javax.swing.JButton();
+        jButtonMaximize = new javax.swing.JButton();
+        jButtonClose = new javax.swing.JButton();
+        jToolBar2 = new javax.swing.JToolBar();
         jLabel1 = new javax.swing.JLabel();
         jLabelActiveBs = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -147,40 +167,289 @@ public class OverlayGui extends javax.swing.JFrame {
         setFocusable(false);
         setFocusableWindowState(false);
         setUndecorated(true);
-        setPreferredSize(new java.awt.Dimension(500, 300));
         setResizable(false);
-        getContentPane().setLayout(new javax.swing.BoxLayout(getContentPane(), javax.swing.BoxLayout.PAGE_AXIS));
+
+        jToolBar1.setBorder(null);
+        jToolBar1.setForeground(new java.awt.Color(255, 255, 255));
+        jToolBar1.setRollover(true);
+        jToolBar1.setFocusable(false);
+        jToolBar1.setOpaque(false);
+
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel3.setText("Events");
+        jLabel3.setFocusable(false);
+        jToolBar1.add(jLabel3);
+
+        jButtonLeft.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        jButtonLeft.setForeground(new java.awt.Color(255, 255, 255));
+        jButtonLeft.setText("<<");
+        jButtonLeft.setFocusable(false);
+        jButtonLeft.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButtonLeft.setOpaque(false);
+        jButtonLeft.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButtonLeft.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonLeftActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(jButtonLeft);
+
+        jButtonRight.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        jButtonRight.setForeground(new java.awt.Color(255, 255, 255));
+        jButtonRight.setText(">>");
+        jButtonRight.setFocusable(false);
+        jButtonRight.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButtonRight.setOpaque(false);
+        jButtonRight.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButtonRight.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonRightActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(jButtonRight);
+
+        jButtonUp.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        jButtonUp.setForeground(new java.awt.Color(255, 255, 255));
+        jButtonUp.setText("up");
+        jButtonUp.setFocusable(false);
+        jButtonUp.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButtonUp.setOpaque(false);
+        jButtonUp.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButtonUp.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonUpActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(jButtonUp);
+
+        jButtonDown.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        jButtonDown.setForeground(new java.awt.Color(255, 255, 255));
+        jButtonDown.setText("down");
+        jButtonDown.setFocusable(false);
+        jButtonDown.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButtonDown.setOpaque(false);
+        jButtonDown.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButtonDown.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonDownActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(jButtonDown);
+
+        jButtonMinimize.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        jButtonMinimize.setForeground(new java.awt.Color(255, 255, 255));
+        jButtonMinimize.setText("min");
+        jButtonMinimize.setFocusable(false);
+        jButtonMinimize.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButtonMinimize.setOpaque(false);
+        jButtonMinimize.setPreferredSize(new java.awt.Dimension(30, 23));
+        jButtonMinimize.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButtonMinimize.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonMinimizeActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(jButtonMinimize);
+
+        jButtonMaximize.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        jButtonMaximize.setForeground(new java.awt.Color(255, 255, 255));
+        jButtonMaximize.setText("max");
+        jButtonMaximize.setFocusable(false);
+        jButtonMaximize.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButtonMaximize.setOpaque(false);
+        jButtonMaximize.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButtonMaximize.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonMaximizeActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(jButtonMaximize);
+
+        jButtonClose.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        jButtonClose.setForeground(new java.awt.Color(255, 255, 255));
+        jButtonClose.setText("X");
+        jButtonClose.setFocusable(false);
+        jButtonClose.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButtonClose.setOpaque(false);
+        jButtonClose.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButtonClose.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonCloseActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(jButtonClose);
+
+        getContentPane().add(jToolBar1, java.awt.BorderLayout.PAGE_START);
+
+        jToolBar2.setOrientation(javax.swing.SwingConstants.VERTICAL);
+        jToolBar2.setRollover(true);
+        jToolBar2.setOpaque(false);
 
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("active B events:");
         jLabel1.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
-        getContentPane().add(jLabel1);
+        jToolBar2.add(jLabel1);
 
         jLabelActiveBs.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         jLabelActiveBs.setForeground(new java.awt.Color(102, 255, 0));
         jLabelActiveBs.setText("-");
         jLabelActiveBs.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-        getContentPane().add(jLabelActiveBs);
+        jToolBar2.add(jLabelActiveBs);
 
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("active pre Events:");
         jLabel2.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
-        getContentPane().add(jLabel2);
+        jToolBar2.add(jLabel2);
 
         jLabelActivePres.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         jLabelActivePres.setForeground(new java.awt.Color(102, 255, 0));
         jLabelActivePres.setText("-");
         jLabelActivePres.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-        getContentPane().add(jLabelActivePres);
+        jToolBar2.add(jLabelActivePres);
+
+        getContentPane().add(jToolBar2, java.awt.BorderLayout.CENTER);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButtonLeftActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLeftActionPerformed
+
+        int x = this.getX();
+        
+        if (x > 0) {
+            Point mouseLoc;
+            Robot rob;
+
+            try {
+                rob = new Robot();
+                mouseLoc = MouseInfo.getPointerInfo().getLocation();
+                rob.mouseMove(mouseLoc.x - 20, mouseLoc.y);
+            } catch (AWTException ex) {
+                Logger.getLogger(OverlayGui.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        
+        if (x <= 20) {
+            x = 0;
+        } else {
+            x = x - 20;
+        }
+        
+        //this.setLocation(x, this.getY());
+        this.mainGui.setOverlayX(x);
+    }//GEN-LAST:event_jButtonLeftActionPerformed
+
+    private void jButtonRightActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRightActionPerformed
+
+        int x = this.getX();
+        
+        if (x < 1720) {
+            Point mouseLoc;
+            Robot rob;
+
+            try {
+                rob = new Robot();
+                mouseLoc = MouseInfo.getPointerInfo().getLocation();
+                rob.mouseMove(mouseLoc.x + 20, mouseLoc.y);
+            } catch (AWTException ex) {
+                Logger.getLogger(OverlayGui.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        
+        if (x >= 1720) {
+            x = 1720;
+        } else {
+            x = x + 20;
+        }
+        
+        //this.setLocation(x, this.getY());
+        this.mainGui.setOverlayX(x);
+    }//GEN-LAST:event_jButtonRightActionPerformed
+
+    private void jButtonUpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonUpActionPerformed
+
+        int y = this.getY();
+        
+        if (y > 0) {
+            Point mouseLoc;
+            Robot rob;
+
+            try {
+                rob = new Robot();
+                mouseLoc = MouseInfo.getPointerInfo().getLocation();
+                rob.mouseMove(mouseLoc.x, mouseLoc.y - 20);
+            } catch (AWTException ex) {
+                Logger.getLogger(OverlayGui.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        
+        if (y <= 20) {
+            y = 0;
+        } else {
+            y = y - 20;
+        }
+        
+        //this.setLocation(this.getX(), y);
+        this.mainGui.setOverlayY(y);
+    }//GEN-LAST:event_jButtonUpActionPerformed
+
+    private void jButtonDownActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDownActionPerformed
+
+        int y = this.getY();
+        
+        if (y < 880) {
+            Point mouseLoc;
+            Robot rob;
+
+            try {
+                rob = new Robot();
+                mouseLoc = MouseInfo.getPointerInfo().getLocation();
+                rob.mouseMove(mouseLoc.x, mouseLoc.y + 20);
+            } catch (AWTException ex) {
+                Logger.getLogger(OverlayGui.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        
+        if (y >= 880) {
+            y = 880;
+        } else {
+            y = y + 20;
+        }
+        
+        //this.setLocation(this.getX(), y);
+        this.mainGui.setOverlayY(y);
+    }//GEN-LAST:event_jButtonDownActionPerformed
+
+    private void jButtonMaximizeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonMaximizeActionPerformed
+
+        this.setSize(this.getWidth(), 600);
+    }//GEN-LAST:event_jButtonMaximizeActionPerformed
+
+    private void jButtonMinimizeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonMinimizeActionPerformed
+
+        this.setSize(this.getWidth(), 33);
+    }//GEN-LAST:event_jButtonMinimizeActionPerformed
+
+    private void jButtonCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCloseActionPerformed
+
+        this.mainGui.setOverlayVisible(false);
+    }//GEN-LAST:event_jButtonCloseActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButtonClose;
+    private javax.swing.JButton jButtonDown;
+    private javax.swing.JButton jButtonLeft;
+    private javax.swing.JButton jButtonMaximize;
+    private javax.swing.JButton jButtonMinimize;
+    private javax.swing.JButton jButtonRight;
+    private javax.swing.JButton jButtonUp;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabelActiveBs;
     private javax.swing.JLabel jLabelActivePres;
+    private javax.swing.JToolBar jToolBar1;
+    private javax.swing.JToolBar jToolBar2;
     // End of variables declaration//GEN-END:variables
 }
