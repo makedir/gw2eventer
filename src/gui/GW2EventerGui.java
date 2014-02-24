@@ -51,10 +51,8 @@ import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JSpinner;
-import javax.swing.JTextField;
 import javax.swing.text.DefaultFormatter;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -559,7 +557,7 @@ public class GW2EventerGui extends javax.swing.JFrame {
 
         jPanel3.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
 
-        jComboBoxHomeWorld.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "-" }));
+        jComboBoxHomeWorld.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Riverside" }));
         jComboBoxHomeWorld.setEnabled(false);
         jComboBoxHomeWorld.setMinimumSize(new java.awt.Dimension(22, 22));
         jComboBoxHomeWorld.setPreferredSize(new java.awt.Dimension(170, 22));
@@ -1114,13 +1112,17 @@ public class GW2EventerGui extends javax.swing.JFrame {
 
     private void jCheckBoxWvWActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxWvWActionPerformed
 
-        if (this.jCheckBoxWvW.isSelected()) {
-            this.setMatchId();
+        if (this.jComboBoxHomeWorld.isEnabled()) {
             
-            this.wvwOverlayGui.setMatchId(this.matchId);
-            this.wvwOverlayGui.startGui();
+            if (this.jCheckBoxWvW.isSelected()) {
+                //this.setMatchId();
+                //this.wvwOverlayGui.setMatchId(this.matchId);
+                this.wvwOverlayGui.startGui();
+            } else {
+                this.wvwOverlayGui.deactivateGui();
+            }
         } else {
-            this.wvwOverlayGui.deactivateGui();
+            this.jCheckBoxWvW.setSelected(false);
         }
     }//GEN-LAST:event_jCheckBoxWvWActionPerformed
     
@@ -1706,13 +1708,7 @@ public class GW2EventerGui extends javax.swing.JFrame {
             javax.swing.UIManager.setLookAndFeel(
                     javax.swing.UIManager.getSystemLookAndFeelClassName());
             
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(GW2EventerGui.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(GW2EventerGui.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(GW2EventerGui.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(GW2EventerGui.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>

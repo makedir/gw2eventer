@@ -428,7 +428,7 @@ public class OverlayGui extends javax.swing.JFrame {
 
     private void jButtonMinimizeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonMinimizeActionPerformed
 
-        this.setSize(this.getWidth(), 33);
+        this.setSize(this.getWidth(), 27);
     }//GEN-LAST:event_jButtonMinimizeActionPerformed
 
     private void jButtonCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCloseActionPerformed

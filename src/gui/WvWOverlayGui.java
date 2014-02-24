@@ -219,9 +219,7 @@ public class WvWOverlayGui extends javax.swing.JFrame {
     
     public void setMatchId(String matchId) {
         
-        this.ownerDataOld.clear();
         this.matchId = matchId;
-        
         this.jLabelMatchId.setText("matchid: " + matchId);
     }
     
@@ -288,7 +286,9 @@ public class WvWOverlayGui extends javax.swing.JFrame {
                 }
                 
                 if ((!owner.equals(onwerOld)) && (currentTimer != null)) {
-                    currentTimer.startTimer();
+                    if (!currentTimer.isTicking()) {
+                        currentTimer.startTimer();
+                    }
                 }
                 
                 if (this.activeMap.equals(labelHome) && currentTimer.isTicking()) {
@@ -340,6 +340,9 @@ public class WvWOverlayGui extends javax.swing.JFrame {
     
     public void startGui() {
         
+        this.mainGui.setMatchId();
+        this.setMatchId(this.mainGui.getMatchId());
+        
         this.ownerDataOld.clear();
         this.resetTimer();
         
@@ -360,6 +363,9 @@ public class WvWOverlayGui extends javax.swing.JFrame {
     public void deactivateGui() {
         
         this.wvwReader.interrupt();
+        
+        this.ownerDataOld.clear();
+        this.resetTimer();
         
         this.eventTimerLabelCoherent.resetTimer();
         this.setVisible(false);
@@ -720,12 +726,16 @@ public class WvWOverlayGui extends javax.swing.JFrame {
         jToolBar1.add(jComboBoxWvW);
 
         jButtonRefresh.setForeground(new java.awt.Color(255, 255, 255));
-        jButtonRefresh.setText("Refresh");
-        jButtonRefresh.setEnabled(false);
+        jButtonRefresh.setText("Reset");
         jButtonRefresh.setFocusable(false);
         jButtonRefresh.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButtonRefresh.setOpaque(false);
         jButtonRefresh.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButtonRefresh.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonRefreshActionPerformed(evt);
+            }
+        });
         jToolBar1.add(jButtonRefresh);
 
         jButtonLeft.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
@@ -967,8 +977,6 @@ public class WvWOverlayGui extends javax.swing.JFrame {
         jLabelBorderlands12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/media/wvw/camp_red.png"))); // NOI18N
         jLabelBorderlands12.setFocusable(false);
         getContentPane().add(jLabelBorderlands12, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 260, -1, -1));
-
-        eventTimerLabelCoherent.setText("eventTimerLabel1");
         getContentPane().add(eventTimerLabelCoherent, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 370, -1, -1));
 
         jLabelMatchId.setForeground(new java.awt.Color(255, 255, 255));
@@ -1128,6 +1136,12 @@ public class WvWOverlayGui extends javax.swing.JFrame {
                 break;
         }
     }//GEN-LAST:event_jComboBoxWvWActionPerformed
+
+    private void jButtonRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRefreshActionPerformed
+
+        this.deactivateGui();
+        this.startGui();
+    }//GEN-LAST:event_jButtonRefreshActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

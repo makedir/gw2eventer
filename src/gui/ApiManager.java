@@ -44,6 +44,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JSpinner;
 
 /**
@@ -341,10 +342,11 @@ public class ApiManager {
         FileInputStream streamIn = null;
         
         String path = System.getProperty("user.dir");
+        File f;
         
         try {
             
-                File f = new File(path + "\\gw2eve.dat");
+                f = new File(path + "\\gw2eve.dat");
                
                 if (f.exists() && !f.isDirectory()) {
                   
@@ -431,7 +433,16 @@ public class ApiManager {
                 }
           } catch (Exception ex) {
 
-               ex.printStackTrace();
+               Logger.getLogger(ApiManager.class.getName()).log(Level.SEVERE, null, ex);
+               
+               JOptionPane.showMessageDialog(gui,
+                    "Please restart GW2 Eventer or delete dat file.",
+                    "Dat file not coherent",
+                    JOptionPane.ERROR_MESSAGE);
+               
+               this.saveSettingstoFile();
+               
+               System.exit(0);
           } finally {
                   
                if (objectinputstream != null) {
