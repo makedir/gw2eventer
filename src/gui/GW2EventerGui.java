@@ -239,6 +239,7 @@ public class GW2EventerGui extends javax.swing.JFrame {
     private int wvwOverlayY;
     
     private String matchId;
+    private String matchIdColor;
     
     private WvWMatchReader wvwMatchReader;
     private HashMap matchIds;
@@ -255,6 +256,7 @@ public class GW2EventerGui extends javax.swing.JFrame {
         
         this.matchIds = new HashMap();
         this.matchId = "2-6";
+        this.matchIdColor = "green";
         
         this.jLabelNewVersion.setVisible(false);
         this.updateInformed = false;
@@ -1195,9 +1197,17 @@ public class GW2EventerGui extends javax.swing.JFrame {
             
             String homwWorldId = (String) this.homeWorlds.get((String) this.jComboBoxHomeWorld.getSelectedItem());
             
-            if (homwWorldId.equals(redServerID) || homwWorldId.equals(blueServerId) || homwWorldId.equals(greenServerId)) {
-                System.out.println(matchId);
+            if (homwWorldId.equals(redServerID)) {
                 this.matchId = matchId;
+                this.matchIdColor = "red";
+                break;
+            } else if (homwWorldId.equals(blueServerId)) {
+                this.matchId = matchId;
+                this.matchIdColor = "blue";
+                break;
+            } else if (homwWorldId.equals(greenServerId)) {
+                this.matchId = matchId;
+                this.matchIdColor = "green";
                 break;
             }
         }
@@ -1206,6 +1216,11 @@ public class GW2EventerGui extends javax.swing.JFrame {
     public String getMatchId() {
         
         return this.matchId;
+    }
+    
+    public String getMatchIdColor() {
+        
+        return this.matchIdColor;
     }
     
     private void initOverlayGui() {

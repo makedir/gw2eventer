@@ -55,6 +55,7 @@ public class WvWOverlayGui extends javax.swing.JFrame {
     private ArrayList timerLabelBorderlandsGreen;
     
     private String matchId;
+    private String matchIdColor;
     private String activeMap;
     
     private WvWReader wvwReader;
@@ -114,6 +115,7 @@ public class WvWOverlayGui extends javax.swing.JFrame {
         this.activeMap = "Center"; //Center=eternal, RedHome, BlueHome, GreenHome
         
         this.matchId = this.mainGui.getMatchId();
+        this.matchIdColor = this.mainGui.getMatchIdColor();
         
         this.ownerData = new HashMap();
         this.ownerDataOld = new HashMap();
@@ -217,10 +219,16 @@ public class WvWOverlayGui extends javax.swing.JFrame {
         this.initTimerandLabels();
     }
     
+    public void setMatchIdColor(String color) {
+        
+        this.matchIdColor = color;
+    }
+    
     public void setMatchId(String matchId) {
         
         this.matchId = matchId;
-        this.jLabelMatchId.setText("matchid: " + matchId);
+        this.jLabelMatchId.setText("<html>matchid: <font color="
+                + this.matchIdColor + ">" + matchId + "</font></html>");
     }
     
     public void refresh() {
@@ -341,6 +349,8 @@ public class WvWOverlayGui extends javax.swing.JFrame {
     public void startGui() {
         
         this.mainGui.setMatchId();
+        
+        this.setMatchIdColor(this.mainGui.getMatchIdColor());
         this.setMatchId(this.mainGui.getMatchId());
         
         this.ownerDataOld.clear();
