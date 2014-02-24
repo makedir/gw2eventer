@@ -24,10 +24,147 @@
 
 package gui;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.nio.charset.Charset;
+import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.config.RequestConfig;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+
 /**
  *
  * @author mkdr <makedir@gmail.com>
  */
-public class WvWReader {
+public class WvWReader extends Thread {
     
+    private HashMap result;
+    
+    private String matchId;
+    
+    private WvWOverlayGui wvwOverlayGui;
+    
+    public WvWReader(WvWOverlayGui wvwOverlayGui) {
+        
+        this.wvwOverlayGui = wvwOverlayGui;
+    }
+    
+    public void setResult(HashMap hashMap) {
+                
+        this.result = hashMap;
+    }
+    
+    public void setMatchId(String matchId) {
+                
+        this.matchId = matchId;
+    }
+    
+    @Override
+    public void run() {
+
+        RequestConfig requestConfig = RequestConfig.custom().setConnectTimeout(10 * 1000).build();
+        HttpClient client = HttpClientBuilder.create().setDefaultRequestConfig(requestConfig).build();
+        //HttpClient client = new DefaultHttpClient();
+
+        HttpGet request = new HttpGet(
+                "https://api.guildwars2.com/v1/wvw/match_details.json?match_id="
+                        + this.matchId);
+        
+        HttpResponse response;
+
+        String line = "";
+        String out = "";
+
+        while (!this.isInterrupted()) {
+            
+            try {
+
+                response = client.execute(request);
+
+                if (response.getStatusLine().toString().contains("200")) {
+
+                    BufferedReader rd = new BufferedReader(new InputStreamReader(
+                    response.getEntity().getContent(), Charset.forName("UTF-8")));
+
+                    line = "";
+                    out = "";
+
+                    while ((line = rd.readLine()) != null) {
+
+                        out = out + line;
+                    }
+
+                    JSONParser parser = new JSONParser();
+
+                    Object obj;
+
+                    this.result.clear();
+
+                    try {
+
+                        obj = parser.parse(out);
+
+                        JSONObject obj2 = (JSONObject) obj;
+                        JSONArray data = (JSONArray) obj2.get("maps");
+
+                        for (int i = 0; i < data.size(); i++) {
+
+                            obj2 = (JSONObject) data.get(i);
+                            JSONArray innerData = (JSONArray) obj2.get("objectives");
+                            
+                            for (int j = 0; j < innerData.size(); j++) {
+                                
+                                JSONObject innerObj = (JSONObject) innerData.get(j);
+                                this.result.put("" + innerObj.get("id"), "" + innerObj.get("owner"));
+                            }
+                        }
+                    } catch (ParseException ex) {
+
+                        Logger.getLogger(ApiManager.class.getName()).log(
+                                Level.SEVERE, null, ex);
+                    }
+                    
+                    request.releaseConnection();
+                    
+                    this.wvwOverlayGui.refresh();
+                    
+                    try {
+                        Thread.sleep(10000);
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(WvWReader.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                } else {
+                    try {
+                        request.releaseConnection();
+                        Thread.sleep(10000);
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(EventAllReader.class.getName()).log(Level.SEVERE, null, ex);
+                        
+                        this.interrupt();
+                    }
+                }
+            } catch (IOException | IllegalStateException ex) {
+                try {
+                    Logger.getLogger(EventReader.class.getName()).log(
+                            Level.SEVERE, null, ex);
+                    
+                    request.releaseConnection();
+                    Thread.sleep(10000);
+                } catch (InterruptedException ex1) {
+                    Logger.getLogger(EventAllReader.class.getName()).log(Level.SEVERE, null, ex1);
+                    
+                    this.interrupt();
+                }
+            }
+        }
+    }
 }

@@ -170,8 +170,8 @@ public class OverlayGui extends javax.swing.JFrame {
         setResizable(false);
 
         jToolBar1.setBorder(null);
+        jToolBar1.setFloatable(false);
         jToolBar1.setForeground(new java.awt.Color(255, 255, 255));
-        jToolBar1.setRollover(true);
         jToolBar1.setFocusable(false);
         jToolBar1.setOpaque(false);
 
@@ -281,8 +281,9 @@ public class OverlayGui extends javax.swing.JFrame {
 
         getContentPane().add(jToolBar1, java.awt.BorderLayout.PAGE_START);
 
+        jToolBar2.setFloatable(false);
         jToolBar2.setOrientation(javax.swing.SwingConstants.VERTICAL);
-        jToolBar2.setRollover(true);
+        jToolBar2.setFocusable(false);
         jToolBar2.setOpaque(false);
 
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));

@@ -1161,6 +1161,11 @@ public class GW2EventerGui extends javax.swing.JFrame {
         return this.lastPush;
     }
     
+    public String getMatchId() {
+        
+        return "2-6";
+    }
+    
     private void initOverlayGui() {
         
         this.overlayGui.setIconImage(guiIcon);
