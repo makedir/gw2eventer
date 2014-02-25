@@ -60,6 +60,11 @@
                 <StringItem index="3" value="Red"/>
               </StringArray>
             </Property>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
+                <LineBorder/>
+              </Border>
+            </Property>
             <Property name="focusable" type="boolean" value="false"/>
             <Property name="opaque" type="boolean" value="false"/>
           </Properties>
@@ -670,7 +675,7 @@
     <Component class="gui.EventTimerLabel" name="eventTimerLabelCoherent">
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="20" y="370" width="-1" height="-1"/>
+          <AbsoluteConstraints x="35" y="370" width="-1" height="-1"/>
         </Constraint>
       </Constraints>
     </Component>

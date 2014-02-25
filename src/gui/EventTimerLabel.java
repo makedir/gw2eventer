@@ -25,6 +25,7 @@
 package gui;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JLabel;
@@ -54,6 +55,11 @@ public class EventTimerLabel extends JLabel implements ActionListener {
         this.customText = "";
         
         this.setForeground(Color.white);
+        
+        Font font = this.getFont();
+        Font boldFont = new Font(font.getFontName(), Font.BOLD, font.getSize());
+        this.setFont(boldFont);
+        
         this.setFocusable(false);
         this.setOpaque(false);
         this.setVisible(false);

@@ -227,8 +227,7 @@ public class WvWOverlayGui extends javax.swing.JFrame {
     public void setMatchId(String matchId) {
         
         this.matchId = matchId;
-        this.jLabelMatchId.setText("<html>matchid: <font color="
-                + this.matchIdColor + ">" + matchId + "</font></html>");
+        this.jLabelMatchId.setText("<html>" + matchId + "(<b>" + this.matchIdColor + "</b>)</html>");
     }
     
     public void refresh() {
@@ -269,15 +268,6 @@ public class WvWOverlayGui extends javax.swing.JFrame {
                 EventTimerLabel currentTimer = null;
                 JLabel currentLabel = null;
                 
-                if (this.activeMap.equals("Center")) {
-                    //currentLabel = (JLabel) this.labelsEternal.get(labelNumber - 1);
-                    this.setEternalColors();
-                } else {
-                    //System.out.println(labelNumber - 1);
-                    //currentLabel = (JLabel) this.labelsBorderlands.get(labelNumber - 1);
-                    this.setBorderlandsColors();
-                }
-                
                 switch (labelHome) {
                     case "Center":
                         currentTimer = (EventTimerLabel) this.timerLabelEternal.get(labelNumber - 1);
@@ -316,6 +306,12 @@ public class WvWOverlayGui extends javax.swing.JFrame {
             String owner = (String) pairs.getValue();
             
             this.ownerDataOld.put(new String(id), new String(owner));
+        }
+        
+        if (this.activeMap.equals("Center")) {
+            this.setEternalColors();
+        } else {
+            this.setBorderlandsColors();
         }
     }
     
@@ -726,6 +722,7 @@ public class WvWOverlayGui extends javax.swing.JFrame {
         jToolBar1.setOpaque(false);
 
         jComboBoxWvW.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Eternal", "Green", "Blue", "Red" }));
+        jComboBoxWvW.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jComboBoxWvW.setFocusable(false);
         jComboBoxWvW.setOpaque(false);
         jComboBoxWvW.addActionListener(new java.awt.event.ActionListener() {
@@ -987,7 +984,7 @@ public class WvWOverlayGui extends javax.swing.JFrame {
         jLabelBorderlands12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/media/wvw/camp_red.png"))); // NOI18N
         jLabelBorderlands12.setFocusable(false);
         getContentPane().add(jLabelBorderlands12, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 260, -1, -1));
-        getContentPane().add(eventTimerLabelCoherent, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 370, -1, -1));
+        getContentPane().add(eventTimerLabelCoherent, new org.netbeans.lib.awtextra.AbsoluteConstraints(35, 370, -1, -1));
 
         jLabelMatchId.setForeground(new java.awt.Color(255, 255, 255));
         jLabelMatchId.setText("matchid:");
@@ -1122,6 +1119,12 @@ public class WvWOverlayGui extends javax.swing.JFrame {
     private void jComboBoxWvWActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxWvWActionPerformed
 
         String selection = (String) this.jComboBoxWvW.getSelectedItem();
+        
+        if (this.activeMap.equals("Center")) {
+            this.setEternalColors();
+        } else {
+            this.setBorderlandsColors();
+        }
         
         switch (selection) {
             case "Eternal":
