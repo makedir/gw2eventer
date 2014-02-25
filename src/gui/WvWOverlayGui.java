@@ -387,6 +387,7 @@ public class WvWOverlayGui extends javax.swing.JFrame {
                 f = getClass().getDeclaredField("jLabelEternal" + i);
 
                 JLabel l = (JLabel) f.get(this);
+                
                 int width = l.getX();
                 int height = l.getY();
                 
@@ -395,7 +396,7 @@ public class WvWOverlayGui extends javax.swing.JFrame {
                 EventTimerLabel eventTimerLabel = new EventTimerLabel();
                 this.timerLabelEternal.add(eventTimerLabel);
                 
-                getContentPane().add(eventTimerLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(width + 8, height + 12, -1, -1), 0);
+                getContentPane().add(eventTimerLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(width + 6, height + 10, -1, -1), 0);
             } catch (    NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException ex) {
                 Logger.getLogger(WvWOverlayGui.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -417,17 +418,17 @@ public class WvWOverlayGui extends javax.swing.JFrame {
                 EventTimerLabel eventTimerLabel = new EventTimerLabel();
                 this.timerLabelBorderlandsRed.add(eventTimerLabel);
                 
-                getContentPane().add(eventTimerLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(width + 8, height + 12, -1, -1), 0);
+                getContentPane().add(eventTimerLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(width + 6, height + 10, -1, -1), 0);
                 
                 eventTimerLabel = new EventTimerLabel();
                 this.timerLabelBorderlandsGreen.add(eventTimerLabel);
                 
-                getContentPane().add(eventTimerLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(width + 8, height + 12, -1, -1), 0);
+                getContentPane().add(eventTimerLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(width + 6, height + 10, -1, -1), 0);
                 
                 eventTimerLabel = new EventTimerLabel();
                 this.timerLabelBorderlandsBlue.add(eventTimerLabel);
                 
-                getContentPane().add(eventTimerLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(width + 8, height + 12, -1, -1), 0);
+                getContentPane().add(eventTimerLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(width + 6, height + 10, -1, -1), 0);
             } catch (    NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException ex) {
                 Logger.getLogger(WvWOverlayGui.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -555,13 +556,16 @@ public class WvWOverlayGui extends javax.swing.JFrame {
                     int labelNumber = Integer.parseInt(((String[]) this.idsToLabel.get(id))[0]);
                     String labelType = ((String[]) this.idsToLabel.get(id))[1];
                     String labelHome = ((String[]) this.idsToLabel.get(id))[3];
+                    String labelToolTip = ((String[]) this.idsToLabel.get(id))[2];
                     
                     if (labelHome.equals(this.activeMap)) {
                         
                         //System.out.println("id: " + id + ", labelnumber: " + labelNumber + ", type: " + labelType);
                         
                         JLabel currentLabel = (JLabel) this.labelsEternal.get(labelNumber - 1);
-
+                        
+                        currentLabel.setToolTipText(labelToolTip);
+                        
                         try {
                             f = getClass().getDeclaredField(labelType + owner);
                             ImageIcon icon;
@@ -600,6 +604,7 @@ public class WvWOverlayGui extends javax.swing.JFrame {
                     int labelNumber = Integer.parseInt(((String[]) this.idsToLabel.get(id))[0]);
                     String labelType = ((String[]) this.idsToLabel.get(id))[1];
                     String labelHome = ((String[]) this.idsToLabel.get(id))[3];
+                    String labelToolTip = ((String[]) this.idsToLabel.get(id))[2];
                     
                     if (labelHome.equals(this.activeMap)) {
                         
@@ -607,6 +612,8 @@ public class WvWOverlayGui extends javax.swing.JFrame {
                         
                         JLabel currentLabel = (JLabel) this.labelsBorderlands.get(labelNumber - 1);
 
+                        currentLabel.setToolTipText(labelToolTip);
+                        
                         try {
                             f = getClass().getDeclaredField(labelType + owner);
                             ImageIcon icon;
@@ -848,90 +855,90 @@ public class WvWOverlayGui extends javax.swing.JFrame {
 
         jLabelEternal22.setIcon(new javax.swing.ImageIcon(getClass().getResource("/media/wvw/camp_red.png"))); // NOI18N
         jLabelEternal22.setFocusable(false);
-        getContentPane().add(jLabelEternal22, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 250, -1, -1));
+        getContentPane().add(jLabelEternal22, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 250, -1, -1));
 
         jLabelEternal21.setIcon(new javax.swing.ImageIcon(getClass().getResource("/media/wvw/camp_red.png"))); // NOI18N
         jLabelEternal21.setFocusable(false);
-        getContentPane().add(jLabelEternal21, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 250, -1, -1));
+        getContentPane().add(jLabelEternal21, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 250, -1, -1));
 
         jLabelEternal20.setIcon(new javax.swing.ImageIcon(getClass().getResource("/media/wvw/camp_red.png"))); // NOI18N
         jLabelEternal20.setFocusable(false);
-        getContentPane().add(jLabelEternal20, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 230, -1, -1));
+        getContentPane().add(jLabelEternal20, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 230, -1, -1));
 
         jLabelEternal19.setIcon(new javax.swing.ImageIcon(getClass().getResource("/media/wvw/camp_red.png"))); // NOI18N
         jLabelEternal19.setFocusable(false);
-        getContentPane().add(jLabelEternal19, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 240, -1, -1));
+        getContentPane().add(jLabelEternal19, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 240, -1, -1));
 
         jLabelEternal18.setIcon(new javax.swing.ImageIcon(getClass().getResource("/media/wvw/camp_red.png"))); // NOI18N
         jLabelEternal18.setFocusable(false);
-        getContentPane().add(jLabelEternal18, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 210, -1, -1));
+        getContentPane().add(jLabelEternal18, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 210, -1, -1));
 
         jLabelEternal17.setIcon(new javax.swing.ImageIcon(getClass().getResource("/media/wvw/camp_red.png"))); // NOI18N
         jLabelEternal17.setFocusable(false);
-        getContentPane().add(jLabelEternal17, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 220, -1, -1));
+        getContentPane().add(jLabelEternal17, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 220, -1, -1));
 
         jLabelEternal16.setIcon(new javax.swing.ImageIcon(getClass().getResource("/media/wvw/camp_red.png"))); // NOI18N
-        getContentPane().add(jLabelEternal16, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 200, -1, -1));
+        getContentPane().add(jLabelEternal16, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 200, -1, -1));
 
         jLabelEternal15.setIcon(new javax.swing.ImageIcon(getClass().getResource("/media/wvw/camp_red.png"))); // NOI18N
         jLabelEternal15.setFocusable(false);
-        getContentPane().add(jLabelEternal15, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 210, -1, -1));
+        getContentPane().add(jLabelEternal15, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 210, -1, -1));
 
         jLabelEternal14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/media/wvw/camp_red.png"))); // NOI18N
         jLabelEternal14.setFocusable(false);
-        getContentPane().add(jLabelEternal14, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 170, -1, -1));
+        getContentPane().add(jLabelEternal14, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 170, -1, -1));
 
         jLabelEternal13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/media/wvw/camp_red.png"))); // NOI18N
         jLabelEternal13.setFocusable(false);
-        getContentPane().add(jLabelEternal13, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 170, -1, -1));
+        getContentPane().add(jLabelEternal13, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 170, -1, -1));
 
         jLabelEternal12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/media/wvw/camp_red.png"))); // NOI18N
         jLabelEternal12.setFocusable(false);
-        getContentPane().add(jLabelEternal12, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 140, -1, -1));
+        getContentPane().add(jLabelEternal12, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 140, -1, -1));
 
         jLabelEternal11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/media/wvw/camp_red.png"))); // NOI18N
         jLabelEternal11.setFocusable(false);
-        getContentPane().add(jLabelEternal11, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 150, -1, -1));
+        getContentPane().add(jLabelEternal11, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 150, -1, -1));
 
         jLabelEternal10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/media/wvw/camp_red.png"))); // NOI18N
         jLabelEternal10.setFocusable(false);
-        getContentPane().add(jLabelEternal10, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 150, -1, -1));
+        getContentPane().add(jLabelEternal10, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 150, -1, -1));
 
         jLabelEternal9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/media/wvw/camp_red.png"))); // NOI18N
         jLabelEternal9.setFocusable(false);
-        getContentPane().add(jLabelEternal9, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 150, -1, -1));
+        getContentPane().add(jLabelEternal9, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 150, -1, -1));
 
         jLabelEternal8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/media/wvw/camp_red.png"))); // NOI18N
         jLabelEternal8.setFocusable(false);
-        getContentPane().add(jLabelEternal8, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 140, -1, -1));
+        getContentPane().add(jLabelEternal8, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 140, -1, -1));
 
         jLabelEternal7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/media/wvw/camp_red.png"))); // NOI18N
         jLabelEternal7.setFocusable(false);
-        getContentPane().add(jLabelEternal7, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 100, -1, -1));
+        getContentPane().add(jLabelEternal7, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 100, -1, -1));
 
         jLabelEternal6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/media/wvw/camp_red.png"))); // NOI18N
         jLabelEternal6.setFocusable(false);
-        getContentPane().add(jLabelEternal6, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 70, -1, -1));
+        getContentPane().add(jLabelEternal6, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 70, -1, -1));
 
         jLabelEternal5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/media/wvw/camp_red.png"))); // NOI18N
         jLabelEternal5.setFocusable(false);
-        getContentPane().add(jLabelEternal5, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 80, -1, -1));
+        getContentPane().add(jLabelEternal5, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 80, -1, -1));
 
         jLabelEternal4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/media/wvw/camp_red.png"))); // NOI18N
         jLabelEternal4.setFocusable(false);
-        getContentPane().add(jLabelEternal4, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 40, -1, -1));
+        getContentPane().add(jLabelEternal4, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 40, -1, -1));
 
         jLabelEternal3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/media/wvw/camp_red.png"))); // NOI18N
         jLabelEternal3.setFocusable(false);
-        getContentPane().add(jLabelEternal3, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 50, -1, -1));
+        getContentPane().add(jLabelEternal3, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 50, -1, -1));
 
         jLabelEternal2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/media/wvw/camp_red.png"))); // NOI18N
         jLabelEternal2.setFocusable(false);
-        getContentPane().add(jLabelEternal2, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 30, -1, -1));
+        getContentPane().add(jLabelEternal2, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 30, -1, -1));
 
         jLabelEternal1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/media/wvw/camp_red.png"))); // NOI18N
         jLabelEternal1.setFocusable(false);
-        getContentPane().add(jLabelEternal1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 50, -1, -1));
+        getContentPane().add(jLabelEternal1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 50, -1, -1));
 
         jLabelBorderlands5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/media/wvw/camp_red.png"))); // NOI18N
         jLabelBorderlands5.setFocusable(false);
@@ -984,7 +991,7 @@ public class WvWOverlayGui extends javax.swing.JFrame {
         jLabelBorderlands12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/media/wvw/camp_red.png"))); // NOI18N
         jLabelBorderlands12.setFocusable(false);
         getContentPane().add(jLabelBorderlands12, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 260, -1, -1));
-        getContentPane().add(eventTimerLabelCoherent, new org.netbeans.lib.awtextra.AbsoluteConstraints(35, 370, -1, -1));
+        getContentPane().add(eventTimerLabelCoherent, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 370, -1, -1));
 
         jLabelMatchId.setForeground(new java.awt.Color(255, 255, 255));
         jLabelMatchId.setText("matchid:");

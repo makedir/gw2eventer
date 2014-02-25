@@ -95,6 +95,7 @@ public class EventTimerLabel extends JLabel implements ActionListener {
     
     public void resetTimer() {
         
+        this.setText("");
         this.running = false;
         this.timer.stop();
         this.counter = COUNTER_SECONDS;

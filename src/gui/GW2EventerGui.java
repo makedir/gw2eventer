@@ -185,7 +185,7 @@ public class GW2EventerGui extends javax.swing.JFrame {
     private static final String LANG_INPUT_ERROR_MSG_ES = "Message can't be left empty.";
     private static final String LANG_INPUT_ERROR_MSG_FR = "Message can't be left empty.";
     
-    private static final String LANG_NEWVERSION_DE = "Neue Version raus! Lade es hier.";
+    private static final String LANG_NEWVERSION_DE = "Neue Version raus! Lade sie hier.";
     private static final String LANG_NEWVERSION_EN = "New version is out! Get it here.";
     private static final String LANG_NEWVERSION_ES = "New version is out! Get it here.";
     private static final String LANG_NEWVERSION_FR = "New version is out! Get it here.";
