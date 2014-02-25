@@ -322,7 +322,7 @@ public class GW2EventerGui extends javax.swing.JFrame {
         this.initWvwOverlayGui();
         
         this.wvwOverlayX = 20;
-        this.wvwOverlayY = 320;
+        this.wvwOverlayY = 420;
         
         this.language = "en";
         this.worldID = "2206"; //Millersund [DE]
