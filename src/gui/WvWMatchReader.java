@@ -109,22 +109,34 @@ public class WvWMatchReader extends Thread {
 
                              obj2 = (JSONObject) array.get(i);
 
-                            this.result.put("" + obj2.get("wvw_match_id"), new String[]{"" + obj2.get("red_world_id"), "" + obj2.get("blue_world_id"), "" + obj2.get("green_world_id")});
+                            this.result.put("" + obj2.get("wvw_match_id"),
+                                    new String[]{"" + obj2.get("red_world_id"),
+                                        "" + obj2.get("blue_world_id"),
+                                        "" + obj2.get("green_world_id")});
                         }
+                        
+                        request.releaseConnection();
+                    
+                        this.wvwCheckBox.setEnabled(true);
+                        this.interrupt();
                     } catch (ParseException ex) {
-
-                        Logger.getLogger(ApiManager.class.getName()).log(
-                                Level.SEVERE, null, ex);
+                        try {
+                            Logger.getLogger(ApiManager.class.getName()).log(
+                                    Level.SEVERE, null, ex);
+                            
+                            request.releaseConnection();
+                            Thread.sleep(3000);
+                        } catch (InterruptedException ex1) {
+                            Logger.getLogger(WvWMatchReader.class.getName()).log(Level.SEVERE, null, ex1);
+                        }
                     }
-                    
-                    request.releaseConnection();
-                    
-                    this.wvwCheckBox.setEnabled(true);
-                    this.interrupt();
                 } else {
                     try {
+                        Logger.getLogger(EventReader.class.getName()).log(
+                            Level.SEVERE, null, "Connection error.");
+                        
                         request.releaseConnection();
-                        Thread.sleep(10000);
+                        Thread.sleep(3000);
                     } catch (InterruptedException ex) {
                         Logger.getLogger(HomeWorldAllReader.class.getName()).log(Level.SEVERE, null, ex);
                         
@@ -137,7 +149,7 @@ public class WvWMatchReader extends Thread {
                             Level.SEVERE, null, ex);
                     
                     request.releaseConnection();
-                    Thread.sleep(10000);
+                    Thread.sleep(3000);
                 } catch (InterruptedException ex1) {
                     Logger.getLogger(HomeWorldAllReader.class.getName()).log(Level.SEVERE, null, ex1);
                     

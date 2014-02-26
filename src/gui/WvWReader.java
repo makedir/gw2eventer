@@ -127,25 +127,38 @@ public class WvWReader extends Thread {
                                 this.result.put("" + innerObj.get("id"), "" + innerObj.get("owner"));
                             }
                         }
-                    } catch (ParseException ex) {
+                        
+                        request.releaseConnection();
+                    
+                        this.wvwOverlayGui.refresh();
 
-                        Logger.getLogger(ApiManager.class.getName()).log(
-                                Level.SEVERE, null, ex);
-                    }
-                    
-                    request.releaseConnection();
-                    
-                    this.wvwOverlayGui.refresh();
-                    
-                    try {
-                        Thread.sleep(10000);
-                    } catch (InterruptedException ex) {
-                        Logger.getLogger(WvWReader.class.getName()).log(Level.SEVERE, null, ex);
+                        try {
+                            Thread.sleep(10000);
+                        } catch (InterruptedException ex) {
+                            Logger.getLogger(WvWReader.class.getName()).log(Level.SEVERE, null, ex);
+
+                            this.interrupt();
+                        }
+                    } catch (ParseException ex) {
+                        try {
+                            Logger.getLogger(ApiManager.class.getName()).log(
+                                    Level.SEVERE, null, ex);
+                            
+                            request.releaseConnection();
+                            Thread.sleep(3000);
+                        } catch (InterruptedException ex1) {
+                            Logger.getLogger(WvWReader.class.getName()).log(Level.SEVERE, null, ex1);
+                            
+                            this.interrupt();
+                        }
                     }
                 } else {
                     try {
+                        Logger.getLogger(EventReader.class.getName()).log(
+                            Level.SEVERE, null, "Connection error.");
+                        
                         request.releaseConnection();
-                        Thread.sleep(10000);
+                        Thread.sleep(3000);
                     } catch (InterruptedException ex) {
                         Logger.getLogger(EventAllReader.class.getName()).log(Level.SEVERE, null, ex);
                         
@@ -158,7 +171,7 @@ public class WvWReader extends Thread {
                             Level.SEVERE, null, ex);
                     
                     request.releaseConnection();
-                    Thread.sleep(10000);
+                    Thread.sleep(3000);
                 } catch (InterruptedException ex1) {
                     Logger.getLogger(EventAllReader.class.getName()).log(Level.SEVERE, null, ex1);
                     

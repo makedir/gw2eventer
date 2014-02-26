@@ -66,6 +66,7 @@ public class ApiManager {
     
     private JComboBox jComboBoxHomeWorlds;
     private JComboBox jComboBoxLanguage;
+    private JCheckBox jCheckBoxWvW;
     
     public JLabel labelServer;
     
@@ -97,7 +98,8 @@ public class ApiManager {
             JComboBox jComboBoxHomeWorlds, JLabel labelServer,
             JLabel labelWorking, boolean playSounds, JButton workingButton,
             JCheckBox refreshSelector, ArrayList eventLabelsTimer,
-            JComboBox jComboBoxLanguage, OverlayGui overlayGui) {
+            JComboBox jComboBoxLanguage, OverlayGui overlayGui,
+            JCheckBox jCheckBoxWvW) {
 
         this.gui = gui;
         this.overlayGui = overlayGui;
@@ -120,6 +122,7 @@ public class ApiManager {
         
         this.jComboBoxHomeWorlds = jComboBoxHomeWorlds;
         this.jComboBoxLanguage = jComboBoxLanguage;
+        this.jCheckBoxWvW = jCheckBoxWvW;
         
         this.labelServer = labelServer;
         this.labelWorking = labelWorking;
@@ -587,7 +590,8 @@ public class ApiManager {
         this.language = language;
         
         allServerReader.setHashMap(this.homeWorlds, this.jComboBoxHomeWorlds,
-                this.labelWorking, this.workingButton, this.refreshSelector, this.jComboBoxLanguage);
+                this.labelWorking, this.workingButton, this.refreshSelector,
+                this.jComboBoxLanguage, this.jCheckBoxWvW);
         
         allServerReader.setLanguage(this.language);
         allServerReader.start();

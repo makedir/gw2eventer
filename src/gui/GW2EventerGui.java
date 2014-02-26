@@ -200,9 +200,14 @@ public class GW2EventerGui extends javax.swing.JFrame {
     private static final String LANG_OVERLAY_PRE_ACTIVE_ES = "Active pre events:";
     private static final String LANG_OVERLAY_PRE_ACTIVE_FR = "Active pre events:";
     
+    private static final String LANG_OVERLAY_WVW_COHERENT_DE = "Zeit bis alle Daten koherent: ";
+    private static final String LANG_OVERLAY_WVW_COHERENT_EN = "Time until data is coherent: ";
+    private static final String LANG_OVERLAY_WVW_COHERENT_ES = "Time until data is coherent: ";
+    private static final String LANG_OVERLAY_WVW_COHERENT_FR = "Time until data is coherent: ";
+    
     public static final int EVENT_COUNT = 23;
     
-    private static final String VERSION = "1.5";
+    private static final String VERSION = "1.6";
     
     private JButton workingButton;
     private JCheckBox refreshSelector;
@@ -387,11 +392,11 @@ public class GW2EventerGui extends javax.swing.JFrame {
                 this.jComboBoxHomeWorld, this.jLabelServer, this.jLabelWorking,
                 this.jCheckBoxPlaySounds.isSelected(), this.workingButton,
                 this.refreshSelector, this.eventLabelsTimer,
-                this.jComboBoxLanguage, this.overlayGui);
+                this.jComboBoxLanguage, this.overlayGui, this.jCheckBoxWvW);
         }
         
-        this.wvwMatchReader = new WvWMatchReader(this.matchIds, this.jCheckBoxWvW);
-        this.wvwMatchReader.start();
+        //this.wvwMatchReader = new WvWMatchReader(this.matchIds, this.jCheckBoxWvW);
+        //this.wvwMatchReader.start();
         
         this.preventSleepMode();
         this.runUpdateService();
@@ -400,6 +405,22 @@ public class GW2EventerGui extends javax.swing.JFrame {
         //this.runTest();
     }
 
+    public void reloadMatchIds() {
+        
+        this.matchIds = new HashMap();
+        
+        this.wvwMatchReader = new WvWMatchReader(this.matchIds, this.jCheckBoxWvW);
+        this.wvwMatchReader.start();
+        
+        try {
+            this.wvwMatchReader.join();
+            this.wvwOverlayGui.deactivateGui();
+            this.wvwOverlayGui.startGui();
+        } catch (InterruptedException ex) {
+            Logger.getLogger(GW2EventerGui.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
     public void setOverlayVisible(boolean visible) {
         
         this.jCheckBoxOverlay.setSelected(visible);
@@ -1060,7 +1081,7 @@ public class GW2EventerGui extends javax.swing.JFrame {
                 this.jComboBoxHomeWorld, this.jLabelServer, this.jLabelWorking,
                 this.jCheckBoxPlaySounds.isSelected(), this.workingButton,
                 this.refreshSelector, this.eventLabelsTimer,
-                this.jComboBoxLanguage, this.overlayGui);
+                this.jComboBoxLanguage, this.overlayGui, this.jCheckBoxWvW);
         }
 
         this.apiManager.homeWorldsReload((String) this.jComboBoxLanguage.getSelectedItem());
@@ -1117,9 +1138,7 @@ public class GW2EventerGui extends javax.swing.JFrame {
         if (this.jComboBoxHomeWorld.isEnabled()) {
             
             if (this.jCheckBoxWvW.isSelected()) {
-                //this.setMatchId();
-                //this.wvwOverlayGui.setMatchId(this.matchId);
-                this.wvwOverlayGui.startGui();
+                this.reloadMatchIds();
             } else {
                 this.wvwOverlayGui.deactivateGui();
             }
@@ -1165,6 +1184,7 @@ public class GW2EventerGui extends javax.swing.JFrame {
             this.overlayGui.setTranslations((String) getClass().getDeclaredField("LANG_OVERLAY_B_ACTIVE_" + selectedLang).get(null),
                     (String) getClass().getDeclaredField("LANG_OVERLAY_PRE_ACTIVE_" + selectedLang).get(null));
             
+            this.wvwOverlayGui.setTranslations((String) getClass().getDeclaredField("LANG_OVERLAY_WVW_COHERENT_" + selectedLang).get(null));
         } catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException ex) {
             Logger.getLogger(GW2EventerGui.class.getName()).log(Level.SEVERE, null, ex);
         }

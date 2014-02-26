@@ -123,18 +123,24 @@ public class EventAllReader extends Thread {
                         }
                         
                         this.apimanager.updateToolTips();
+                        
+                        request.releaseConnection();
+                        this.interrupt();
                     } catch (ParseException ex) {
-
-                        Logger.getLogger(ApiManager.class.getName()).log(
-                                Level.SEVERE, null, ex);
+                        try {
+                            Logger.getLogger(ApiManager.class.getName()).log(
+                                    Level.SEVERE, null, ex);
+                            
+                            request.releaseConnection();
+                            Thread.sleep(5000);
+                        } catch (InterruptedException ex1) {
+                            Logger.getLogger(EventAllReader.class.getName()).log(Level.SEVERE, null, ex1);
+                        }
                     }
-                    
-                    request.releaseConnection();
-                    this.interrupt();
                 } else {
                     try {
                         request.releaseConnection();
-                        Thread.sleep(10000);
+                        Thread.sleep(5000);
                     } catch (InterruptedException ex) {
                         Logger.getLogger(EventAllReader.class.getName()).log(Level.SEVERE, null, ex);
                     }
@@ -145,7 +151,7 @@ public class EventAllReader extends Thread {
                             Level.SEVERE, null, ex);
                     
                     request.releaseConnection();
-                    Thread.sleep(10000);
+                    Thread.sleep(5000);
                 } catch (InterruptedException ex1) {
                     Logger.getLogger(EventAllReader.class.getName()).log(Level.SEVERE, null, ex1);
                     

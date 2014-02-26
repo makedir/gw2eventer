@@ -28,6 +28,8 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JLabel;
 import javax.swing.Timer;
 
@@ -51,11 +53,8 @@ public class EventTimerLabel extends JLabel implements ActionListener {
         super();
         
         this.running = false;
-        
         this.customText = "";
-        
         this.setForeground(Color.white);
-        
         Font font = this.getFont();
         Font boldFont = new Font(font.getFontName(), Font.BOLD, font.getSize());
         this.setFont(boldFont);
@@ -90,12 +89,42 @@ public class EventTimerLabel extends JLabel implements ActionListener {
             this.timer.start();
             this.running = true;
             //this.setVisible(true);
+            
+            Thread t = new Thread() {
+
+                @Override public void run() {
+
+                    try {
+                        setForeground(Color.red);
+                        Thread.sleep(500);
+                        setForeground(Color.white);
+                        Thread.sleep(500);
+                        setForeground(Color.red);
+                        Thread.sleep(500);
+                        setForeground(Color.white);
+                        Thread.sleep(500);
+                        setForeground(Color.red);
+                        Thread.sleep(500);
+                        setForeground(Color.white);
+                        Thread.sleep(500);
+                        setForeground(Color.red);
+                        Thread.sleep(500);
+                        setForeground(Color.white);
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(EventTimerLabel.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            };
+            
+            t.start();
         }
     }
     
     public void resetTimer() {
         
         this.setText("");
+        this.setForeground(Color.white);
+        
         this.running = false;
         this.timer.stop();
         this.counter = COUNTER_SECONDS;

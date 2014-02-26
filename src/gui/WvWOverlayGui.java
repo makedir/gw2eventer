@@ -219,6 +219,11 @@ public class WvWOverlayGui extends javax.swing.JFrame {
         this.initTimerandLabels();
     }
     
+    public void setTranslations(String coherent) {
+        
+        this.eventTimerLabelCoherent.setCustomText(coherent);
+    }
+    
     public void setMatchIdColor(String color) {
         
         this.matchIdColor = color;
@@ -344,6 +349,11 @@ public class WvWOverlayGui extends javax.swing.JFrame {
     
     public void startGui() {
         
+        this.jButtonRefresh.setEnabled(true);
+        
+        this.jToolBar2.setVisible(true);
+        this.jButtonCoherent.setVisible(true);
+        
         this.mainGui.setMatchId();
         
         this.setMatchIdColor(this.mainGui.getMatchIdColor());
@@ -368,13 +378,15 @@ public class WvWOverlayGui extends javax.swing.JFrame {
     
     public void deactivateGui() {
         
-        this.wvwReader.interrupt();
+        if (this.wvwReader != null) {
+            this.wvwReader.interrupt();
         
-        this.ownerDataOld.clear();
-        this.resetTimer();
-        
-        this.eventTimerLabelCoherent.resetTimer();
-        this.setVisible(false);
+            this.ownerDataOld.clear();
+            this.resetTimer();
+
+            this.eventTimerLabelCoherent.resetTimer();
+            this.setVisible(false);
+        }
     }
     
     private void initTimerandLabels() {
@@ -711,8 +723,10 @@ public class WvWOverlayGui extends javax.swing.JFrame {
         jLabelBorderlands13 = new javax.swing.JLabel();
         jLabelBorderlands11 = new javax.swing.JLabel();
         jLabelBorderlands12 = new javax.swing.JLabel();
-        eventTimerLabelCoherent = new gui.EventTimerLabel();
         jLabelMatchId = new javax.swing.JLabel();
+        jToolBar2 = new javax.swing.JToolBar();
+        jButtonCoherent = new javax.swing.JButton();
+        eventTimerLabelCoherent = new gui.EventTimerLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setAlwaysOnTop(true);
@@ -991,11 +1005,34 @@ public class WvWOverlayGui extends javax.swing.JFrame {
         jLabelBorderlands12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/media/wvw/camp_red.png"))); // NOI18N
         jLabelBorderlands12.setFocusable(false);
         getContentPane().add(jLabelBorderlands12, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 260, -1, -1));
-        getContentPane().add(eventTimerLabelCoherent, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 370, -1, -1));
 
         jLabelMatchId.setForeground(new java.awt.Color(255, 255, 255));
         jLabelMatchId.setText("matchid:");
         getContentPane().add(jLabelMatchId, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, -1, -1));
+
+        jToolBar2.setFloatable(false);
+        jToolBar2.setFocusable(false);
+        jToolBar2.setOpaque(false);
+
+        jButtonCoherent.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        jButtonCoherent.setForeground(new java.awt.Color(255, 255, 255));
+        jButtonCoherent.setText("X");
+        jButtonCoherent.setBorderPainted(false);
+        jButtonCoherent.setFocusPainted(false);
+        jButtonCoherent.setFocusable(false);
+        jButtonCoherent.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButtonCoherent.setOpaque(false);
+        jButtonCoherent.setPreferredSize(new java.awt.Dimension(40, 25));
+        jButtonCoherent.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButtonCoherent.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonCoherentActionPerformed(evt);
+            }
+        });
+        jToolBar2.add(jButtonCoherent);
+        jToolBar2.add(eventTimerLabelCoherent);
+
+        getContentPane().add(jToolBar2, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 367, 290, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -1159,14 +1196,23 @@ public class WvWOverlayGui extends javax.swing.JFrame {
 
     private void jButtonRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRefreshActionPerformed
 
-        this.deactivateGui();
-        this.startGui();
+        this.jButtonRefresh.setEnabled(false);
+        
+        this.mainGui.reloadMatchIds();
     }//GEN-LAST:event_jButtonRefreshActionPerformed
+
+    private void jButtonCoherentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCoherentActionPerformed
+
+        this.eventTimerLabelCoherent.resetTimer();
+        this.jToolBar2.setVisible(false);
+        this.jButtonCoherent.setVisible(false);
+    }//GEN-LAST:event_jButtonCoherentActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private gui.EventTimerLabel eventTimerLabelCoherent;
     private javax.swing.JButton jButtonClose;
+    private javax.swing.JButton jButtonCoherent;
     private javax.swing.JButton jButtonDown;
     private javax.swing.JButton jButtonLeft;
     private javax.swing.JButton jButtonMaximize;
@@ -1212,5 +1258,6 @@ public class WvWOverlayGui extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelEternal9;
     private javax.swing.JLabel jLabelMatchId;
     private javax.swing.JToolBar jToolBar1;
+    private javax.swing.JToolBar jToolBar2;
     // End of variables declaration//GEN-END:variables
 }

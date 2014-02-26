@@ -59,6 +59,7 @@ public class HomeWorldAllReader extends Thread {
     
     private JComboBox homeWorlds;
     private JComboBox jComboBoxLanguage;
+    private JCheckBox jCheckBoxWvW;
     
     private JLabel labelWorking;
     
@@ -81,7 +82,8 @@ public class HomeWorldAllReader extends Thread {
     
     public void setHashMap(HashMap hashMap, JComboBox homeWorlds,
             JLabel labelWorking, JButton workingButton,
-            JCheckBox refreshSelector, JComboBox jComboBoxLanguage) {
+            JCheckBox refreshSelector, JComboBox jComboBoxLanguage,
+            JCheckBox jCheckBoxWvW) {
                 
         this.labelWorking = labelWorking;
         
@@ -93,6 +95,7 @@ public class HomeWorldAllReader extends Thread {
         this.result = hashMap;
         this.homeWorlds = homeWorlds;
         this.jComboBoxLanguage = jComboBoxLanguage;
+        this.jCheckBoxWvW = jCheckBoxWvW;
     }
     
     public void setLanguage(String language) {
@@ -173,17 +176,31 @@ public class HomeWorldAllReader extends Thread {
                         this.workingButton.setEnabled(true);
                         this.homeWorlds.setEnabled(true);
                         this.jComboBoxLanguage.setEnabled(true);
+                        this.jCheckBoxWvW.setEnabled(true);
                         
                         this.apiManager.loadHomeWorldFromFile();
+                        
+                        request.releaseConnection();
+                        this.interrupt();
                     } catch (ParseException ex) {
-
-                        Logger.getLogger(ApiManager.class.getName()).log(
-                                Level.SEVERE, null, ex);
+                        try {
+                            Logger.getLogger(ApiManager.class.getName()).log(
+                                    Level.SEVERE, null, ex);
+                            
+                            request.releaseConnection();
+                            
+                            this.refreshSelector.setEnabled(false);
+                            this.workingButton.setEnabled(false);
+                            this.jComboBoxLanguage.setEnabled(false);
+                            this.jCheckBoxWvW.setEnabled(false);
+                            this.labelWorking.setText("connection error. retrying in 5...");
+                            this.labelWorking.setVisible(true);
+                            
+                            Thread.sleep(5000);
+                        } catch (InterruptedException ex1) {
+                            Logger.getLogger(HomeWorldAllReader.class.getName()).log(Level.SEVERE, null, ex1);
+                        }
                     }
-                    
-                    request.releaseConnection();
-                    
-                    this.interrupt();
                 } else {
                     try {
                         request.releaseConnection();
@@ -191,10 +208,11 @@ public class HomeWorldAllReader extends Thread {
                         this.refreshSelector.setEnabled(false);
                         this.workingButton.setEnabled(false);
                         this.jComboBoxLanguage.setEnabled(false);
+                        this.jCheckBoxWvW.setEnabled(false);
                         this.labelWorking.setText("connection error. retrying in 10...");
                         this.labelWorking.setVisible(true);
                         
-                        Thread.sleep(10000);
+                        Thread.sleep(5000);
                     } catch (InterruptedException ex) {
                         Logger.getLogger(HomeWorldAllReader.class.getName()).log(Level.SEVERE, null, ex);
                         
@@ -211,10 +229,11 @@ public class HomeWorldAllReader extends Thread {
                     this.refreshSelector.setEnabled(false);
                     this.workingButton.setEnabled(false);
                     this.jComboBoxLanguage.setEnabled(false);
-                    this.labelWorking.setText("connection error. retrying in 10...");
+                    this.jCheckBoxWvW.setEnabled(false);
+                    this.labelWorking.setText("connection error. retrying in 5...");
                     this.labelWorking.setVisible(true);
                     
-                    Thread.sleep(10000);
+                    Thread.sleep(5000);
                 } catch (InterruptedException ex1) {
                     Logger.getLogger(HomeWorldAllReader.class.getName()).log(Level.SEVERE, null, ex1);
                     
