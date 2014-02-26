@@ -1103,7 +1103,7 @@ public class GW2EventerGui extends javax.swing.JFrame {
         
         if (desktop != null && desktop.isSupported(Desktop.Action.BROWSE)) {
             try {
-                desktop.browse(new URI("http://gw2eventer.com/"));
+                desktop.browse(new URI("https://sourceforge.net/projects/gw2eventer/files/latest/download"));
             } catch (Exception e) {
                 e.printStackTrace();
             }
