@@ -252,6 +252,12 @@ public class WvWOverlayGui extends javax.swing.JFrame {
                 
                 this.ownerDataOld.put(new String(id), new String(owner));
             }
+            
+            if (this.activeMap.equals("Center")) {
+                this.setEternalColors();
+            } else {
+                this.setBorderlandsColors();
+            }
         }
         
         it = this.ownerData.entrySet().iterator();
@@ -291,11 +297,31 @@ public class WvWOverlayGui extends javax.swing.JFrame {
                 if ((!owner.equals(onwerOld)) && (currentTimer != null)) {
                     if (!currentTimer.isTicking()) {
                         currentTimer.startTimer();
+                        
+                        if (this.activeMap.equals(labelHome)) {
+                            currentTimer.setVisible(true);
+
+                            if (this.activeMap.equals("Center")) {
+                                currentLabel = (JLabel) this.labelsEternal.get(labelNumber - 1);
+                            } else {
+                                currentLabel = (JLabel) this.labelsBorderlands.get(labelNumber - 1);
+                            }
+                            
+                            try {
+                                Field f = getClass().getDeclaredField(labelType + owner);
+                                ImageIcon icon;
+
+                                try {
+                                    icon = (ImageIcon) f.get(this);
+                                    currentLabel.setIcon(icon);
+                                } catch (        IllegalArgumentException | IllegalAccessException ex) {
+                                    Logger.getLogger(WvWOverlayGui.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            } catch (    NoSuchFieldException | SecurityException ex) {
+                                Logger.getLogger(WvWOverlayGui.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                        }
                     }
-                }
-                
-                if (this.activeMap.equals(labelHome) && currentTimer.isTicking()) {
-                    currentTimer.setVisible(true);
                 }
             }
         }
@@ -313,11 +339,12 @@ public class WvWOverlayGui extends javax.swing.JFrame {
             this.ownerDataOld.put(new String(id), new String(owner));
         }
         
+        /*
         if (this.activeMap.equals("Center")) {
             this.setEternalColors();
         } else {
             this.setBorderlandsColors();
-        }
+        }*/
     }
     
     private void resetTimer() {
@@ -448,6 +475,10 @@ public class WvWOverlayGui extends javax.swing.JFrame {
     }
     
     private void showEternal(boolean show) {
+        
+        if (show) {
+            this.setEternalColors();
+        }
         
         for (int i = 1; i <= 22; i++) {
 
@@ -1164,11 +1195,12 @@ public class WvWOverlayGui extends javax.swing.JFrame {
 
         String selection = (String) this.jComboBoxWvW.getSelectedItem();
         
+        /*
         if (this.activeMap.equals("Center")) {
             this.setEternalColors();
         } else {
             this.setBorderlandsColors();
-        }
+        }*/
         
         switch (selection) {
             case "Eternal":
