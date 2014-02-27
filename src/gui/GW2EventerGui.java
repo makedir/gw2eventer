@@ -467,6 +467,7 @@ public class GW2EventerGui extends javax.swing.JFrame {
         
         if (visible) {
             this.reloadMatchIds();
+            this.jCheckBoxWvWOverlay.setSelected(true);
         } else {
             this.wvwOverlayGui.deactivateGui();
             this.jCheckBoxWvWOverlay.setSelected(false);

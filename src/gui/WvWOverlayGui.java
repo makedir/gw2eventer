@@ -1097,7 +1097,7 @@ public class WvWOverlayGui extends javax.swing.JFrame {
         jLabelToolTip.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         jLabelToolTip.setForeground(new java.awt.Color(255, 255, 255));
         jLabelToolTip.setFocusable(false);
-        getContentPane().add(jLabelToolTip, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 360, -1, -1));
+        getContentPane().add(jLabelToolTip, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 355, -1, -1));
 
         jToolBarInfo.setFloatable(false);
         jToolBarInfo.setFocusable(false);
