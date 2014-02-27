@@ -40,6 +40,7 @@
         </Property>
         <Property name="toolTipText" type="java.lang.String" value="Menu"/>
         <Property name="focusable" type="boolean" value="false"/>
+        <Property name="inheritsPopupMenu" type="boolean" value="false"/>
       </Properties>
       <Events>
         <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jLabelMenuMousePressed"/>

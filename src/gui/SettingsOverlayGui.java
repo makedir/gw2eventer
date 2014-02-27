@@ -101,6 +101,7 @@ public class SettingsOverlayGui extends javax.swing.JFrame {
         jLabelMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/media/menu.png"))); // NOI18N
         jLabelMenu.setToolTipText("Menu");
         jLabelMenu.setFocusable(false);
+        jLabelMenu.setInheritsPopupMenu(false);
         jLabelMenu.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 jLabelMenuMousePressed(evt);

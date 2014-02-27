@@ -33,10 +33,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
@@ -429,6 +427,17 @@ public class WvWOverlayGui extends javax.swing.JFrame {
         }
     }
     
+    private void showToolTip(String toolTip) {
+        
+        this.jLabelToolTip.setText(toolTip);
+        this.jLabelToolTip.setVisible(true);
+    }
+    
+    private void hideToolTip() {
+        
+        this.jLabelToolTip.setVisible(false);
+    }
+    
     private void initTimerandLabels() {
         
         for (int i = 1; i <= 22; i++) {
@@ -438,7 +447,16 @@ public class WvWOverlayGui extends javax.swing.JFrame {
             try {
                 f = getClass().getDeclaredField("jLabelEternal" + i);
 
-                JLabel l = (JLabel) f.get(this);
+                final JLabel l = (JLabel) f.get(this);
+                
+                l.addMouseListener(new java.awt.event.MouseAdapter() {
+                    public void mouseEntered(java.awt.event.MouseEvent evt) {
+                        showToolTip(l.getToolTipText());
+                    }
+                    public void mouseExited(java.awt.event.MouseEvent evt) {
+                        hideToolTip();
+                    }
+                });
                 
                 int width = l.getX();
                 int height = l.getY();
@@ -461,7 +479,17 @@ public class WvWOverlayGui extends javax.swing.JFrame {
             try {
                 f = getClass().getDeclaredField("jLabelBorderlands" + i);
 
-                JLabel l = (JLabel) f.get(this);
+                final JLabel l = (JLabel) f.get(this);
+                
+                l.addMouseListener(new java.awt.event.MouseAdapter() {
+                    public void mouseEntered(java.awt.event.MouseEvent evt) {
+                        showToolTip(l.getToolTipText());
+                    }
+                    public void mouseExited(java.awt.event.MouseEvent evt) {
+                        hideToolTip();
+                    }
+                });
+                
                 int width = l.getX();
                 int height = l.getY();
                 
@@ -769,6 +797,7 @@ public class WvWOverlayGui extends javax.swing.JFrame {
         jLabelBorderlands12 = new javax.swing.JLabel();
         jLabelMatchId = new javax.swing.JLabel();
         jLabelMenu = new javax.swing.JLabel();
+        jLabelToolTip = new javax.swing.JLabel();
         jToolBarInfo = new javax.swing.JToolBar();
         jButtonCoherent = new javax.swing.JButton();
         eventTimerLabelCoherent = new gui.EventTimerLabel();
@@ -1065,6 +1094,11 @@ public class WvWOverlayGui extends javax.swing.JFrame {
         });
         getContentPane().add(jLabelMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 20, -1, -1));
 
+        jLabelToolTip.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        jLabelToolTip.setForeground(new java.awt.Color(255, 255, 255));
+        jLabelToolTip.setFocusable(false);
+        getContentPane().add(jLabelToolTip, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 360, -1, -1));
+
         jToolBarInfo.setFloatable(false);
         jToolBarInfo.setFocusable(false);
         jToolBarInfo.setOpaque(false);
@@ -1330,6 +1364,7 @@ public class WvWOverlayGui extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelEternal9;
     private javax.swing.JLabel jLabelMatchId;
     private javax.swing.JLabel jLabelMenu;
+    private javax.swing.JLabel jLabelToolTip;
     private javax.swing.JToolBar jToolBarInfo;
     private javax.swing.JToolBar jToolBarMenu;
     // End of variables declaration//GEN-END:variables
