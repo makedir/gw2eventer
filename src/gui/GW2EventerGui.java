@@ -455,6 +455,8 @@ public class GW2EventerGui extends javax.swing.JFrame {
         
         this.jCheckBoxOverlay.setSelected(visible);
         this.overlayGui.setVisible(visible);
+        
+        this.settingsOverlayGui.setEvents(visible);
     }
     
     public void setSettingsOverlayVisible(boolean visible) {
@@ -472,6 +474,8 @@ public class GW2EventerGui extends javax.swing.JFrame {
             this.wvwOverlayGui.deactivateGui();
             this.jCheckBoxWvWOverlay.setSelected(false);
         }
+        
+        this.settingsOverlayGui.setWvW(visible);
     }
     
     public void setWvWOverlayX(int newX) {
