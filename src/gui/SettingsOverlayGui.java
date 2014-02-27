@@ -54,15 +54,20 @@ public class SettingsOverlayGui extends javax.swing.JFrame {
         this.jCheckBoxSound.setSelected(sound);
     }
     
-    public void setEvents(boolean sound) {
+    public void setEvents(boolean events) {
         
-        this.jCheckBoxEvents.setSelected(sound);
+        this.jCheckBoxEvents.setSelected(events);
     }
     
-    public void setWvW(boolean sound) {
+    public void setWvW(boolean wvw) {
         
         this.jCheckBoxWvW.setEnabled(true);
-        this.jCheckBoxWvW.setSelected(sound);
+        this.jCheckBoxWvW.setSelected(wvw);
+    }
+    
+    public void setWvWEnabled(boolean enabled) {
+        
+        this.jCheckBoxWvW.setEnabled(enabled);
     }
     
     /**
@@ -83,7 +88,6 @@ public class SettingsOverlayGui extends javax.swing.JFrame {
         jButtonRight = new javax.swing.JButton();
         jButtonUp = new javax.swing.JButton();
         jButtonDown = new javax.swing.JButton();
-        jButtonClose = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setAlwaysOnTop(true);
@@ -208,29 +212,10 @@ public class SettingsOverlayGui extends javax.swing.JFrame {
         });
         jToolBarMenu.add(jButtonDown);
 
-        jButtonClose.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
-        jButtonClose.setForeground(new java.awt.Color(255, 255, 255));
-        jButtonClose.setText("X");
-        jButtonClose.setFocusable(false);
-        jButtonClose.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButtonClose.setOpaque(false);
-        jButtonClose.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jButtonClose.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonCloseActionPerformed(evt);
-            }
-        });
-        jToolBarMenu.add(jButtonClose);
-
         getContentPane().add(jToolBarMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 320, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jButtonCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCloseActionPerformed
-
-        this.mainGui.setSettingsOverlayVisible(false);
-    }//GEN-LAST:event_jButtonCloseActionPerformed
 
     private void jLabelMenuMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelMenuMousePressed
 
@@ -362,7 +347,6 @@ public class SettingsOverlayGui extends javax.swing.JFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButtonClose;
     private javax.swing.JButton jButtonDown;
     private javax.swing.JButton jButtonLeft;
     private javax.swing.JButton jButtonRight;

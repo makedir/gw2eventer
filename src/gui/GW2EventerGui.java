@@ -227,7 +227,7 @@ public class GW2EventerGui extends javax.swing.JFrame {
     
     public static final int EVENT_COUNT = 23;
     
-    private static final String VERSION = "1.7";
+    private static final String VERSION = "1.6";
     
     private JButton workingButton;
     private JCheckBox refreshSelector;
@@ -740,6 +740,11 @@ public class GW2EventerGui extends javax.swing.JFrame {
                 jCheckBoxWvWOverlayActionPerformed(evt);
             }
         });
+        jCheckBoxWvWOverlay.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                jCheckBoxWvWOverlayPropertyChange(evt);
+            }
+        });
         jPanel3.add(jCheckBoxWvWOverlay);
 
         jCheckBoxSettingsOverlay.setText("Settings");
@@ -1234,6 +1239,13 @@ public class GW2EventerGui extends javax.swing.JFrame {
 
         this.settingsOverlayGui.setVisible(this.jCheckBoxSettingsOverlay.isSelected());
     }//GEN-LAST:event_jCheckBoxSettingsOverlayActionPerformed
+
+    private void jCheckBoxWvWOverlayPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jCheckBoxWvWOverlayPropertyChange
+
+        if (this.jCheckBoxWvWOverlay.isEnabled()) {
+            this.settingsOverlayGui.setWvWEnabled(true);
+        }
+    }//GEN-LAST:event_jCheckBoxWvWOverlayPropertyChange
     
     private void setTranslations() {
         
