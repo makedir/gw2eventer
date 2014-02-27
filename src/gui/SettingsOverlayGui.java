@@ -28,9 +28,6 @@ import java.awt.AWTException;
 import java.awt.MouseInfo;
 import java.awt.Point;
 import java.awt.Robot;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -38,103 +35,34 @@ import java.util.logging.Logger;
  *
  * @author mkdr <makedir@gmail.com>
  */
-public class OverlayGui extends javax.swing.JFrame {
+public class SettingsOverlayGui extends javax.swing.JFrame {
 
-    HashMap activeBEvents;
-    HashMap activePreEvents;
-    
     private GW2EventerGui mainGui;
     
     /**
-     * Creates new form OverlayGui
+     * Creates new form SettingsOverlayGui
      */
-    public OverlayGui(GW2EventerGui mainGui) {
+    public SettingsOverlayGui(GW2EventerGui mainGui) {
         
         this.mainGui = mainGui;
-        
-        this.activeBEvents = new HashMap();
-        this.activePreEvents = new HashMap();
         
         initComponents();
     }
 
-    public void setTranslations(String activeBEventsLabel, String activePreEventsLabel) {
+    public void setSound(boolean sound) {
         
-        this.jLabel1.setText(activeBEventsLabel);
-        this.jLabel2.setText(activePreEventsLabel);
+        this.jCheckBoxSound.setSelected(sound);
     }
     
-    public void clearActive() {
+    public void setEvents(boolean sound) {
         
-        this.activeBEvents.clear();
-        this.activePreEvents.clear();
+        this.jCheckBoxEvents.setSelected(sound);
     }
     
-    public void addActiveB(String name, String color) {
+    public void setWvW(boolean sound) {
         
-        this.activeBEvents.put(name, color);
-    }
-    
-    public void addActivePreEvent(String name, String color) {
-        
-        this.activePreEvents.put(name, color);
-    }
-    
-    public void renderActive() {
-        
-        String outBsTmp = "";
-        String outPresTmp = "";
-        
-        Iterator it = this.activeBEvents.entrySet().iterator();
-                    
-        while (it.hasNext()) {
-
-            Map.Entry pairs = (Map.Entry) it.next();
-
-            String name = (String) pairs.getKey();
-            String color = (String) pairs.getValue();
-            
-            if (color.equals("yellow")) {
-                outBsTmp = outBsTmp + "<b><font color=yellow>" + name + "</font></b><br>";
-            } else {
-                outBsTmp = outBsTmp + "<b>" + name + "</b><br>";
-            }
-            
-            it.remove();
-        }
-        
-        it = this.activePreEvents.entrySet().iterator();
-                    
-        while (it.hasNext()) {
-
-            Map.Entry pairs = (Map.Entry) it.next();
-
-            String name = (String) pairs.getKey();
-            String color = (String) pairs.getValue();
-            
-            if (color.equals("yellow")) {
-                outPresTmp = outPresTmp + "<b><font color=yellow>" + name + "</font></b><br>";
-            } else {
-                outPresTmp = outPresTmp + "<b>" + name + "</b><br>";
-            }
-            
-            it.remove();
-        }
-        
-        if (outBsTmp.equals("")) {
-            outBsTmp = "-";
-        } else {
-            outBsTmp = "<html>" + outBsTmp + "</html>";
-        }
-        
-        if (outPresTmp.equals("")) {
-            outPresTmp = "-";
-        } else {
-            outPresTmp = "<html>" + outPresTmp + "</html>";
-        }
-        
-        this.jLabelActiveBs.setText(outBsTmp);
-        this.jLabelActivePres.setText(outPresTmp);
+        this.jCheckBoxWvW.setEnabled(true);
+        this.jCheckBoxWvW.setSelected(sound);
     }
     
     /**
@@ -148,26 +76,21 @@ public class OverlayGui extends javax.swing.JFrame {
 
         jLabelMenu = new javax.swing.JLabel();
         jToolBarMenu = new javax.swing.JToolBar();
-        jLabel3 = new javax.swing.JLabel();
+        jCheckBoxSound = new javax.swing.JCheckBox();
+        jCheckBoxEvents = new javax.swing.JCheckBox();
+        jCheckBoxWvW = new javax.swing.JCheckBox();
         jButtonLeft = new javax.swing.JButton();
         jButtonRight = new javax.swing.JButton();
         jButtonUp = new javax.swing.JButton();
         jButtonDown = new javax.swing.JButton();
-        jButtonMinimize = new javax.swing.JButton();
-        jButtonMaximize = new javax.swing.JButton();
         jButtonClose = new javax.swing.JButton();
-        jToolBarContent = new javax.swing.JToolBar();
-        jLabel1 = new javax.swing.JLabel();
-        jLabelActiveBs = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabelActivePres = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
-        setTitle("GW2 Eventer overlay");
         setAlwaysOnTop(true);
         setFocusable(false);
         setFocusableWindowState(false);
         setUndecorated(true);
+        setPreferredSize(new java.awt.Dimension(400, 50));
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -179,18 +102,55 @@ public class OverlayGui extends javax.swing.JFrame {
                 jLabelMenuMousePressed(evt);
             }
         });
-        getContentPane().add(jLabelMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 20, -1, -1));
+        getContentPane().add(jLabelMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 20, -1, -1));
 
-        jToolBarMenu.setBorder(null);
         jToolBarMenu.setFloatable(false);
-        jToolBarMenu.setForeground(new java.awt.Color(255, 255, 255));
+        jToolBarMenu.setBorderPainted(false);
         jToolBarMenu.setFocusable(false);
         jToolBarMenu.setOpaque(false);
+        jToolBarMenu.setRequestFocusEnabled(false);
 
-        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel3.setText("Events");
-        jLabel3.setFocusable(false);
-        jToolBarMenu.add(jLabel3);
+        jCheckBoxSound.setForeground(new java.awt.Color(255, 255, 255));
+        jCheckBoxSound.setSelected(true);
+        jCheckBoxSound.setText("Sounds ");
+        jCheckBoxSound.setFocusable(false);
+        jCheckBoxSound.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        jCheckBoxSound.setOpaque(false);
+        jCheckBoxSound.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jCheckBoxSound.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBoxSoundActionPerformed(evt);
+            }
+        });
+        jToolBarMenu.add(jCheckBoxSound);
+
+        jCheckBoxEvents.setForeground(new java.awt.Color(255, 255, 255));
+        jCheckBoxEvents.setText("Events ");
+        jCheckBoxEvents.setFocusable(false);
+        jCheckBoxEvents.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        jCheckBoxEvents.setOpaque(false);
+        jCheckBoxEvents.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jCheckBoxEvents.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBoxEventsActionPerformed(evt);
+            }
+        });
+        jToolBarMenu.add(jCheckBoxEvents);
+
+        jCheckBoxWvW.setForeground(new java.awt.Color(255, 255, 255));
+        jCheckBoxWvW.setText("WvW ");
+        jCheckBoxWvW.setToolTipText("");
+        jCheckBoxWvW.setEnabled(false);
+        jCheckBoxWvW.setFocusable(false);
+        jCheckBoxWvW.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        jCheckBoxWvW.setOpaque(false);
+        jCheckBoxWvW.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jCheckBoxWvW.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBoxWvWActionPerformed(evt);
+            }
+        });
+        jToolBarMenu.add(jCheckBoxWvW);
 
         jButtonLeft.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         jButtonLeft.setForeground(new java.awt.Color(255, 255, 255));
@@ -248,35 +208,6 @@ public class OverlayGui extends javax.swing.JFrame {
         });
         jToolBarMenu.add(jButtonDown);
 
-        jButtonMinimize.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
-        jButtonMinimize.setForeground(new java.awt.Color(255, 255, 255));
-        jButtonMinimize.setText("min");
-        jButtonMinimize.setFocusable(false);
-        jButtonMinimize.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButtonMinimize.setOpaque(false);
-        jButtonMinimize.setPreferredSize(new java.awt.Dimension(30, 23));
-        jButtonMinimize.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jButtonMinimize.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonMinimizeActionPerformed(evt);
-            }
-        });
-        jToolBarMenu.add(jButtonMinimize);
-
-        jButtonMaximize.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
-        jButtonMaximize.setForeground(new java.awt.Color(255, 255, 255));
-        jButtonMaximize.setText("max");
-        jButtonMaximize.setFocusable(false);
-        jButtonMaximize.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButtonMaximize.setOpaque(false);
-        jButtonMaximize.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jButtonMaximize.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonMaximizeActionPerformed(evt);
-            }
-        });
-        jToolBarMenu.add(jButtonMaximize);
-
         jButtonClose.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         jButtonClose.setForeground(new java.awt.Color(255, 255, 255));
         jButtonClose.setText("X");
@@ -291,39 +222,24 @@ public class OverlayGui extends javax.swing.JFrame {
         });
         jToolBarMenu.add(jButtonClose);
 
-        getContentPane().add(jToolBarMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 246, -1));
-
-        jToolBarContent.setFloatable(false);
-        jToolBarContent.setOrientation(javax.swing.SwingConstants.VERTICAL);
-        jToolBarContent.setFocusable(false);
-        jToolBarContent.setOpaque(false);
-
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("active B events:");
-        jLabel1.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
-        jToolBarContent.add(jLabel1);
-
-        jLabelActiveBs.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
-        jLabelActiveBs.setForeground(new java.awt.Color(102, 255, 0));
-        jLabelActiveBs.setText("-");
-        jLabelActiveBs.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-        jToolBarContent.add(jLabelActiveBs);
-
-        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("active pre Events:");
-        jLabel2.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
-        jToolBarContent.add(jLabel2);
-
-        jLabelActivePres.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
-        jLabelActivePres.setForeground(new java.awt.Color(102, 255, 0));
-        jLabelActivePres.setText("-");
-        jLabelActivePres.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-        jToolBarContent.add(jLabelActivePres);
-
-        getContentPane().add(jToolBarContent, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 23, 246, 243));
+        getContentPane().add(jToolBarMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 320, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButtonCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCloseActionPerformed
+
+        this.mainGui.setSettingsOverlayVisible(false);
+    }//GEN-LAST:event_jButtonCloseActionPerformed
+
+    private void jLabelMenuMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelMenuMousePressed
+
+        if (this.jToolBarMenu.isVisible()) {
+            this.jToolBarMenu.setVisible(false);
+        } else {
+            this.jToolBarMenu.setVisible(true);
+        }
+    }//GEN-LAST:event_jLabelMenuMousePressed
 
     private void jButtonLeftActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLeftActionPerformed
 
@@ -338,7 +254,7 @@ public class OverlayGui extends javax.swing.JFrame {
                 mouseLoc = MouseInfo.getPointerInfo().getLocation();
                 rob.mouseMove(mouseLoc.x - 20, mouseLoc.y);
             } catch (AWTException ex) {
-                Logger.getLogger(OverlayGui.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(SettingsOverlayGui.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         
@@ -348,8 +264,7 @@ public class OverlayGui extends javax.swing.JFrame {
             x = x - 20;
         }
         
-        //this.setLocation(x, this.getY());
-        this.mainGui.setOverlayX(x);
+        this.mainGui.setSettingsOverlayX(x);
     }//GEN-LAST:event_jButtonLeftActionPerformed
 
     private void jButtonRightActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRightActionPerformed
@@ -365,7 +280,7 @@ public class OverlayGui extends javax.swing.JFrame {
                 mouseLoc = MouseInfo.getPointerInfo().getLocation();
                 rob.mouseMove(mouseLoc.x + 20, mouseLoc.y);
             } catch (AWTException ex) {
-                Logger.getLogger(OverlayGui.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(SettingsOverlayGui.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         
@@ -375,8 +290,7 @@ public class OverlayGui extends javax.swing.JFrame {
             x = x + 20;
         }
         
-        //this.setLocation(x, this.getY());
-        this.mainGui.setOverlayX(x);
+        this.mainGui.setSettingsOverlayX(x);
     }//GEN-LAST:event_jButtonRightActionPerformed
 
     private void jButtonUpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonUpActionPerformed
@@ -392,7 +306,7 @@ public class OverlayGui extends javax.swing.JFrame {
                 mouseLoc = MouseInfo.getPointerInfo().getLocation();
                 rob.mouseMove(mouseLoc.x, mouseLoc.y - 20);
             } catch (AWTException ex) {
-                Logger.getLogger(OverlayGui.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(SettingsOverlayGui.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         
@@ -402,8 +316,7 @@ public class OverlayGui extends javax.swing.JFrame {
             y = y - 20;
         }
         
-        //this.setLocation(this.getX(), y);
-        this.mainGui.setOverlayY(y);
+        this.mainGui.setSettingsOverlayY(y);
     }//GEN-LAST:event_jButtonUpActionPerformed
 
     private void jButtonDownActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDownActionPerformed
@@ -419,7 +332,7 @@ public class OverlayGui extends javax.swing.JFrame {
                 mouseLoc = MouseInfo.getPointerInfo().getLocation();
                 rob.mouseMove(mouseLoc.x, mouseLoc.y + 20);
             } catch (AWTException ex) {
-                Logger.getLogger(OverlayGui.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(SettingsOverlayGui.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         
@@ -429,50 +342,35 @@ public class OverlayGui extends javax.swing.JFrame {
             y = y + 20;
         }
         
-        //this.setLocation(this.getX(), y);
-        this.mainGui.setOverlayY(y);
+        this.mainGui.setSettingsOverlayY(y);
     }//GEN-LAST:event_jButtonDownActionPerformed
 
-    private void jButtonMaximizeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonMaximizeActionPerformed
+    private void jCheckBoxSoundActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxSoundActionPerformed
 
-        this.setSize(this.getWidth(), 600);
-    }//GEN-LAST:event_jButtonMaximizeActionPerformed
+        this.mainGui.setSoundPlaying(this.jCheckBoxSound.isSelected());
+    }//GEN-LAST:event_jCheckBoxSoundActionPerformed
 
-    private void jButtonMinimizeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonMinimizeActionPerformed
+    private void jCheckBoxEventsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxEventsActionPerformed
+        
+        this.mainGui.setOverlayVisible(this.jCheckBoxEvents.isSelected());
+    }//GEN-LAST:event_jCheckBoxEventsActionPerformed
 
-        this.setSize(this.getWidth(), 25);
-    }//GEN-LAST:event_jButtonMinimizeActionPerformed
+    private void jCheckBoxWvWActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxWvWActionPerformed
 
-    private void jButtonCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCloseActionPerformed
-
-        this.mainGui.setOverlayVisible(false);
-    }//GEN-LAST:event_jButtonCloseActionPerformed
-
-    private void jLabelMenuMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelMenuMousePressed
-
-        if (this.jToolBarMenu.isVisible()) {
-            this.jToolBarMenu.setVisible(false);
-        } else {
-            this.jToolBarMenu.setVisible(true);
-        }
-    }//GEN-LAST:event_jLabelMenuMousePressed
+        this.mainGui.setWvWOverlayVisible(this.jCheckBoxWvW.isSelected());
+    }//GEN-LAST:event_jCheckBoxWvWActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonClose;
     private javax.swing.JButton jButtonDown;
     private javax.swing.JButton jButtonLeft;
-    private javax.swing.JButton jButtonMaximize;
-    private javax.swing.JButton jButtonMinimize;
     private javax.swing.JButton jButtonRight;
     private javax.swing.JButton jButtonUp;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabelActiveBs;
-    private javax.swing.JLabel jLabelActivePres;
+    private javax.swing.JCheckBox jCheckBoxEvents;
+    private javax.swing.JCheckBox jCheckBoxSound;
+    private javax.swing.JCheckBox jCheckBoxWvW;
     private javax.swing.JLabel jLabelMenu;
-    private javax.swing.JToolBar jToolBarContent;
     private javax.swing.JToolBar jToolBarMenu;
     // End of variables declaration//GEN-END:variables
 }

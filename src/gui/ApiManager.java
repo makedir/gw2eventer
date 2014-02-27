@@ -323,6 +323,8 @@ public class ApiManager {
             oos.writeObject("" + this.gui.getOverlayY());
             oos.writeObject("" + this.gui.getWvWOverlayX());
             oos.writeObject("" + this.gui.getWvWOverlayY());
+            oos.writeObject("" + this.gui.getSettingsOverlayX());
+            oos.writeObject("" + this.gui.getSettingsOverlayY());
         } catch (Exception ex) {
             
             ex.printStackTrace();
@@ -429,6 +431,22 @@ public class ApiManager {
                         int parseInt = Integer.parseInt((String) readCase);
                         this.gui.setWvWOverlayY(parseInt);
                     }
+                    
+                    readCase = null;
+                    readCase = (String) objectinputstream.readObject();
+                    
+                    if (readCase != null) {
+                        int parseInt = Integer.parseInt((String) readCase);
+                        this.gui.setSettingsOverlayX(parseInt);
+                    }
+                    
+                    readCase = null;
+                    readCase = (String) objectinputstream.readObject();
+                    
+                    if (readCase != null) {
+                        int parseInt = Integer.parseInt((String) readCase);
+                        this.gui.setSettingsOverlayY(parseInt);
+                    }
                 } else {
                     
                     this.saveSettingstoFile();
@@ -485,7 +503,7 @@ public class ApiManager {
                         this.jComboBoxHomeWorlds.setVisible(false);
                         this.jComboBoxHomeWorlds.setVisible(true);
                         
-                        this.gui.setMatchId();
+                        //this.gui.setMatchId();
                     }
                 } else {
                     

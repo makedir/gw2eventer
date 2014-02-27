@@ -33,8 +33,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
@@ -219,9 +221,15 @@ public class WvWOverlayGui extends javax.swing.JFrame {
         this.initTimerandLabels();
     }
     
-    public void setTranslations(String coherent) {
+    public void setTranslations(String coherent, String eternal, String green, String red, String blue) {
         
         this.eventTimerLabelCoherent.setCustomText(coherent);
+        
+        this.jComboBoxWvW.removeAllItems();
+        this.jComboBoxWvW.addItem(eternal);
+        this.jComboBoxWvW.addItem(green);
+        this.jComboBoxWvW.addItem(red);
+        this.jComboBoxWvW.addItem(blue);
     }
     
     public void setMatchIdColor(String color) {
@@ -378,7 +386,11 @@ public class WvWOverlayGui extends javax.swing.JFrame {
         
         this.jButtonRefresh.setEnabled(true);
         
-        this.jToolBar2.setVisible(true);
+        this.jToolBarMenu.setVisible(true);
+        this.jComboBoxWvW.setVisible(true);
+        this.jLabelMatchId.setVisible(true);
+        
+        this.jToolBarInfo.setVisible(true);
         this.jButtonCoherent.setVisible(true);
         
         this.mainGui.setMatchId();
@@ -406,6 +418,7 @@ public class WvWOverlayGui extends javax.swing.JFrame {
     public void deactivateGui() {
         
         if (this.wvwReader != null) {
+            
             this.wvwReader.interrupt();
         
             this.ownerDataOld.clear();
@@ -709,8 +722,8 @@ public class WvWOverlayGui extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jToolBar1 = new javax.swing.JToolBar();
         jComboBoxWvW = new javax.swing.JComboBox();
+        jToolBarMenu = new javax.swing.JToolBar();
         jButtonRefresh = new javax.swing.JButton();
         jButtonLeft = new javax.swing.JButton();
         jButtonRight = new javax.swing.JButton();
@@ -755,7 +768,8 @@ public class WvWOverlayGui extends javax.swing.JFrame {
         jLabelBorderlands11 = new javax.swing.JLabel();
         jLabelBorderlands12 = new javax.swing.JLabel();
         jLabelMatchId = new javax.swing.JLabel();
-        jToolBar2 = new javax.swing.JToolBar();
+        jLabelMenu = new javax.swing.JLabel();
+        jToolBarInfo = new javax.swing.JToolBar();
         jButtonCoherent = new javax.swing.JButton();
         eventTimerLabelCoherent = new gui.EventTimerLabel();
 
@@ -767,13 +781,7 @@ public class WvWOverlayGui extends javax.swing.JFrame {
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jToolBar1.setBorder(null);
-        jToolBar1.setForeground(new java.awt.Color(255, 255, 255));
-        jToolBar1.setRollover(true);
-        jToolBar1.setFocusable(false);
-        jToolBar1.setOpaque(false);
-
-        jComboBoxWvW.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Eternal", "Green", "Blue", "Red" }));
+        jComboBoxWvW.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Eternal", "Green", "Red", "Blue" }));
         jComboBoxWvW.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jComboBoxWvW.setFocusable(false);
         jComboBoxWvW.setOpaque(false);
@@ -782,7 +790,13 @@ public class WvWOverlayGui extends javax.swing.JFrame {
                 jComboBoxWvWActionPerformed(evt);
             }
         });
-        jToolBar1.add(jComboBoxWvW);
+        getContentPane().add(jComboBoxWvW, new org.netbeans.lib.awtextra.AbsoluteConstraints(239, 40, -1, -1));
+
+        jToolBarMenu.setBorder(null);
+        jToolBarMenu.setForeground(new java.awt.Color(255, 255, 255));
+        jToolBarMenu.setRollover(true);
+        jToolBarMenu.setFocusable(false);
+        jToolBarMenu.setOpaque(false);
 
         jButtonRefresh.setForeground(new java.awt.Color(255, 255, 255));
         jButtonRefresh.setText("Reset");
@@ -795,7 +809,7 @@ public class WvWOverlayGui extends javax.swing.JFrame {
                 jButtonRefreshActionPerformed(evt);
             }
         });
-        jToolBar1.add(jButtonRefresh);
+        jToolBarMenu.add(jButtonRefresh);
 
         jButtonLeft.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         jButtonLeft.setForeground(new java.awt.Color(255, 255, 255));
@@ -809,7 +823,7 @@ public class WvWOverlayGui extends javax.swing.JFrame {
                 jButtonLeftActionPerformed(evt);
             }
         });
-        jToolBar1.add(jButtonLeft);
+        jToolBarMenu.add(jButtonLeft);
 
         jButtonRight.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         jButtonRight.setForeground(new java.awt.Color(255, 255, 255));
@@ -823,7 +837,7 @@ public class WvWOverlayGui extends javax.swing.JFrame {
                 jButtonRightActionPerformed(evt);
             }
         });
-        jToolBar1.add(jButtonRight);
+        jToolBarMenu.add(jButtonRight);
 
         jButtonUp.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         jButtonUp.setForeground(new java.awt.Color(255, 255, 255));
@@ -837,7 +851,7 @@ public class WvWOverlayGui extends javax.swing.JFrame {
                 jButtonUpActionPerformed(evt);
             }
         });
-        jToolBar1.add(jButtonUp);
+        jToolBarMenu.add(jButtonUp);
 
         jButtonDown.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         jButtonDown.setForeground(new java.awt.Color(255, 255, 255));
@@ -851,7 +865,7 @@ public class WvWOverlayGui extends javax.swing.JFrame {
                 jButtonDownActionPerformed(evt);
             }
         });
-        jToolBar1.add(jButtonDown);
+        jToolBarMenu.add(jButtonDown);
 
         jButtonMinimize.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         jButtonMinimize.setForeground(new java.awt.Color(255, 255, 255));
@@ -866,7 +880,7 @@ public class WvWOverlayGui extends javax.swing.JFrame {
                 jButtonMinimizeActionPerformed(evt);
             }
         });
-        jToolBar1.add(jButtonMinimize);
+        jToolBarMenu.add(jButtonMinimize);
 
         jButtonMaximize.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         jButtonMaximize.setForeground(new java.awt.Color(255, 255, 255));
@@ -880,7 +894,7 @@ public class WvWOverlayGui extends javax.swing.JFrame {
                 jButtonMaximizeActionPerformed(evt);
             }
         });
-        jToolBar1.add(jButtonMaximize);
+        jToolBarMenu.add(jButtonMaximize);
 
         jButtonClose.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         jButtonClose.setForeground(new java.awt.Color(255, 255, 255));
@@ -894,9 +908,9 @@ public class WvWOverlayGui extends javax.swing.JFrame {
                 jButtonCloseActionPerformed(evt);
             }
         });
-        jToolBar1.add(jButtonClose);
+        jToolBarMenu.add(jButtonClose);
 
-        getContentPane().add(jToolBar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+        getContentPane().add(jToolBarMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         jLabelEternal22.setIcon(new javax.swing.ImageIcon(getClass().getResource("/media/wvw/camp_red.png"))); // NOI18N
         jLabelEternal22.setFocusable(false);
@@ -1039,11 +1053,21 @@ public class WvWOverlayGui extends javax.swing.JFrame {
 
         jLabelMatchId.setForeground(new java.awt.Color(255, 255, 255));
         jLabelMatchId.setText("matchid:");
-        getContentPane().add(jLabelMatchId, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, -1, -1));
+        getContentPane().add(jLabelMatchId, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 25, -1, -1));
 
-        jToolBar2.setFloatable(false);
-        jToolBar2.setFocusable(false);
-        jToolBar2.setOpaque(false);
+        jLabelMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/media/menu.png"))); // NOI18N
+        jLabelMenu.setToolTipText("Menu");
+        jLabelMenu.setFocusable(false);
+        jLabelMenu.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jLabelMenuMousePressed(evt);
+            }
+        });
+        getContentPane().add(jLabelMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 20, -1, -1));
+
+        jToolBarInfo.setFloatable(false);
+        jToolBarInfo.setFocusable(false);
+        jToolBarInfo.setOpaque(false);
 
         jButtonCoherent.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         jButtonCoherent.setForeground(new java.awt.Color(255, 255, 255));
@@ -1060,10 +1084,10 @@ public class WvWOverlayGui extends javax.swing.JFrame {
                 jButtonCoherentActionPerformed(evt);
             }
         });
-        jToolBar2.add(jButtonCoherent);
-        jToolBar2.add(eventTimerLabelCoherent);
+        jToolBarInfo.add(jButtonCoherent);
+        jToolBarInfo.add(eventTimerLabelCoherent);
 
-        getContentPane().add(jToolBar2, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 367, 290, -1));
+        getContentPane().add(jToolBarInfo, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 367, 290, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -1193,7 +1217,11 @@ public class WvWOverlayGui extends javax.swing.JFrame {
 
     private void jComboBoxWvWActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxWvWActionPerformed
 
-        String selection = (String) this.jComboBoxWvW.getSelectedItem();
+        this.jComboBoxWvW.setVisible(false);
+        this.jLabelMatchId.setVisible(false);
+        this.jToolBarMenu.setVisible(false);
+        
+        int selection = this.jComboBoxWvW.getSelectedIndex();
         
         /*
         if (this.activeMap.equals("Center")) {
@@ -1203,22 +1231,22 @@ public class WvWOverlayGui extends javax.swing.JFrame {
         }*/
         
         switch (selection) {
-            case "Eternal":
+            case 0:
                 this.activeMap = "Center";
                 this.showEternal(true);
                 this.showBorderlands(false);
                 break;
-            case "Red":
-                this.activeMap = "RedHome";
-                this.showEternal(false);
-                this.showBorderlands(true);
-                break;
-            case "Green":
+            case 1:
                 this.activeMap = "GreenHome";
                 this.showEternal(false);
                 this.showBorderlands(true);
                 break;
-            case "Blue":
+            case 2:
+                this.activeMap = "RedHome";
+                this.showEternal(false);
+                this.showBorderlands(true);
+                break;
+            case 3:
                 this.activeMap = "BlueHome";
                 this.showEternal(false);
                 this.showBorderlands(true);
@@ -1229,16 +1257,28 @@ public class WvWOverlayGui extends javax.swing.JFrame {
     private void jButtonRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRefreshActionPerformed
 
         this.jButtonRefresh.setEnabled(false);
-        
         this.mainGui.reloadMatchIds();
     }//GEN-LAST:event_jButtonRefreshActionPerformed
 
     private void jButtonCoherentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCoherentActionPerformed
 
         this.eventTimerLabelCoherent.resetTimer();
-        this.jToolBar2.setVisible(false);
+        this.jToolBarInfo.setVisible(false);
         this.jButtonCoherent.setVisible(false);
     }//GEN-LAST:event_jButtonCoherentActionPerformed
+
+    private void jLabelMenuMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelMenuMousePressed
+
+        if (this.jToolBarMenu.isVisible()) {
+            this.jToolBarMenu.setVisible(false);
+            this.jComboBoxWvW.setVisible(false);
+            this.jLabelMatchId.setVisible(false);
+        } else {
+            this.jToolBarMenu.setVisible(true);
+            this.jComboBoxWvW.setVisible(true);
+            this.jLabelMatchId.setVisible(true);
+        }
+    }//GEN-LAST:event_jLabelMenuMousePressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -1289,7 +1329,8 @@ public class WvWOverlayGui extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelEternal8;
     private javax.swing.JLabel jLabelEternal9;
     private javax.swing.JLabel jLabelMatchId;
-    private javax.swing.JToolBar jToolBar1;
-    private javax.swing.JToolBar jToolBar2;
+    private javax.swing.JLabel jLabelMenu;
+    private javax.swing.JToolBar jToolBarInfo;
+    private javax.swing.JToolBar jToolBarMenu;
     // End of variables declaration//GEN-END:variables
 }

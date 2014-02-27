@@ -80,7 +80,7 @@ public class GW2EventerGui extends javax.swing.JFrame {
     private static final String LANG_PLAY_SOUNDS_ES = "play sounds";
     private static final String LANG_PLAY_SOUNDS_FR = "play sounds";
     
-    private static final String LANG_PREVENT_SLEEP_DE = "PC Sleepmode verhindern";
+    private static final String LANG_PREVENT_SLEEP_DE = "Standy verhindern";
     private static final String LANG_PREVENT_SLEEP_EN = "prevent pc sleep";
     private static final String LANG_PREVENT_SLEEP_ES = "prevent pc sleep";
     private static final String LANG_PREVENT_SLEEP_FR = "prevent pc sleep";
@@ -205,9 +205,29 @@ public class GW2EventerGui extends javax.swing.JFrame {
     private static final String LANG_OVERLAY_WVW_COHERENT_ES = "Time until data is coherent: ";
     private static final String LANG_OVERLAY_WVW_COHERENT_FR = "Time until data is coherent: ";
     
+    private static final String LANG_GREEN_DE = "Grün";
+    private static final String LANG_GREEN_EN = "Green";
+    private static final String LANG_GREEN_ES = "Green";
+    private static final String LANG_GREEN_FR = "Green";
+    
+    private static final String LANG_RED_DE = "Rot";
+    private static final String LANG_RED_EN = "Red";
+    private static final String LANG_RED_ES = "Red";
+    private static final String LANG_RED_FR = "Red";
+    
+    private static final String LANG_BLUE_DE = "Blau";
+    private static final String LANG_BLUE_EN = "Blue";
+    private static final String LANG_BLUE_ES = "Blue";
+    private static final String LANG_BLUE_FR = "Blue";
+    
+    private static final String LANG_ETERNAL_DE = "Ewige";
+    private static final String LANG_ETERNAL_EN = "Eternal";
+    private static final String LANG_ETERNAL_ES = "Eternal";
+    private static final String LANG_ETERNAL_FR = "Eternal";
+    
     public static final int EVENT_COUNT = 23;
     
-    private static final String VERSION = "1.6";
+    private static final String VERSION = "1.7";
     
     private JButton workingButton;
     private JCheckBox refreshSelector;
@@ -236,12 +256,16 @@ public class GW2EventerGui extends javax.swing.JFrame {
     
     private OverlayGui overlayGui;
     private WvWOverlayGui wvwOverlayGui;
+    private SettingsOverlayGui settingsOverlayGui;
     
     private int overlayX;
     private int overlayY;
     
     private int wvwOverlayX;
     private int wvwOverlayY;
+    
+    private int settingsOverlayX;
+    private int settingsOverlayY;
     
     private String matchId;
     private String matchIdColor;
@@ -323,11 +347,17 @@ public class GW2EventerGui extends javax.swing.JFrame {
         this.overlayX = 20;
         this.overlayY = 120;
         
+        this.settingsOverlayGui = new SettingsOverlayGui(this);
+        this.initSettingsOverlayGui();
+        
+        this.settingsOverlayX = 20;
+        this.settingsOverlayY = 220;
+        
         this.wvwOverlayGui = new WvWOverlayGui(this);
         this.initWvwOverlayGui();
         
         this.wvwOverlayX = 20;
-        this.wvwOverlayY = 420;
+        this.wvwOverlayY = 270;
         
         this.language = "en";
         this.worldID = "2206"; //Millersund [DE]
@@ -392,7 +422,7 @@ public class GW2EventerGui extends javax.swing.JFrame {
                 this.jComboBoxHomeWorld, this.jLabelServer, this.jLabelWorking,
                 this.jCheckBoxPlaySounds.isSelected(), this.workingButton,
                 this.refreshSelector, this.eventLabelsTimer,
-                this.jComboBoxLanguage, this.overlayGui, this.jCheckBoxWvW);
+                this.jComboBoxLanguage, this.overlayGui, this.jCheckBoxWvWOverlay);
         }
         
         //this.wvwMatchReader = new WvWMatchReader(this.matchIds, this.jCheckBoxWvW);
@@ -409,7 +439,7 @@ public class GW2EventerGui extends javax.swing.JFrame {
         
         this.matchIds = new HashMap();
         
-        this.wvwMatchReader = new WvWMatchReader(this.matchIds, this.jCheckBoxWvW);
+        this.wvwMatchReader = new WvWMatchReader(this.matchIds, this.jCheckBoxWvWOverlay);
         this.wvwMatchReader.start();
         
         try {
@@ -427,14 +457,19 @@ public class GW2EventerGui extends javax.swing.JFrame {
         this.overlayGui.setVisible(visible);
     }
     
+    public void setSettingsOverlayVisible(boolean visible) {
+        
+        this.jCheckBoxSettingsOverlay.setSelected(visible);
+        this.settingsOverlayGui.setVisible(visible);
+    }
+    
     public void setWvWOverlayVisible(boolean visible) {
         
-        this.jCheckBoxWvW.setSelected(visible);
-        
         if (visible) {
-            this.wvwOverlayGui.startGui();
+            this.reloadMatchIds();
         } else {
             this.wvwOverlayGui.deactivateGui();
+            this.jCheckBoxWvWOverlay.setSelected(false);
         }
     }
     
@@ -486,6 +521,40 @@ public class GW2EventerGui extends javax.swing.JFrame {
         return this.overlayY;
     }
     
+    public void setSettingsOverlayX(int newX) {
+        
+        this.settingsOverlayX = newX;
+        this.settingsOverlayGui.setLocation(newX, this.settingsOverlayGui.getY());
+    }
+    
+    public void setSettingsOverlayY(int newY) {
+        
+        this.settingsOverlayY = newY;
+        this.settingsOverlayGui.setLocation(this.settingsOverlayGui.getX(), newY);
+    }
+    
+    public int getSettingsOverlayX() {
+        
+        return this.settingsOverlayX;
+    }
+    
+    public int getSettingsOverlayY() {
+        
+        return this.settingsOverlayY;
+    }
+    
+    public void setSoundPlaying(boolean play) {
+        
+        this.apiManager.setPlaySounds(play);
+        this.jCheckBoxPlaySounds.setSelected(play);
+    }
+    
+    public void setEventOverlay(boolean play) {
+        
+        this.apiManager.setPlaySounds(play);
+        this.jCheckBoxPlaySounds.setSelected(play);
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -506,8 +575,11 @@ public class GW2EventerGui extends javax.swing.JFrame {
         jCheckBoxAutoRefresh = new javax.swing.JCheckBox();
         jCheckBoxPlaySounds = new javax.swing.JCheckBox();
         jCheckBoxSystemSleep = new javax.swing.JCheckBox();
+        jSeparator1 = new javax.swing.JSeparator();
+        jLabel4 = new javax.swing.JLabel();
         jCheckBoxOverlay = new javax.swing.JCheckBox();
-        jCheckBoxWvW = new javax.swing.JCheckBox();
+        jCheckBoxWvWOverlay = new javax.swing.JCheckBox();
+        jCheckBoxSettingsOverlay = new javax.swing.JCheckBox();
         jPanel2 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -645,7 +717,15 @@ public class GW2EventerGui extends javax.swing.JFrame {
         });
         jPanel3.add(jCheckBoxSystemSleep);
 
-        jCheckBoxOverlay.setText("Overlay");
+        jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
+        jSeparator1.setToolTipText("");
+        jSeparator1.setPreferredSize(new java.awt.Dimension(2, 20));
+        jPanel3.add(jSeparator1);
+
+        jLabel4.setText("Overlay:");
+        jPanel3.add(jLabel4);
+
+        jCheckBoxOverlay.setText("Events");
         jCheckBoxOverlay.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jCheckBoxOverlayActionPerformed(evt);
@@ -653,14 +733,22 @@ public class GW2EventerGui extends javax.swing.JFrame {
         });
         jPanel3.add(jCheckBoxOverlay);
 
-        jCheckBoxWvW.setText("WvW");
-        jCheckBoxWvW.setEnabled(false);
-        jCheckBoxWvW.addActionListener(new java.awt.event.ActionListener() {
+        jCheckBoxWvWOverlay.setText("WvW");
+        jCheckBoxWvWOverlay.setEnabled(false);
+        jCheckBoxWvWOverlay.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckBoxWvWActionPerformed(evt);
+                jCheckBoxWvWOverlayActionPerformed(evt);
             }
         });
-        jPanel3.add(jCheckBoxWvW);
+        jPanel3.add(jCheckBoxWvWOverlay);
+
+        jCheckBoxSettingsOverlay.setText("Settings");
+        jCheckBoxSettingsOverlay.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBoxSettingsOverlayActionPerformed(evt);
+            }
+        });
+        jPanel3.add(jCheckBoxSettingsOverlay);
 
         jPanel1.add(jPanel3);
 
@@ -1022,7 +1110,8 @@ public class GW2EventerGui extends javax.swing.JFrame {
 
     private void jCheckBoxPlaySoundsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxPlaySoundsActionPerformed
 
-        this.apiManager.setPlaySounds(this.jCheckBoxPlaySounds.isSelected());
+        this.setSoundPlaying(this.jCheckBoxPlaySounds.isSelected());
+        this.settingsOverlayGui.setSound(this.jCheckBoxPlaySounds.isSelected());
     }//GEN-LAST:event_jCheckBoxPlaySoundsActionPerformed
 
     private void jCheckBoxAutoRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxAutoRefreshActionPerformed
@@ -1074,14 +1163,14 @@ public class GW2EventerGui extends javax.swing.JFrame {
         this.setTranslations();
 
         if (this.apiManager == null) {
-
+            
             this.apiManager = new ApiManager(this, this.jSpinnerRefreshTime,
                 this.jCheckBoxAutoRefresh.isSelected(), this.eventLabels,
                 this.language, this.worldID, this.homeWorlds,
                 this.jComboBoxHomeWorld, this.jLabelServer, this.jLabelWorking,
                 this.jCheckBoxPlaySounds.isSelected(), this.workingButton,
                 this.refreshSelector, this.eventLabelsTimer,
-                this.jComboBoxLanguage, this.overlayGui, this.jCheckBoxWvW);
+                this.jComboBoxLanguage, this.overlayGui, this.jCheckBoxWvWOverlay);
         }
 
         this.apiManager.homeWorldsReload((String) this.jComboBoxLanguage.getSelectedItem());
@@ -1090,11 +1179,12 @@ public class GW2EventerGui extends javax.swing.JFrame {
 
     private void jComboBoxHomeWorldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxHomeWorldActionPerformed
 
+        /*
         if (this.jComboBoxHomeWorld.getSelectedItem() != null) {
             if (this.matchIds.size() > 0) {
                 this.setMatchId();
             }
-        }
+        }*/
     }//GEN-LAST:event_jComboBoxHomeWorldActionPerformed
 
     private void jLabelNewVersionMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelNewVersionMousePressed
@@ -1130,22 +1220,20 @@ public class GW2EventerGui extends javax.swing.JFrame {
 
     private void jCheckBoxOverlayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxOverlayActionPerformed
 
-        this.overlayGui.setVisible(this.jCheckBoxOverlay.isSelected());
+        this.setOverlayVisible(this.jCheckBoxOverlay.isSelected());
+        this.settingsOverlayGui.setEvents(this.jCheckBoxOverlay.isSelected());
     }//GEN-LAST:event_jCheckBoxOverlayActionPerformed
 
-    private void jCheckBoxWvWActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxWvWActionPerformed
+    private void jCheckBoxWvWOverlayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxWvWOverlayActionPerformed
 
-        if (this.jComboBoxHomeWorld.isEnabled()) {
-            
-            if (this.jCheckBoxWvW.isSelected()) {
-                this.reloadMatchIds();
-            } else {
-                this.wvwOverlayGui.deactivateGui();
-            }
-        } else {
-            this.jCheckBoxWvW.setSelected(false);
-        }
-    }//GEN-LAST:event_jCheckBoxWvWActionPerformed
+        this.setWvWOverlayVisible(this.jCheckBoxWvWOverlay.isSelected());
+        this.settingsOverlayGui.setWvW(this.jCheckBoxWvWOverlay.isSelected());
+    }//GEN-LAST:event_jCheckBoxWvWOverlayActionPerformed
+
+    private void jCheckBoxSettingsOverlayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxSettingsOverlayActionPerformed
+
+        this.settingsOverlayGui.setVisible(this.jCheckBoxSettingsOverlay.isSelected());
+    }//GEN-LAST:event_jCheckBoxSettingsOverlayActionPerformed
     
     private void setTranslations() {
         
@@ -1184,7 +1272,11 @@ public class GW2EventerGui extends javax.swing.JFrame {
             this.overlayGui.setTranslations((String) getClass().getDeclaredField("LANG_OVERLAY_B_ACTIVE_" + selectedLang).get(null),
                     (String) getClass().getDeclaredField("LANG_OVERLAY_PRE_ACTIVE_" + selectedLang).get(null));
             
-            this.wvwOverlayGui.setTranslations((String) getClass().getDeclaredField("LANG_OVERLAY_WVW_COHERENT_" + selectedLang).get(null));
+            this.wvwOverlayGui.setTranslations((String) getClass().getDeclaredField("LANG_OVERLAY_WVW_COHERENT_" + selectedLang).get(null),
+                    (String) getClass().getDeclaredField("LANG_ETERNAL_" + selectedLang).get(null),
+                    (String) getClass().getDeclaredField("LANG_GREEN_" + selectedLang).get(null),
+                    (String) getClass().getDeclaredField("LANG_RED_" + selectedLang).get(null),
+                    (String) getClass().getDeclaredField("LANG_BLUE_" + selectedLang).get(null));
         } catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException ex) {
             Logger.getLogger(GW2EventerGui.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -1243,6 +1335,19 @@ public class GW2EventerGui extends javax.swing.JFrame {
         return this.matchIdColor;
     }
     
+    private void initSettingsOverlayGui() {
+        
+        this.settingsOverlayGui.setIconImage(guiIcon);
+        this.settingsOverlayGui.setSize(350, 44);
+        this.settingsOverlayGui.setVisible(false);
+        
+        //Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        //this.settingsOverlayGui.setLocation(0, (screenSize.height/2-this.overlayGui.getSize().height/2) + 100);
+        
+        this.settingsOverlayGui.setBackground(new Color(0, 0, 0, 0));
+        this.settingsOverlayGui.setAlwaysOnTop(true);
+    }
+    
     private void initOverlayGui() {
         
         this.overlayGui.setIconImage(guiIcon);
@@ -1252,8 +1357,8 @@ public class GW2EventerGui extends javax.swing.JFrame {
         //this.overlayGui.setLocationRelativeTo(null);
         //this.overlayGui.setLocation(0, 200);
         
-        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        this.overlayGui.setLocation(0, (screenSize.height/2-this.overlayGui.getSize().height/2) + 100);
+        //Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        //this.overlayGui.setLocation(0, (screenSize.height/2-this.overlayGui.getSize().height/2) + 100);
         
         this.overlayGui.setBackground(new Color(0, 0, 0, 0));
         this.overlayGui.setAlwaysOnTop(true);
@@ -1270,8 +1375,8 @@ public class GW2EventerGui extends javax.swing.JFrame {
         this.wvwOverlayGui.setSize(320, 500);
         this.wvwOverlayGui.setVisible(false);
         
-        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        this.wvwOverlayGui.setLocation(0, (screenSize.height/2-this.overlayGui.getSize().height/2) + 100);
+        //Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        //this.wvwOverlayGui.setLocation(0, (screenSize.height/2-this.wvwOverlayGui.getSize().height/2) + 100);
         
         this.wvwOverlayGui.setBackground(new Color(0, 0, 0, 0));
     }
@@ -1393,9 +1498,7 @@ public class GW2EventerGui extends javax.swing.JFrame {
           @Override public void run() {
               
               try {
-                  
                   Thread.sleep(20000);
-                  
                   jLabelTips.setVisible(false);
               } catch (InterruptedException ex) {
                   Logger.getLogger(GW2EventerGui.class.getName()).log(Level.SEVERE, null, ex);
@@ -1600,19 +1703,27 @@ public class GW2EventerGui extends javax.swing.JFrame {
                                         updateInformed = true;
                                     }
                                 }
-                            } catch (ParseException ex) {
                                 
-                                Logger.getLogger(ApiManager.class.getName()).log(
-                                        Level.SEVERE, null, ex);
-                            }
-                            
-                            request.releaseConnection();
-                            //this.interrupt();
-                            
-                            try {
-                                Thread.sleep(60000 * 60);
-                            } catch (InterruptedException ex) {
-                                Logger.getLogger(GW2EventerGui.class.getName()).log(Level.SEVERE, null, ex);
+                                try {
+                                    request.releaseConnection();
+                                    Thread.sleep(60000 * 45);
+                                } catch (InterruptedException ex) {
+                                    Logger.getLogger(GW2EventerGui.class.getName()).log(Level.SEVERE, null, ex);
+                                    
+                                    this.interrupt();
+                                }
+                            } catch (ParseException ex) {
+                                try {
+                                    Logger.getLogger(ApiManager.class.getName()).log(
+                                            Level.SEVERE, null, ex);
+                                    
+                                    request.releaseConnection();
+                                    Thread.sleep(30000);
+                                } catch (InterruptedException ex1) {
+                                    Logger.getLogger(GW2EventerGui.class.getName()).log(Level.SEVERE, null, ex1);
+                                    
+                                    this.interrupt();
+                                }
                             }
                         } else {
                             try {
@@ -1620,6 +1731,8 @@ public class GW2EventerGui extends javax.swing.JFrame {
                                 Thread.sleep(30000);
                             } catch (InterruptedException ex) {
                                 Logger.getLogger(EventAllReader.class.getName()).log(Level.SEVERE, null, ex);
+                                
+                                this.interrupt();
                             }
                         }
                     } catch (IOException | IllegalStateException ex) {
@@ -1763,13 +1876,15 @@ public class GW2EventerGui extends javax.swing.JFrame {
     private javax.swing.JCheckBox jCheckBoxAutoRefresh;
     private javax.swing.JCheckBox jCheckBoxOverlay;
     private javax.swing.JCheckBox jCheckBoxPlaySounds;
+    private javax.swing.JCheckBox jCheckBoxSettingsOverlay;
     private javax.swing.JCheckBox jCheckBoxSystemSleep;
-    private javax.swing.JCheckBox jCheckBoxWvW;
+    private javax.swing.JCheckBox jCheckBoxWvWOverlay;
     private javax.swing.JComboBox jComboBoxHomeWorld;
     private javax.swing.JComboBox jComboBoxLanguage;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabelNewVersion;
     private javax.swing.JLabel jLabelSeconds;
     private javax.swing.JLabel jLabelServer;
@@ -1780,6 +1895,7 @@ public class GW2EventerGui extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
+    private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSpinner jSpinnerRefreshTime;
     private javax.swing.JLabel labelEvent1;
     private javax.swing.JLabel labelEvent10;
