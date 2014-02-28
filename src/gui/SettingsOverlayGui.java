@@ -216,8 +216,8 @@ public class SettingsOverlayGui extends javax.swing.JFrame {
                 newx = 20;
             }
 
-            if (x >= 1720) {
-                newx = 1700;
+            if (x >= 1620) {
+                newx = 1600;
             }
 
             if (y <= 0) {
