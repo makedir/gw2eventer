@@ -819,7 +819,7 @@ public class WvWOverlayGui extends javax.swing.JFrame {
                 jComboBoxWvWActionPerformed(evt);
             }
         });
-        getContentPane().add(jComboBoxWvW, new org.netbeans.lib.awtextra.AbsoluteConstraints(239, 40, -1, -1));
+        getContentPane().add(jComboBoxWvW, new org.netbeans.lib.awtextra.AbsoluteConstraints(236, 40, -1, -1));
 
         jToolBarMenu.setBorder(null);
         jToolBarMenu.setForeground(new java.awt.Color(255, 255, 255));
@@ -1092,12 +1092,12 @@ public class WvWOverlayGui extends javax.swing.JFrame {
                 jLabelMenuMousePressed(evt);
             }
         });
-        getContentPane().add(jLabelMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 20, -1, -1));
+        getContentPane().add(jLabelMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(235, 20, -1, -1));
 
         jLabelToolTip.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         jLabelToolTip.setForeground(new java.awt.Color(255, 255, 255));
         jLabelToolTip.setFocusable(false);
-        getContentPane().add(jLabelToolTip, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 355, -1, -1));
+        getContentPane().add(jLabelToolTip, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 14, -1, -1));
 
         jToolBarInfo.setFloatable(false);
         jToolBarInfo.setFocusable(false);
