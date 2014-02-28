@@ -344,20 +344,11 @@ public class GW2EventerGui extends javax.swing.JFrame {
         this.overlayGui = new OverlayGui(this);
         this.initOverlayGui();
         
-        this.overlayX = 20;
-        this.overlayY = 120;
-        
         this.settingsOverlayGui = new SettingsOverlayGui(this);
         this.initSettingsOverlayGui();
         
-        this.settingsOverlayX = 20;
-        this.settingsOverlayY = 220;
-        
         this.wvwOverlayGui = new WvWOverlayGui(this);
         this.initWvwOverlayGui();
-        
-        this.wvwOverlayX = 20;
-        this.wvwOverlayY = 270;
         
         this.language = "en";
         this.worldID = "2206"; //Millersund [DE]
@@ -480,72 +471,72 @@ public class GW2EventerGui extends javax.swing.JFrame {
     
     public void setWvWOverlayX(int newX) {
         
-        this.wvwOverlayX = newX;
+        //this.wvwOverlayX = newX;
         this.wvwOverlayGui.setLocation(newX, this.wvwOverlayGui.getY());
     }
     
     public void setWvWOverlayY(int newY) {
         
-        this.wvwOverlayY = newY;
+        //this.wvwOverlayY = newY;
         this.wvwOverlayGui.setLocation(this.wvwOverlayGui.getX(), newY);
     }
     
     public int getWvWOverlayX() {
         
-        return this.wvwOverlayX;
+        return this.wvwOverlayGui.getX();
     }
     
     public int getWvWOverlayY() {
         
-        return this.wvwOverlayY;
+        return this.wvwOverlayGui.getY();
     }
     
     public void setOverlayX(int newX) {
         
         //this.jSpinnerOverlayX.setValue(newX);
-        this.overlayX = newX;
+        //this.overlayX = newX;
         this.overlayGui.setLocation(newX, this.overlayGui.getY());
     }
     
     public void setOverlayY(int newY) {
         
         //this.jSpinnerOverlayY.setValue(newY);
-        this.overlayY = newY;
+        //this.overlayY = newY;
         this.overlayGui.setLocation(this.overlayGui.getX(), newY);
     }
     
     public int getOverlayX() {
         
         //return (Integer) this.jSpinnerOverlayX.getValue();
-        return this.overlayX;
+        return this.overlayGui.getX();
     }
     
     public int getOverlayY() {
         
         //return (Integer) this.jSpinnerOverlayY.getValue();
-        return this.overlayY;
+        return this.overlayGui.getY();
     }
     
     public void setSettingsOverlayX(int newX) {
         
-        this.settingsOverlayX = newX;
+        //this.settingsOverlayX = newX;
         this.settingsOverlayGui.setLocation(newX, this.settingsOverlayGui.getY());
     }
     
     public void setSettingsOverlayY(int newY) {
         
-        this.settingsOverlayY = newY;
+        //this.settingsOverlayY = newY;
         this.settingsOverlayGui.setLocation(this.settingsOverlayGui.getX(), newY);
     }
     
     public int getSettingsOverlayX() {
         
-        return this.settingsOverlayX;
+        return this.settingsOverlayGui.getX();
     }
     
     public int getSettingsOverlayY() {
         
-        return this.settingsOverlayY;
+        return this.settingsOverlayGui.getY();
     }
     
     public void setSoundPlaying(boolean play) {
@@ -1358,8 +1349,7 @@ public class GW2EventerGui extends javax.swing.JFrame {
         this.settingsOverlayGui.setSize(350, 44);
         this.settingsOverlayGui.setVisible(false);
         
-        //Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        //this.settingsOverlayGui.setLocation(0, (screenSize.height/2-this.overlayGui.getSize().height/2) + 100);
+        this.settingsOverlayGui.setLocation(20, 220);
         
         this.settingsOverlayGui.setBackground(new Color(0, 0, 0, 0));
         this.settingsOverlayGui.setAlwaysOnTop(true);
@@ -1374,8 +1364,7 @@ public class GW2EventerGui extends javax.swing.JFrame {
         //this.overlayGui.setLocationRelativeTo(null);
         //this.overlayGui.setLocation(0, 200);
         
-        //Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        //this.overlayGui.setLocation(0, (screenSize.height/2-this.overlayGui.getSize().height/2) + 100);
+        this.overlayGui.setLocation(20, 120);
         
         this.overlayGui.setBackground(new Color(0, 0, 0, 0));
         this.overlayGui.setAlwaysOnTop(true);
@@ -1392,8 +1381,7 @@ public class GW2EventerGui extends javax.swing.JFrame {
         this.wvwOverlayGui.setSize(320, 500);
         this.wvwOverlayGui.setVisible(false);
         
-        //Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        //this.wvwOverlayGui.setLocation(0, (screenSize.height/2-this.wvwOverlayGui.getSize().height/2) + 100);
+        this.wvwOverlayGui.setLocation(20, 270);
         
         this.wvwOverlayGui.setBackground(new Color(0, 0, 0, 0));
     }

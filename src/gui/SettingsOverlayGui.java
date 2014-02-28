@@ -84,10 +84,7 @@ public class SettingsOverlayGui extends javax.swing.JFrame {
         jCheckBoxSound = new javax.swing.JCheckBox();
         jCheckBoxEvents = new javax.swing.JCheckBox();
         jCheckBoxWvW = new javax.swing.JCheckBox();
-        jButtonLeft = new javax.swing.JButton();
-        jButtonRight = new javax.swing.JButton();
-        jButtonUp = new javax.swing.JButton();
-        jButtonDown = new javax.swing.JButton();
+        jButtonMove = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setAlwaysOnTop(true);
@@ -157,61 +154,19 @@ public class SettingsOverlayGui extends javax.swing.JFrame {
         });
         jToolBarMenu.add(jCheckBoxWvW);
 
-        jButtonLeft.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
-        jButtonLeft.setForeground(new java.awt.Color(255, 255, 255));
-        jButtonLeft.setText("<<");
-        jButtonLeft.setFocusable(false);
-        jButtonLeft.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButtonLeft.setOpaque(false);
-        jButtonLeft.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jButtonLeft.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonLeftActionPerformed(evt);
+        jButtonMove.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        jButtonMove.setForeground(new java.awt.Color(255, 255, 255));
+        jButtonMove.setText("move");
+        jButtonMove.setFocusable(false);
+        jButtonMove.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButtonMove.setOpaque(false);
+        jButtonMove.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButtonMove.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                jButtonMoveMouseDragged(evt);
             }
         });
-        jToolBarMenu.add(jButtonLeft);
-
-        jButtonRight.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
-        jButtonRight.setForeground(new java.awt.Color(255, 255, 255));
-        jButtonRight.setText(">>");
-        jButtonRight.setFocusable(false);
-        jButtonRight.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButtonRight.setOpaque(false);
-        jButtonRight.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jButtonRight.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonRightActionPerformed(evt);
-            }
-        });
-        jToolBarMenu.add(jButtonRight);
-
-        jButtonUp.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
-        jButtonUp.setForeground(new java.awt.Color(255, 255, 255));
-        jButtonUp.setText("up");
-        jButtonUp.setFocusable(false);
-        jButtonUp.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButtonUp.setOpaque(false);
-        jButtonUp.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jButtonUp.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonUpActionPerformed(evt);
-            }
-        });
-        jToolBarMenu.add(jButtonUp);
-
-        jButtonDown.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
-        jButtonDown.setForeground(new java.awt.Color(255, 255, 255));
-        jButtonDown.setText("down");
-        jButtonDown.setFocusable(false);
-        jButtonDown.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButtonDown.setOpaque(false);
-        jButtonDown.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jButtonDown.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonDownActionPerformed(evt);
-            }
-        });
-        jToolBarMenu.add(jButtonDown);
+        jToolBarMenu.add(jButtonMove);
 
         getContentPane().add(jToolBarMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 320, -1));
 
@@ -226,110 +181,6 @@ public class SettingsOverlayGui extends javax.swing.JFrame {
             this.jToolBarMenu.setVisible(true);
         }
     }//GEN-LAST:event_jLabelMenuMousePressed
-
-    private void jButtonLeftActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLeftActionPerformed
-
-        int x = this.getX();
-        
-        if (x > 0) {
-            Point mouseLoc;
-            Robot rob;
-
-            try {
-                rob = new Robot();
-                mouseLoc = MouseInfo.getPointerInfo().getLocation();
-                rob.mouseMove(mouseLoc.x - 20, mouseLoc.y);
-            } catch (AWTException ex) {
-                Logger.getLogger(SettingsOverlayGui.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-        
-        if (x <= 20) {
-            x = 0;
-        } else {
-            x = x - 20;
-        }
-        
-        this.mainGui.setSettingsOverlayX(x);
-    }//GEN-LAST:event_jButtonLeftActionPerformed
-
-    private void jButtonRightActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRightActionPerformed
-
-        int x = this.getX();
-        
-        if (x < 1720) {
-            Point mouseLoc;
-            Robot rob;
-
-            try {
-                rob = new Robot();
-                mouseLoc = MouseInfo.getPointerInfo().getLocation();
-                rob.mouseMove(mouseLoc.x + 20, mouseLoc.y);
-            } catch (AWTException ex) {
-                Logger.getLogger(SettingsOverlayGui.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-        
-        if (x >= 1720) {
-            x = 1720;
-        } else {
-            x = x + 20;
-        }
-        
-        this.mainGui.setSettingsOverlayX(x);
-    }//GEN-LAST:event_jButtonRightActionPerformed
-
-    private void jButtonUpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonUpActionPerformed
-
-        int y = this.getY();
-        
-        if (y > 0) {
-            Point mouseLoc;
-            Robot rob;
-
-            try {
-                rob = new Robot();
-                mouseLoc = MouseInfo.getPointerInfo().getLocation();
-                rob.mouseMove(mouseLoc.x, mouseLoc.y - 20);
-            } catch (AWTException ex) {
-                Logger.getLogger(SettingsOverlayGui.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-        
-        if (y <= 20) {
-            y = 0;
-        } else {
-            y = y - 20;
-        }
-        
-        this.mainGui.setSettingsOverlayY(y);
-    }//GEN-LAST:event_jButtonUpActionPerformed
-
-    private void jButtonDownActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDownActionPerformed
-
-        int y = this.getY();
-        
-        if (y < 880) {
-            Point mouseLoc;
-            Robot rob;
-
-            try {
-                rob = new Robot();
-                mouseLoc = MouseInfo.getPointerInfo().getLocation();
-                rob.mouseMove(mouseLoc.x, mouseLoc.y + 20);
-            } catch (AWTException ex) {
-                Logger.getLogger(SettingsOverlayGui.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-        
-        if (y >= 880) {
-            y = 880;
-        } else {
-            y = y + 20;
-        }
-        
-        this.mainGui.setSettingsOverlayY(y);
-    }//GEN-LAST:event_jButtonDownActionPerformed
 
     private void jCheckBoxSoundActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxSoundActionPerformed
 
@@ -346,12 +197,46 @@ public class SettingsOverlayGui extends javax.swing.JFrame {
         this.mainGui.setWvWOverlayVisible(this.jCheckBoxWvW.isSelected());
     }//GEN-LAST:event_jCheckBoxWvWActionPerformed
 
+    private void jButtonMoveMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonMoveMouseDragged
+
+        int x = this.getX();
+        int y = this.getY();
+
+        Point mouseLoc;
+        Robot rob;
+
+        try {
+            rob = new Robot();
+            mouseLoc = MouseInfo.getPointerInfo().getLocation();
+
+            int newx = mouseLoc.x - 202;
+            int newy = mouseLoc.y - 7;
+
+            if (x <= 0) {
+                newx = 20;
+            }
+
+            if (x >= 1720) {
+                newx = 1700;
+            }
+
+            if (y <= 0) {
+                newy = 20;
+            }
+
+            if (y >= 1050) {
+                newy = 1030;
+            }
+
+            this.setLocation(newx, newy);
+        } catch (AWTException ex) {
+            Logger.getLogger(OverlayGui.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButtonMoveMouseDragged
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButtonDown;
-    private javax.swing.JButton jButtonLeft;
-    private javax.swing.JButton jButtonRight;
-    private javax.swing.JButton jButtonUp;
+    private javax.swing.JButton jButtonMove;
     private javax.swing.JCheckBox jCheckBoxEvents;
     private javax.swing.JCheckBox jCheckBoxSound;
     private javax.swing.JCheckBox jCheckBoxWvW;
