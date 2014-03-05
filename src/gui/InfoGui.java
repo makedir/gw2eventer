@@ -64,6 +64,7 @@ public class InfoGui extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("GW2 Eventer");
+        setBackground(new java.awt.Color(70, 59, 49));
         setModalityType(java.awt.Dialog.ModalityType.APPLICATION_MODAL);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 

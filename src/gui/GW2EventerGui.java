@@ -227,7 +227,7 @@ public class GW2EventerGui extends javax.swing.JFrame {
     
     public static final int EVENT_COUNT = 23;
     
-    private static final String VERSION = "1.71";
+    private static final String VERSION = "1.72";
     
     private JButton workingButton;
     private JCheckBox refreshSelector;
@@ -1210,6 +1210,7 @@ public class GW2EventerGui extends javax.swing.JFrame {
 
         this.infoGui.setLocationRelativeTo(this);
         this.infoGui.setResizable(false);
+        this.infoGui.setSize(305, 330);
         //this.infoGui.pack();
         this.infoGui.setVisible(true);
     }//GEN-LAST:event_jLabel1MousePressed

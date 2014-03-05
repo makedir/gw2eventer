@@ -36,7 +36,7 @@
     <Component class="javax.swing.JLabel" name="jLabelMenu">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/media/menu.png"/>
+          <Image iconType="3" name="/media/settings.png"/>
         </Property>
         <Property name="toolTipText" type="java.lang.String" value="Menu"/>
         <Property name="focusable" type="boolean" value="false"/>
@@ -47,7 +47,7 @@
       </Events>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="270" y="20" width="-1" height="-1"/>
+          <AbsoluteConstraints x="250" y="20" width="-1" height="-1"/>
         </Constraint>
       </Constraints>
     </Component>
@@ -67,6 +67,14 @@
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBoxLayout"/>
       <SubComponents>
+        <Component class="javax.swing.JLabel" name="jLabel1">
+          <Properties>
+            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="ff" green="ff" red="ff" type="rgb"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="Settings "/>
+          </Properties>
+        </Component>
         <Component class="javax.swing.JCheckBox" name="jCheckBoxSound">
           <Properties>
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">

@@ -81,6 +81,7 @@ public class SettingsOverlayGui extends javax.swing.JFrame {
 
         jLabelMenu = new javax.swing.JLabel();
         jToolBarMenu = new javax.swing.JToolBar();
+        jLabel1 = new javax.swing.JLabel();
         jCheckBoxSound = new javax.swing.JCheckBox();
         jCheckBoxEvents = new javax.swing.JCheckBox();
         jCheckBoxWvW = new javax.swing.JCheckBox();
@@ -95,7 +96,7 @@ public class SettingsOverlayGui extends javax.swing.JFrame {
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabelMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/media/menu.png"))); // NOI18N
+        jLabelMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/media/settings.png"))); // NOI18N
         jLabelMenu.setToolTipText("Menu");
         jLabelMenu.setFocusable(false);
         jLabelMenu.setInheritsPopupMenu(false);
@@ -104,13 +105,17 @@ public class SettingsOverlayGui extends javax.swing.JFrame {
                 jLabelMenuMousePressed(evt);
             }
         });
-        getContentPane().add(jLabelMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 20, -1, -1));
+        getContentPane().add(jLabelMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 20, -1, -1));
 
         jToolBarMenu.setFloatable(false);
         jToolBarMenu.setBorderPainted(false);
         jToolBarMenu.setFocusable(false);
         jToolBarMenu.setOpaque(false);
         jToolBarMenu.setRequestFocusEnabled(false);
+
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setText("Settings ");
+        jToolBarMenu.add(jLabel1);
 
         jCheckBoxSound.setForeground(new java.awt.Color(255, 255, 255));
         jCheckBoxSound.setSelected(true);
@@ -208,10 +213,10 @@ public class SettingsOverlayGui extends javax.swing.JFrame {
         try {
             rob = new Robot();
             mouseLoc = MouseInfo.getPointerInfo().getLocation();
-
-            int newx = mouseLoc.x - 202;
-            int newy = mouseLoc.y - 7;
-
+            
+            int newx = mouseLoc.x - 250;
+            int newy = mouseLoc.y - 11;
+            
             if (x <= 0) {
                 newx = 20;
             }
@@ -227,7 +232,7 @@ public class SettingsOverlayGui extends javax.swing.JFrame {
             if (y >= 1050) {
                 newy = 1030;
             }
-
+            
             this.setLocation(newx, newy);
         } catch (AWTException ex) {
             Logger.getLogger(OverlayGui.class.getName()).log(Level.SEVERE, null, ex);
@@ -240,6 +245,7 @@ public class SettingsOverlayGui extends javax.swing.JFrame {
     private javax.swing.JCheckBox jCheckBoxEvents;
     private javax.swing.JCheckBox jCheckBoxSound;
     private javax.swing.JCheckBox jCheckBoxWvW;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabelMenu;
     private javax.swing.JToolBar jToolBarMenu;
     // End of variables declaration//GEN-END:variables

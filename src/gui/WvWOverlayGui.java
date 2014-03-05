@@ -752,10 +752,11 @@ public class WvWOverlayGui extends javax.swing.JFrame {
 
         jComboBoxWvW = new javax.swing.JComboBox();
         jToolBarMenu = new javax.swing.JToolBar();
+        jLabel1 = new javax.swing.JLabel();
         jButtonRefresh = new javax.swing.JButton();
-        jButtonMove = new javax.swing.JButton();
         jButtonMinimize = new javax.swing.JButton();
         jButtonMaximize = new javax.swing.JButton();
+        jButtonMove = new javax.swing.JButton();
         jButtonClose = new javax.swing.JButton();
         jLabelEternal22 = new javax.swing.JLabel();
         jLabelEternal21 = new javax.swing.JLabel();
@@ -824,8 +825,13 @@ public class WvWOverlayGui extends javax.swing.JFrame {
         jToolBarMenu.setFocusable(false);
         jToolBarMenu.setOpaque(false);
 
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setText("WvW");
+        jToolBarMenu.add(jLabel1);
+
+        jButtonRefresh.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         jButtonRefresh.setForeground(new java.awt.Color(255, 255, 255));
-        jButtonRefresh.setText("Reset");
+        jButtonRefresh.setText("reset");
         jButtonRefresh.setFocusable(false);
         jButtonRefresh.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButtonRefresh.setOpaque(false);
@@ -836,20 +842,6 @@ public class WvWOverlayGui extends javax.swing.JFrame {
             }
         });
         jToolBarMenu.add(jButtonRefresh);
-
-        jButtonMove.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
-        jButtonMove.setForeground(new java.awt.Color(255, 255, 255));
-        jButtonMove.setText("move");
-        jButtonMove.setFocusable(false);
-        jButtonMove.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButtonMove.setOpaque(false);
-        jButtonMove.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jButtonMove.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
-            public void mouseDragged(java.awt.event.MouseEvent evt) {
-                jButtonMoveMouseDragged(evt);
-            }
-        });
-        jToolBarMenu.add(jButtonMove);
 
         jButtonMinimize.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         jButtonMinimize.setForeground(new java.awt.Color(255, 255, 255));
@@ -879,6 +871,20 @@ public class WvWOverlayGui extends javax.swing.JFrame {
             }
         });
         jToolBarMenu.add(jButtonMaximize);
+
+        jButtonMove.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        jButtonMove.setForeground(new java.awt.Color(255, 255, 255));
+        jButtonMove.setText("move");
+        jButtonMove.setFocusable(false);
+        jButtonMove.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButtonMove.setOpaque(false);
+        jButtonMove.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButtonMove.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                jButtonMoveMouseDragged(evt);
+            }
+        });
+        jToolBarMenu.add(jButtonMove);
 
         jButtonClose.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         jButtonClose.setForeground(new java.awt.Color(255, 255, 255));
@@ -1039,7 +1045,7 @@ public class WvWOverlayGui extends javax.swing.JFrame {
         jLabelMatchId.setText("matchid:");
         getContentPane().add(jLabelMatchId, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 25, -1, -1));
 
-        jLabelMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/media/menu.png"))); // NOI18N
+        jLabelMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/media/wvw.png"))); // NOI18N
         jLabelMenu.setToolTipText("Menu");
         jLabelMenu.setFocusable(false);
         jLabelMenu.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -1173,8 +1179,8 @@ public class WvWOverlayGui extends javax.swing.JFrame {
             rob = new Robot();
             mouseLoc = MouseInfo.getPointerInfo().getLocation();
 
-            int newx = mouseLoc.x - 55;
-            int newy = mouseLoc.y - 7;
+            int newx = mouseLoc.x - 150;
+            int newy = mouseLoc.y - 11;
 
             if (x <= 0) {
                 newx = 20;
@@ -1208,6 +1214,7 @@ public class WvWOverlayGui extends javax.swing.JFrame {
     private javax.swing.JButton jButtonMove;
     private javax.swing.JButton jButtonRefresh;
     private javax.swing.JComboBox jComboBoxWvW;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabelBorderlands1;
     private javax.swing.JLabel jLabelBorderlands10;
     private javax.swing.JLabel jLabelBorderlands11;

@@ -149,9 +149,9 @@ public class OverlayGui extends javax.swing.JFrame {
         jLabelMenu = new javax.swing.JLabel();
         jToolBarMenu = new javax.swing.JToolBar();
         jLabel3 = new javax.swing.JLabel();
-        jButtonMove = new javax.swing.JButton();
         jButtonMinimize = new javax.swing.JButton();
         jButtonMaximize = new javax.swing.JButton();
+        jButtonMove = new javax.swing.JButton();
         jButtonClose = new javax.swing.JButton();
         jToolBarContent = new javax.swing.JToolBar();
         jLabel1 = new javax.swing.JLabel();
@@ -168,7 +168,7 @@ public class OverlayGui extends javax.swing.JFrame {
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabelMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/media/menu.png"))); // NOI18N
+        jLabelMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/media/events.png"))); // NOI18N
         jLabelMenu.setToolTipText("Menu");
         jLabelMenu.setFocusable(false);
         jLabelMenu.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -188,20 +188,6 @@ public class OverlayGui extends javax.swing.JFrame {
         jLabel3.setText("Events");
         jLabel3.setFocusable(false);
         jToolBarMenu.add(jLabel3);
-
-        jButtonMove.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
-        jButtonMove.setForeground(new java.awt.Color(255, 255, 255));
-        jButtonMove.setText("move");
-        jButtonMove.setFocusable(false);
-        jButtonMove.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButtonMove.setOpaque(false);
-        jButtonMove.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jButtonMove.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
-            public void mouseDragged(java.awt.event.MouseEvent evt) {
-                jButtonMoveMouseDragged(evt);
-            }
-        });
-        jToolBarMenu.add(jButtonMove);
 
         jButtonMinimize.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         jButtonMinimize.setForeground(new java.awt.Color(255, 255, 255));
@@ -231,6 +217,20 @@ public class OverlayGui extends javax.swing.JFrame {
             }
         });
         jToolBarMenu.add(jButtonMaximize);
+
+        jButtonMove.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        jButtonMove.setForeground(new java.awt.Color(255, 255, 255));
+        jButtonMove.setText("move");
+        jButtonMove.setFocusable(false);
+        jButtonMove.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButtonMove.setOpaque(false);
+        jButtonMove.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButtonMove.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                jButtonMoveMouseDragged(evt);
+            }
+        });
+        jToolBarMenu.add(jButtonMove);
 
         jButtonClose.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         jButtonClose.setForeground(new java.awt.Color(255, 255, 255));
@@ -315,9 +315,9 @@ public class OverlayGui extends javax.swing.JFrame {
         try {
             rob = new Robot();
             mouseLoc = MouseInfo.getPointerInfo().getLocation();
-
-            int newx = mouseLoc.x - 55;
-            int newy = mouseLoc.y - 7;
+            
+            int newx = mouseLoc.x - 118;
+            int newy = mouseLoc.y - 11;
 
             if (x <= 0) {
                 newx = 20;
