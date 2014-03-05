@@ -322,8 +322,12 @@ public class EventReader extends Thread {
                                     activeLabelTimer.setText(minsdiff + " mins (B)");
                                 }
                                 
-                                if (activeLabel.getToolTipText().equals("")) {
-                                    activeLabel.setToolTipText((String) this.allEvents.get(obj2.get("event_id")));
+                                if (activeLabel != null) {
+                                    if (activeLabel.getToolTipText() != null) {
+                                        if (activeLabel.getToolTipText().equals("")) { // null pointer??
+                                            activeLabel.setToolTipText((String) this.allEvents.get(obj2.get("event_id")));
+                                        }
+                                    }
                                 }
                                 
                                 if (obj2.get("state").equals("Active")) {
@@ -334,6 +338,8 @@ public class EventReader extends Thread {
                                     
                                     toolTip = activeLabel.getToolTipText();
 
+                                    String upperWave = eventWav.substring(0, 1).toUpperCase() + eventWav.substring(1);
+                                    
                                     if (toolTip.length() > 35) {
                                         toolTip = toolTip.substring(0, 35) + "...";
                                     }
@@ -345,17 +351,27 @@ public class EventReader extends Thread {
                                         this.timerStamps[activeLabelInt] = null;
                                         
                                         if (this.eventPlaySounds[activeLabelInt][2]) {
-                                            this.overlayGui.addActiveB(toolTip, "yellow");
+                                            if (!this.overlayGui.containsActiveB(upperWave)) {
+                                                this.overlayGui.addActiveB(upperWave, "yellow");
+                                            }
                                         } else {
-                                            this.overlayGui.addActiveB(toolTip, "green");
+                                            if (!this.overlayGui.containsActiveB(upperWave)) {
+                                                this.overlayGui.addActiveB(upperWave, "green");
+                                            }
                                         }
                                     } else {
                                         
+                                        upperWave = upperWave.substring(0, upperWave.length() - 4);
+                                        
                                         if (this.eventPlaySounds[activeLabelInt][2]) {
-                                            this.overlayGui.addActivePreEvent(toolTip, "yellow");
+                                            if (!this.overlayGui.containsActivePre(upperWave)) {
+                                                this.overlayGui.addActivePreEvent(upperWave, "yellow");
+                                            }
                                         } else {
-                                            this.overlayGui.addActivePreEvent(toolTip, "green");
-                                        }   
+                                            if (!this.overlayGui.containsActivePre(upperWave)) {
+                                                this.overlayGui.addActivePreEvent(upperWave, "green");
+                                            }
+                                        }
                                     }
                                     
                                     //activeLabel.setSize(100, activeLabel.getSize().height);

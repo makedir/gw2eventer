@@ -70,6 +70,16 @@ public class OverlayGui extends javax.swing.JFrame {
         this.activePreEvents.clear();
     }
     
+    public boolean containsActiveB(String activeB) {
+        
+        return this.activeBEvents.containsKey(activeB);
+    }
+    
+    public boolean containsActivePre(String activePre) {
+        
+        return this.activePreEvents.containsKey(activePre);
+    }
+    
     public void addActiveB(String name, String color) {
         
         this.activeBEvents.put(name, color);
