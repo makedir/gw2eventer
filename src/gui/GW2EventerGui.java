@@ -70,22 +70,22 @@ import org.json.simple.parser.ParseException;
  */
 public class GW2EventerGui extends javax.swing.JFrame {
     
-    private static final String LANG_AUTO_REFRESH_DE = "auto. neuladen";
-    private static final String LANG_AUTO_REFRESH_EN = "auto refresh";
-    private static final String LANG_AUTO_REFRESH_ES = "auto refresh";
-    private static final String LANG_AUTO_REFRESH_FR = "auto refresh";
+    private static final String LANG_AUTO_REFRESH_DE = "Event refresh";
+    private static final String LANG_AUTO_REFRESH_EN = "Event refresh";
+    private static final String LANG_AUTO_REFRESH_ES = "Event refresh";
+    private static final String LANG_AUTO_REFRESH_FR = "Event refresh";
     
     private static final String LANG_PLAY_SOUNDS_DE = "Sounds abspielen";
-    private static final String LANG_PLAY_SOUNDS_EN = "play sounds";
-    private static final String LANG_PLAY_SOUNDS_ES = "play sounds";
-    private static final String LANG_PLAY_SOUNDS_FR = "play sounds";
+    private static final String LANG_PLAY_SOUNDS_EN = "Play sounds";
+    private static final String LANG_PLAY_SOUNDS_ES = "Play sounds";
+    private static final String LANG_PLAY_SOUNDS_FR = "Play sounds";
     
-    private static final String LANG_PREVENT_SLEEP_DE = "Standy verhindern";
-    private static final String LANG_PREVENT_SLEEP_EN = "prevent pc sleep";
-    private static final String LANG_PREVENT_SLEEP_ES = "prevent pc sleep";
-    private static final String LANG_PREVENT_SLEEP_FR = "prevent pc sleep";
+    private static final String LANG_PREVENT_SLEEP_DE = "Standby verhindern";
+    private static final String LANG_PREVENT_SLEEP_EN = "Prevent standby";
+    private static final String LANG_PREVENT_SLEEP_ES = "Prevent standby";
+    private static final String LANG_PREVENT_SLEEP_FR = "Prevent standby";
     
-    private static final String LANG_RELOAD_BTN_DE = "Setzen/Neuladen";
+    private static final String LANG_RELOAD_BTN_DE = "Setzen/Start";
     private static final String LANG_RELOAD_BTN_EN = "Set/Reload";
     private static final String LANG_RELOAD_BTN_ES = "Set/Reload";
     private static final String LANG_RELOAD_BTN_FR = "Set/Reload";
