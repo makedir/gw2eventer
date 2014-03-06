@@ -223,7 +223,7 @@ public class FeedbackGui extends javax.swing.JDialog {
             
             RequestConfig requestConfig = RequestConfig.custom().setConnectTimeout(10 * 1000).build();
             HttpClient httpclient = HttpClientBuilder.create().setDefaultRequestConfig(requestConfig).build();
-            HttpPost httppost = new HttpPost("http://mkdr.de/gw2/feedback/");
+            HttpPost httppost = new HttpPost("http://gw2eventer.sourceforge.net/feedback/");
 
             // Request parameters and other properties.
             List<NameValuePair> params = new ArrayList<NameValuePair>(5);

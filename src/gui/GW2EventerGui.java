@@ -227,7 +227,7 @@ public class GW2EventerGui extends javax.swing.JFrame {
     
     public static final int EVENT_COUNT = 23;
     
-    private static final String VERSION = "1.72";
+    private static final String VERSION = "1.73";
     
     private JButton workingButton;
     private JCheckBox refreshSelector;
@@ -1396,7 +1396,7 @@ public class GW2EventerGui extends javax.swing.JFrame {
                 RequestConfig requestConfig = RequestConfig.custom().setConnectTimeout(10 * 1000).build();
                 HttpClient client = HttpClientBuilder.create().setDefaultRequestConfig(requestConfig).build();
 
-                HttpGet request = new HttpGet("http://mkdr.de/gw2/event_data");
+                HttpGet request = new HttpGet("http://gw2eventer.sourceforge.net/event_data");
 
                 HttpResponse response;
 
@@ -1524,7 +1524,7 @@ public class GW2EventerGui extends javax.swing.JFrame {
                 RequestConfig requestConfig = RequestConfig.custom().setConnectTimeout(10 * 1000).build();
                 HttpClient client = HttpClientBuilder.create().setDefaultRequestConfig(requestConfig).build();
 
-                HttpGet request = new HttpGet("http://mkdr.de/gw2/push");
+                HttpGet request = new HttpGet("http://gw2eventer.sourceforge.net/gw2/push");
 
                 HttpResponse response;
 
@@ -1643,7 +1643,7 @@ public class GW2EventerGui extends javax.swing.JFrame {
                 RequestConfig requestConfig = RequestConfig.custom().setConnectTimeout(10 * 1000).build();
                 HttpClient client = HttpClientBuilder.create().setDefaultRequestConfig(requestConfig).build();
 
-                HttpGet request = new HttpGet("http://mkdr.de/gw2/version");
+                HttpGet request = new HttpGet("http://gw2eventer.sourceforge.net/version");
 
                 HttpResponse response;
 
