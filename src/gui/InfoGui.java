@@ -70,6 +70,7 @@ public class InfoGui extends javax.swing.JDialog {
 
         jLabel3.setForeground(new java.awt.Color(153, 153, 153));
         jLabel3.setText("http://gw2eventer.com");
+        jLabel3.setToolTipText("Go here");
         jLabel3.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 jLabel3MousePressed(evt);
@@ -88,6 +89,7 @@ public class InfoGui extends javax.swing.JDialog {
 
         jButton1.setBackground(new java.awt.Color(255, 153, 51));
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
+        jButton1.setToolTipText("");
         jButton1.setContentAreaFilled(false);
         jButton1.setLabel("OK");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -98,10 +100,10 @@ public class InfoGui extends javax.swing.JDialog {
         getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 240, 80, -1));
 
         jLabel1.setToolTipText("makedir@gmail.com");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 270, 50, 20));
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 272, 50, 20));
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/media/2yXJAoh.png"))); // NOI18N
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 300, 300));
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 320, 320));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents

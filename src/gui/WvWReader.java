@@ -53,9 +53,12 @@ public class WvWReader extends Thread {
     
     private WvWOverlayGui wvwOverlayGui;
     
+    private int timeDifference;
+    
     public WvWReader(WvWOverlayGui wvwOverlayGui) {
         
         this.wvwOverlayGui = wvwOverlayGui;
+        this.timeDifference = 0;
     }
     
     public void setResult(HashMap hashMap) {
@@ -84,6 +87,8 @@ public class WvWReader extends Thread {
         String line = "";
         String out = "";
 
+        this.timeDifference = 0;
+        
         while (!this.isInterrupted()) {
             
             try {
@@ -128,11 +133,12 @@ public class WvWReader extends Thread {
                             }
                         }
                         
-                        request.releaseConnection();
-                    
-                        this.wvwOverlayGui.refresh();
-
                         try {
+                            request.releaseConnection();
+                            this.wvwOverlayGui.refresh(this.timeDifference);
+                            
+                            this.timeDifference = 0;
+                            
                             Thread.sleep(10000);
                         } catch (InterruptedException ex) {
                             Logger.getLogger(WvWReader.class.getName()).log(Level.SEVERE, null, ex);
@@ -145,6 +151,14 @@ public class WvWReader extends Thread {
                                     Level.SEVERE, null, ex);
                             
                             request.releaseConnection();
+                            //this.wvwOverlayGui.refresh();
+                            
+                            if (this.timeDifference < 291) {
+                                this.timeDifference = this.timeDifference + 3;
+                            } else {
+                                this.timeDifference = 0;
+                            }
+                            
                             Thread.sleep(3000);
                         } catch (InterruptedException ex1) {
                             Logger.getLogger(WvWReader.class.getName()).log(Level.SEVERE, null, ex1);
@@ -158,6 +172,14 @@ public class WvWReader extends Thread {
                             Level.SEVERE, null, "Connection error.");
                         
                         request.releaseConnection();
+                        //this.wvwOverlayGui.refresh();
+                        
+                        if (this.timeDifference < 286) {
+                            this.timeDifference = this.timeDifference + 13;
+                        } else {
+                            this.timeDifference = 0;
+                        }
+                        
                         Thread.sleep(3000);
                     } catch (InterruptedException ex) {
                         Logger.getLogger(EventAllReader.class.getName()).log(Level.SEVERE, null, ex);
@@ -171,6 +193,14 @@ public class WvWReader extends Thread {
                             Level.SEVERE, null, ex);
                     
                     request.releaseConnection();
+                    //this.wvwOverlayGui.refresh();
+                    
+                    if (this.timeDifference < 286) {
+                        this.timeDifference = this.timeDifference + 13;
+                    } else {
+                        this.timeDifference = 0;
+                    }
+                    
                     Thread.sleep(3000);
                 } catch (InterruptedException ex1) {
                     Logger.getLogger(EventAllReader.class.getName()).log(Level.SEVERE, null, ex1);

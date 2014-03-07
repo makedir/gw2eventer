@@ -77,6 +77,11 @@ public class EventTimerLabel extends JLabel implements ActionListener {
         return this.running;
     }
     
+    public int getCounter() {
+        
+        return this.counter;
+    }
+    
     public void setCounter(int counter) {
         
         this.counter = counter;
@@ -127,6 +132,7 @@ public class EventTimerLabel extends JLabel implements ActionListener {
         
         this.running = false;
         this.timer.stop();
+        
         this.counter = COUNTER_SECONDS;
         this.setVisible(false);
     }

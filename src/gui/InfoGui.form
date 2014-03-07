@@ -38,6 +38,7 @@
           <Color blue="99" green="99" red="99" type="rgb"/>
         </Property>
         <Property name="text" type="java.lang.String" value="http://gw2eventer.com"/>
+        <Property name="toolTipText" type="java.lang.String" value="Go here"/>
       </Properties>
       <Events>
         <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jLabel3MousePressed"/>
@@ -72,6 +73,7 @@
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="ff" green="ff" red="ff" type="rgb"/>
         </Property>
+        <Property name="toolTipText" type="java.lang.String" value=""/>
         <Property name="contentAreaFilled" type="boolean" value="false"/>
         <Property name="label" type="java.lang.String" value="OK"/>
       </Properties>
@@ -90,7 +92,7 @@
       </Properties>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="240" y="270" width="50" height="20"/>
+          <AbsoluteConstraints x="240" y="272" width="50" height="20"/>
         </Constraint>
       </Constraints>
     </Component>
@@ -102,7 +104,7 @@
       </Properties>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="0" y="0" width="300" height="300"/>
+          <AbsoluteConstraints x="0" y="0" width="320" height="320"/>
         </Constraint>
       </Constraints>
     </Component>

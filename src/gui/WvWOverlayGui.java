@@ -241,7 +241,7 @@ public class WvWOverlayGui extends javax.swing.JFrame {
         this.jLabelMatchId.setText("<html>" + matchId + "(<b>" + this.matchIdColor + "</b>)</html>");
     }
     
-    public void refresh() {
+    public void refresh(int timeDifference) {
         
         Iterator it;
         
@@ -301,7 +301,9 @@ public class WvWOverlayGui extends javax.swing.JFrame {
                 }
                 
                 if ((!owner.equals(onwerOld)) && (currentTimer != null)) {
-                    if (!currentTimer.isTicking()) {
+                    //if (!currentTimer.isTicking()) { // ??
+                        currentTimer.resetTimer(); // ??
+                        currentTimer.setCounter(currentTimer.getCounter() - timeDifference);
                         currentTimer.startTimer();
                         
                         if (this.activeMap.equals(labelHome)) {
@@ -327,7 +329,7 @@ public class WvWOverlayGui extends javax.swing.JFrame {
                                 Logger.getLogger(WvWOverlayGui.class.getName()).log(Level.SEVERE, null, ex);
                             }
                         }
-                    }
+                    //}
                 }
             }
         }

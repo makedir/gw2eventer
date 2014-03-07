@@ -292,7 +292,8 @@ public class EventReader extends Thread {
                                 int indexEvent = Integer.parseInt(((String[]) this.events.get(event))[0]);
                                 String eventPercent = ((String[]) this.events.get(event))[1];
                                 String eventWav = ((String[]) this.events.get(event))[2];
-
+                                String eventName = ((String[]) this.events.get(event))[3];
+                                
                                 JLabel activeLabel = (JLabel) this.eventLabels.get(indexEvent - 1);
                                 JLabel activeLabelTimer = (JLabel) this.eventLabelsTimer.get(indexEvent - 1);
                                 
@@ -337,8 +338,6 @@ public class EventReader extends Thread {
                                     activeLabel.setToolTipText((String) this.allEvents.get(obj2.get("event_id")));
                                     
                                     toolTip = activeLabel.getToolTipText();
-
-                                    String upperWave = eventWav.substring(0, 1).toUpperCase() + eventWav.substring(1);
                                     
                                     if (toolTip.length() > 35) {
                                         toolTip = toolTip.substring(0, 35) + "...";
@@ -351,25 +350,23 @@ public class EventReader extends Thread {
                                         this.timerStamps[activeLabelInt] = null;
                                         
                                         if (this.eventPlaySounds[activeLabelInt][2]) {
-                                            if (!this.overlayGui.containsActiveB(upperWave)) {
-                                                this.overlayGui.addActiveB(upperWave, "yellow");
+                                            if (!this.overlayGui.containsActiveB(eventName)) {
+                                                this.overlayGui.addActiveB(eventName, "yellow");
                                             }
                                         } else {
-                                            if (!this.overlayGui.containsActiveB(upperWave)) {
-                                                this.overlayGui.addActiveB(upperWave, "green");
+                                            if (!this.overlayGui.containsActiveB(eventName)) {
+                                                this.overlayGui.addActiveB(eventName, "green");
                                             }
                                         }
                                     } else {
                                         
-                                        upperWave = upperWave.substring(0, upperWave.length() - 4);
-                                        
                                         if (this.eventPlaySounds[activeLabelInt][2]) {
-                                            if (!this.overlayGui.containsActivePre(upperWave)) {
-                                                this.overlayGui.addActivePreEvent(upperWave, "yellow");
+                                            if (!this.overlayGui.containsActivePre(eventName)) {
+                                                this.overlayGui.addActivePreEvent(eventName, "yellow");
                                             }
                                         } else {
-                                            if (!this.overlayGui.containsActivePre(upperWave)) {
-                                                this.overlayGui.addActivePreEvent(upperWave, "green");
+                                            if (!this.overlayGui.containsActivePre(eventName)) {
+                                                this.overlayGui.addActivePreEvent(eventName, "green");
                                             }
                                         }
                                     }
