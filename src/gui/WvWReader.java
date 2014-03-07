@@ -156,7 +156,7 @@ public class WvWReader extends Thread {
                             if (this.timeDifference < 291) {
                                 this.timeDifference = this.timeDifference + 3;
                             } else {
-                                this.timeDifference = 0;
+                                this.timeDifference = 3;
                             }
                             
                             Thread.sleep(3000);
@@ -177,7 +177,7 @@ public class WvWReader extends Thread {
                         if (this.timeDifference < 286) {
                             this.timeDifference = this.timeDifference + 13;
                         } else {
-                            this.timeDifference = 0;
+                            this.timeDifference = 13;
                         }
                         
                         Thread.sleep(3000);
@@ -198,7 +198,7 @@ public class WvWReader extends Thread {
                     if (this.timeDifference < 286) {
                         this.timeDifference = this.timeDifference + 13;
                     } else {
-                        this.timeDifference = 0;
+                        this.timeDifference = 13;
                     }
                     
                     Thread.sleep(3000);
