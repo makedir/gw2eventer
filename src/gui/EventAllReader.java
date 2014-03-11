@@ -119,7 +119,11 @@ public class EventAllReader extends Thread {
                         for (int i = 0; i < array.size(); i++) {
 
                             JSONObject obj2 = (JSONObject) array.get(i);
-                            this.result.put(obj2.get("id"), obj2.get("name"));
+                            
+                            if (obj2.get("name") != null) {
+                                
+                                this.result.put(obj2.get("id"), obj2.get("name"));
+                            }
                         }
                         
                         this.apimanager.updateToolTips();

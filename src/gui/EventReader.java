@@ -282,136 +282,140 @@ public class EventReader extends Thread {
                         for (int i = 0; i < arrayNew.size(); i++) {
 
                             JSONObject obj2 = (JSONObject) arrayNew.get(i);
-                            String event = (String) obj2.get("event_id");
                             
-                            if (this.events.containsKey(event)) {
+                            if (obj2.get("event_id") != null) {
                                 
-                                //System.out.println("debug: " + event + "\n");
-                                this.result.add(obj2.get("event_id"));
+                                String event = (String) obj2.get("event_id");
 
-                                int indexEvent = Integer.parseInt(((String[]) this.events.get(event))[0]);
-                                String eventPercent = ((String[]) this.events.get(event))[1];
-                                String eventWav = ((String[]) this.events.get(event))[2];
-                                String eventName = ((String[]) this.events.get(event))[3];
-                                
-                                JLabel activeLabel = (JLabel) this.eventLabels.get(indexEvent - 1);
-                                JLabel activeLabelTimer = (JLabel) this.eventLabelsTimer.get(indexEvent - 1);
-                                
-                                int activeLabelInt = indexEvent - 1;
-                                String tmpEventName = eventPercent.substring(0, 1);
-                                
-                                Date dateNow = new Date();
-                                long stampNow = dateNow.getTime();
+                                if (this.events.containsKey(event)) {
 
-                                if (this.timerStamps[activeLabelInt] != null) {
+                                    //System.out.println("debug: " + event + "\n");
+                                    this.result.add(obj2.get("event_id"));
 
-                                    long oldTimestamp = this.timerStamps[activeLabelInt].getTime();
-                                    long minsdiff = ((stampNow - oldTimestamp) / 1000 / 60);
+                                    int indexEvent = Integer.parseInt(((String[]) this.events.get(event))[0]);
+                                    String eventPercent = ((String[]) this.events.get(event))[1];
+                                    String eventWav = ((String[]) this.events.get(event))[2];
+                                    String eventName = ((String[]) this.events.get(event))[3];
 
-                                    if (minsdiff >= 30) {
-                                        activeLabelTimer.setEnabled(true);
-                                    } else {
-                                        activeLabelTimer.setEnabled(false);
-                                    }
-                                    
-                                    if (minsdiff >= 60) {
-                                        activeLabelTimer.setForeground(Color.red);
-                                    } else {
-                                        activeLabelTimer.setForeground(Color.green);
-                                    }
-                                    
-                                    activeLabelTimer.setText(minsdiff + " mins (B)");
-                                }
-                                
-                                if (activeLabel != null) {
-                                    if (activeLabel.getToolTipText() != null) {
-                                        if (activeLabel.getToolTipText().equals("")) { // null pointer??
-                                            activeLabel.setToolTipText((String) this.allEvents.get(obj2.get("event_id")));
-                                        }
-                                    }
-                                }
-                                
-                                if (obj2.get("state").equals("Active")) {
-                                
-                                    activeLabel.setEnabled(true);
-                                    
-                                    activeLabel.setToolTipText((String) this.allEvents.get(obj2.get("event_id")));
-                                    
-                                    toolTip = activeLabel.getToolTipText();
-                                    
-                                    if (toolTip.length() > 35) {
-                                        toolTip = toolTip.substring(0, 35) + "...";
-                                    }
-                                    
-                                    if (tmpEventName.equals("B")) {
+                                    JLabel activeLabel = (JLabel) this.eventLabels.get(indexEvent - 1);
+                                    JLabel activeLabelTimer = (JLabel) this.eventLabelsTimer.get(indexEvent - 1);
 
-                                        this.markedBs[activeLabelInt] = true;
-                                        activeLabelTimer.setVisible(false);
-                                        this.timerStamps[activeLabelInt] = null;
-                                        
-                                        if (this.eventPlaySounds[activeLabelInt][2]) {
-                                            if (!this.overlayGui.containsActiveB(eventName)) {
-                                                this.overlayGui.addActiveB(eventName, "yellow");
-                                            }
+                                    int activeLabelInt = indexEvent - 1;
+                                    String tmpEventName = eventPercent.substring(0, 1);
+
+                                    Date dateNow = new Date();
+                                    long stampNow = dateNow.getTime();
+
+                                    if (this.timerStamps[activeLabelInt] != null) {
+
+                                        long oldTimestamp = this.timerStamps[activeLabelInt].getTime();
+                                        long minsdiff = ((stampNow - oldTimestamp) / 1000 / 60);
+
+                                        if (minsdiff >= 30) {
+                                            activeLabelTimer.setEnabled(true);
                                         } else {
-                                            if (!this.overlayGui.containsActiveB(eventName)) {
-                                                this.overlayGui.addActiveB(eventName, "green");
-                                            }
+                                            activeLabelTimer.setEnabled(false);
                                         }
-                                    } else {
-                                        
-                                        if (this.eventPlaySounds[activeLabelInt][2]) {
-                                            if (!this.overlayGui.containsActivePre(eventName)) {
-                                                this.overlayGui.addActivePreEvent(eventName, "yellow");
-                                            }
+
+                                        if (minsdiff >= 60) {
+                                            activeLabelTimer.setForeground(Color.red);
                                         } else {
-                                            if (!this.overlayGui.containsActivePre(eventName)) {
-                                                this.overlayGui.addActivePreEvent(eventName, "green");
+                                            activeLabelTimer.setForeground(Color.green);
+                                        }
+
+                                        activeLabelTimer.setText(minsdiff + " mins (B)");
+                                    }
+
+                                    if (activeLabel != null) {
+                                        if (activeLabel.getToolTipText() != null) {
+                                            if (activeLabel.getToolTipText().equals("")) { // null pointer??
+                                                activeLabel.setToolTipText((String) this.allEvents.get(obj2.get("event_id")));
                                             }
                                         }
                                     }
-                                    
-                                    //activeLabel.setSize(100, activeLabel.getSize().height);
-                                    //activeLabel.setText(eventPercent);
-                                    
-                                    URL url = this.getClass().getClassLoader().getResource("media/sounds/" + eventWav + ".wav");
-                                    
-                                    if (!playSoundsList.containsKey(url)) {
-                                     
-                                        if (!this.eventPlaySounds[activeLabelInt][2]) {
-                                            if (tmpEventName.equals("B")) {
-                                               if (this.eventPlaySounds[activeLabelInt][1]) {
 
-                                                   playSoundsList.put(url, activeLabel);
-                                               }
+                                    if (obj2.get("state").equals("Active")) {
+
+                                        activeLabel.setEnabled(true);
+
+                                        activeLabel.setToolTipText((String) this.allEvents.get(obj2.get("event_id")));
+
+                                        toolTip = activeLabel.getToolTipText();
+
+                                        if (toolTip.length() > 35) {
+                                            toolTip = toolTip.substring(0, 35) + "...";
+                                        }
+
+                                        if (tmpEventName.equals("B")) {
+
+                                            this.markedBs[activeLabelInt] = true;
+                                            activeLabelTimer.setVisible(false);
+                                            this.timerStamps[activeLabelInt] = null;
+
+                                            if (this.eventPlaySounds[activeLabelInt][2]) {
+                                                if (!this.overlayGui.containsActiveB(eventName)) {
+                                                    this.overlayGui.addActiveB(eventName, "yellow");
+                                                }
                                             } else {
-                                                if (this.eventPlaySounds[activeLabelInt][0]) {
-
-                                                   playSoundsList.put(url, activeLabel);
+                                                if (!this.overlayGui.containsActiveB(eventName)) {
+                                                    this.overlayGui.addActiveB(eventName, "green");
                                                 }
                                             }
                                         } else {
-                                            activeLabel.setForeground(Color.YELLOW);
+
+                                            if (this.eventPlaySounds[activeLabelInt][2]) {
+                                                if (!this.overlayGui.containsActivePre(eventName)) {
+                                                    this.overlayGui.addActivePreEvent(eventName, "yellow");
+                                                }
+                                            } else {
+                                                if (!this.overlayGui.containsActivePre(eventName)) {
+                                                    this.overlayGui.addActivePreEvent(eventName, "green");
+                                                }
+                                            }
                                         }
-                                     }
-                                    
-                                    if (mehrfachEvents.containsKey(activeLabel)) {
-                                        ((ArrayList) mehrfachEvents.get(activeLabel)).add(tmpEventName);
+
+                                        //activeLabel.setSize(100, activeLabel.getSize().height);
+                                        //activeLabel.setText(eventPercent);
+
+                                        URL url = this.getClass().getClassLoader().getResource("media/sounds/" + eventWav + ".wav");
+
+                                        if (!playSoundsList.containsKey(url)) {
+
+                                            if (!this.eventPlaySounds[activeLabelInt][2]) {
+                                                if (tmpEventName.equals("B")) {
+                                                   if (this.eventPlaySounds[activeLabelInt][1]) {
+
+                                                       playSoundsList.put(url, activeLabel);
+                                                   }
+                                                } else {
+                                                    if (this.eventPlaySounds[activeLabelInt][0]) {
+
+                                                       playSoundsList.put(url, activeLabel);
+                                                    }
+                                                }
+                                            } else {
+                                                activeLabel.setForeground(Color.YELLOW);
+                                            }
+                                         }
+
+                                        if (mehrfachEvents.containsKey(activeLabel)) {
+                                            ((ArrayList) mehrfachEvents.get(activeLabel)).add(tmpEventName);
+                                        } else {
+                                            ArrayList tmpListe = new ArrayList();
+                                            tmpListe.add(tmpEventName);
+                                            mehrfachEvents.put(activeLabel, tmpListe);
+                                        }                                    
                                     } else {
-                                        ArrayList tmpListe = new ArrayList();
-                                        tmpListe.add(tmpEventName);
-                                        mehrfachEvents.put(activeLabel, tmpListe);
-                                    }                                    
-                                } else {
-                                    
-                                    if (tmpEventName.equals("B")) {
-                                        if (this.markedBs[activeLabelInt]) {
 
-                                            this.timerStamps[activeLabelInt] = dateNow;
-                                            this.markedBs[activeLabelInt] = false;
+                                        if (tmpEventName.equals("B")) {
+                                            if (this.markedBs[activeLabelInt]) {
 
-                                            activeLabelTimer.setVisible(true);
-                                            activeLabelTimer.setText("0 mins (B)");
+                                                this.timerStamps[activeLabelInt] = dateNow;
+                                                this.markedBs[activeLabelInt] = false;
+
+                                                activeLabelTimer.setVisible(true);
+                                                activeLabelTimer.setText("0 mins (B)");
+                                            }
                                         }
                                     }
                                 }

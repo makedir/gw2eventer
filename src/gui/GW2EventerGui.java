@@ -1117,20 +1117,26 @@ public class GW2EventerGui extends javax.swing.JFrame {
 
     private void jCheckBoxAutoRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxAutoRefreshActionPerformed
 
-        this.apiManager.eventReaderStop();
+        if (this.jCheckBoxAutoRefresh.isSelected()) {
+            
+            this.apiManager.eventReaderStop();
 
-        this.jLabelWorking.setVisible(true);
-        this.jCheckBoxAutoRefresh.setEnabled(false);
-        this.jButtonRefresh.setEnabled(false);
+            this.jLabelWorking.setVisible(true);
+            this.jCheckBoxAutoRefresh.setEnabled(false);
+            this.jButtonRefresh.setEnabled(false);
+            this.jComboBoxLanguage.setEnabled(false);
 
-        String homeWorldSelected = (String) this.homeWorlds.get((String) this.jComboBoxHomeWorld.getSelectedItem());
+            String homeWorldSelected = (String) this.homeWorlds.get((String) this.jComboBoxHomeWorld.getSelectedItem());
 
-        this.apiManager.setRefreshTime((Integer)this.jSpinnerRefreshTime.getValue());
+            this.apiManager.setRefreshTime((Integer)this.jSpinnerRefreshTime.getValue());
 
-        this.apiManager.eventReaderStart((Integer)this.jSpinnerRefreshTime.getValue(),
-            this.jCheckBoxAutoRefresh.isSelected(), homeWorldSelected);
+            this.apiManager.eventReaderStart((Integer)this.jSpinnerRefreshTime.getValue(),
+                this.jCheckBoxAutoRefresh.isSelected(), homeWorldSelected);
 
-        this.resetLabels();
+            this.resetLabels();
+        } else {
+            this.apiManager.eventReaderStop();
+        }
     }//GEN-LAST:event_jCheckBoxAutoRefreshActionPerformed
 
     private void jButtonRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRefreshActionPerformed
@@ -1139,6 +1145,8 @@ public class GW2EventerGui extends javax.swing.JFrame {
 
         this.apiManager.eventReaderStop();
 
+        this.jCheckBoxAutoRefresh.setSelected(true);
+        
         this.jLabelWorking.setVisible(true);
         this.jCheckBoxAutoRefresh.setEnabled(false);
         this.jButtonRefresh.setEnabled(false);

@@ -158,13 +158,15 @@ public class HomeWorldAllReader extends Thread {
                         for (int i = 0; i < array.size(); i++) {
 
                             JSONObject obj2 = (JSONObject) array.get(i);
+                            
+                            if (obj2.get("name") != null) {
+                                this.result.put((String) obj2.get("id"), (String) obj2.get("name"));
+                                this.result.put((String) obj2.get("name"), (String) obj2.get("id"));
 
-                            this.result.put((String) obj2.get("id"), (String) obj2.get("name"));
-                            this.result.put((String) obj2.get("name"), (String) obj2.get("id"));
-
-                            this.homeWorldsList.add(obj2.get("name"));
+                                this.homeWorldsList.add(obj2.get("name"));
+                            }
                         }
-
+                        
                         Collections.sort(this.homeWorldsList);
                         
                         for (int i = 0; i < this.homeWorldsList.size(); i++) {
