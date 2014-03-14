@@ -243,6 +243,10 @@ public class WvWOverlayGui extends javax.swing.JFrame {
     
     public void refresh(int timeDifference) {
         
+        this.setAlwaysOnTop(true);
+        this.toFront();
+        this.repaint();
+        
         Iterator it;
         
         if (this.ownerDataOld.isEmpty()) {

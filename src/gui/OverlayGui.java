@@ -92,6 +92,10 @@ public class OverlayGui extends javax.swing.JFrame {
     
     public void renderActive() {
         
+        this.setAlwaysOnTop(true);
+        this.toFront();
+        this.repaint();
+        
         String outBsTmp = "";
         String outPresTmp = "";
         

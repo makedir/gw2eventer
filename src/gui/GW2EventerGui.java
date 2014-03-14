@@ -146,9 +146,9 @@ public class GW2EventerGui extends javax.swing.JFrame {
     private static final String LANG_FEEDBACK_SUBJECT_FR = "Subject";
     
     private static final String LANG_FEEDBACK_MESSAGE_DE = "Nachricht";
-    private static final String LANG_FEEDBACK_MESSAGE_EN = "Mesesage";
-    private static final String LANG_FEEDBACK_MESSAGE_ES = "Mesesage";
-    private static final String LANG_FEEDBACK_MESSAGE_FR = "Mesesage";
+    private static final String LANG_FEEDBACK_MESSAGE_EN = "Message";
+    private static final String LANG_FEEDBACK_MESSAGE_ES = "Message";
+    private static final String LANG_FEEDBACK_MESSAGE_FR = "Message";
     
     private static final String LANG_SEND_BTN_DE = "Senden";
     private static final String LANG_SEND_BTN_EN = "Send";
@@ -156,9 +156,9 @@ public class GW2EventerGui extends javax.swing.JFrame {
     private static final String LANG_SEND_BTN_FR = "Send";
     
     private static final String LANG_CANCLE_BTN_DE = "Abbrechen";
-    private static final String LANG_CANCLE_BTN_EN = "Cancle";
-    private static final String LANG_CANCLE_BTN_ES = "Cancle";
-    private static final String LANG_CANCLE_BTN_FR = "Cancle";
+    private static final String LANG_CANCLE_BTN_EN = "Cancel";
+    private static final String LANG_CANCLE_BTN_ES = "Cancel";
+    private static final String LANG_CANCLE_BTN_FR = "Cancel";
     
     private static final String LANG_SEND_ERROR_TITLE_DE = "Verbindungs Fehler";
     private static final String LANG_SEND_ERROR_TITLE_EN = "Connection error";
@@ -227,7 +227,7 @@ public class GW2EventerGui extends javax.swing.JFrame {
     
     public static final int EVENT_COUNT = 23;
     
-    private static final String VERSION = "1.75";
+    private static final String VERSION = "1.76";
     
     private JButton workingButton;
     private JCheckBox refreshSelector;
