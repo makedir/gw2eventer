@@ -792,8 +792,6 @@ public class GW2EventerGui extends javax.swing.JFrame {
 
         getContentPane().add(jPanel1, java.awt.BorderLayout.NORTH);
 
-        backgroundPanel1.setMinimumSize(new java.awt.Dimension(1280, 753));
-        backgroundPanel1.setPreferredSize(new java.awt.Dimension(1280, 753));
         backgroundPanel1.setLayout(new java.awt.GridBagLayout());
 
         jPanel5.setLayout(new java.awt.BorderLayout());
