@@ -644,7 +644,6 @@ public class GW2EventerGui extends javax.swing.JFrame {
         setTitle("GW2 Eventer");
         setIconImage(this.guiIcon);
         setMinimumSize(new java.awt.Dimension(1100, 600));
-        setPreferredSize(new java.awt.Dimension(1280, 790));
 
         jPanel1.setMaximumSize(new java.awt.Dimension(1280, 33));
         jPanel1.setMinimumSize(new java.awt.Dimension(1280, 33));
@@ -683,9 +682,9 @@ public class GW2EventerGui extends javax.swing.JFrame {
         });
         jPanel3.add(jButtonRefresh);
 
-        jSpinnerRefreshTime.setModel(new javax.swing.SpinnerNumberModel(20, 20, 300, 20));
+        jSpinnerRefreshTime.setModel(new javax.swing.SpinnerNumberModel(40, 20, 300, 20));
         jSpinnerRefreshTime.setPreferredSize(new java.awt.Dimension(50, 22));
-        jSpinnerRefreshTime.setValue(20);
+        jSpinnerRefreshTime.setValue(40);
         jPanel3.add(jSpinnerRefreshTime);
 
         jLabelSeconds.setText("sec");
