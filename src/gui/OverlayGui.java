@@ -31,6 +31,7 @@ import java.awt.Robot;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.TreeMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JLabel;
@@ -41,8 +42,8 @@ import javax.swing.JLabel;
  */
 public class OverlayGui extends javax.swing.JFrame {
 
-    private HashMap activeBEvents;
-    private HashMap activePreEvents;
+    private TreeMap activeBEvents;
+    private TreeMap activePreEvents;
     
     private HashMap activeBEventsIndexes;
     private HashMap activePreEventsIndexes;
@@ -56,8 +57,8 @@ public class OverlayGui extends javax.swing.JFrame {
         
         this.mainGui = mainGui;
         
-        this.activeBEvents = new HashMap();
-        this.activePreEvents = new HashMap();
+        this.activeBEvents = new TreeMap();
+        this.activePreEvents = new TreeMap();
         
         this.activeBEventsIndexes = new HashMap();
         this.activePreEventsIndexes = new HashMap();
