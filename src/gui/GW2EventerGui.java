@@ -227,7 +227,7 @@ public class GW2EventerGui extends javax.swing.JFrame {
     
     public static final int EVENT_COUNT = 23;
     
-    private static final String VERSION = "1.76";
+    private static final String VERSION = "1.77";
     
     private JButton workingButton;
     private JCheckBox refreshSelector;
@@ -426,6 +426,11 @@ public class GW2EventerGui extends javax.swing.JFrame {
         //this.runTest();
     }
 
+    public void setLooted(int index, boolean looted) {
+        
+        this.apiManager.setLooted(index, looted);
+    }
+    
     public void reloadMatchIds() {
         
         this.matchIds = new HashMap();

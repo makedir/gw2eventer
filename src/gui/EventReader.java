@@ -354,22 +354,22 @@ public class EventReader extends Thread {
 
                                             if (this.eventPlaySounds[activeLabelInt][2]) {
                                                 if (!this.overlayGui.containsActiveB(eventName)) {
-                                                    this.overlayGui.addActiveB(eventName, "yellow");
+                                                    this.overlayGui.addActiveB(eventName, "yellow", activeLabelInt);
                                                 }
                                             } else {
                                                 if (!this.overlayGui.containsActiveB(eventName)) {
-                                                    this.overlayGui.addActiveB(eventName, "green");
+                                                    this.overlayGui.addActiveB(eventName, "green", activeLabelInt);
                                                 }
                                             }
                                         } else {
 
                                             if (this.eventPlaySounds[activeLabelInt][2]) {
                                                 if (!this.overlayGui.containsActivePre(eventName)) {
-                                                    this.overlayGui.addActivePreEvent(eventName, "yellow");
+                                                    this.overlayGui.addActivePreEvent(eventName, "yellow", activeLabelInt);
                                                 }
                                             } else {
                                                 if (!this.overlayGui.containsActivePre(eventName)) {
-                                                    this.overlayGui.addActivePreEvent(eventName, "green");
+                                                    this.overlayGui.addActivePreEvent(eventName, "green", activeLabelInt);
                                                 }
                                             }
                                         }

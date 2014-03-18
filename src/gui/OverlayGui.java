@@ -33,6 +33,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JLabel;
 
 /**
  *
@@ -40,8 +41,11 @@ import java.util.logging.Logger;
  */
 public class OverlayGui extends javax.swing.JFrame {
 
-    HashMap activeBEvents;
-    HashMap activePreEvents;
+    private HashMap activeBEvents;
+    private HashMap activePreEvents;
+    
+    private HashMap activeBEventsIndexes;
+    private HashMap activePreEventsIndexes;
     
     private GW2EventerGui mainGui;
     
@@ -54,6 +58,9 @@ public class OverlayGui extends javax.swing.JFrame {
         
         this.activeBEvents = new HashMap();
         this.activePreEvents = new HashMap();
+        
+        this.activeBEventsIndexes = new HashMap();
+        this.activePreEventsIndexes = new HashMap();
         
         initComponents();
     }
@@ -68,6 +75,9 @@ public class OverlayGui extends javax.swing.JFrame {
         
         this.activeBEvents.clear();
         this.activePreEvents.clear();
+        
+        this.activeBEventsIndexes.clear();
+        this.activePreEventsIndexes.clear();
     }
     
     public boolean containsActiveB(String activeB) {
@@ -80,14 +90,21 @@ public class OverlayGui extends javax.swing.JFrame {
         return this.activePreEvents.containsKey(activePre);
     }
     
-    public void addActiveB(String name, String color) {
+    public void addActiveB(String name, String color, int index) {
         
         this.activeBEvents.put(name, color);
+        this.activeBEventsIndexes.put(name, index);
     }
     
-    public void addActivePreEvent(String name, String color) {
+    public void addActivePreEvent(String name, String color, int index) {
         
         this.activePreEvents.put(name, color);
+        this.activePreEventsIndexes.put(name, index);
+    }
+    
+    private void setLooted(int index, boolean looted) {
+        
+        this.mainGui.setLooted(index, looted);
     }
     
     public void renderActive() {
@@ -96,8 +113,7 @@ public class OverlayGui extends javax.swing.JFrame {
         this.toFront();
         this.repaint();
         
-        String outBsTmp = "";
-        String outPresTmp = "";
+        this.jToolBarActiveBs.removeAll();
         
         Iterator it = this.activeBEvents.entrySet().iterator();
                     
@@ -105,17 +121,38 @@ public class OverlayGui extends javax.swing.JFrame {
 
             Map.Entry pairs = (Map.Entry) it.next();
 
-            String name = (String) pairs.getKey();
+            final String name = (String) pairs.getKey();
             String color = (String) pairs.getValue();
             
+            final JLabel newLabel = new javax.swing.JLabel();
+            newLabel.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+            newLabel.setForeground(new java.awt.Color(102, 255, 0));
+            
+            newLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/media/looted.png")));
+            
+            final int index = (int) this.activeBEventsIndexes.get(name);
+            
+            newLabel.addMouseListener(new java.awt.event.MouseAdapter() {
+                @Override
+                public void mousePressed(java.awt.event.MouseEvent evt) {
+                        setLooted(index, true);
+                        newLabel.setText("<html><b><font color=yellow>" + name + "</font></b></html>");
+                    }
+            });
+            
             if (color.equals("yellow")) {
-                outBsTmp = outBsTmp + "<b><font color=yellow>" + name + "</font></b><br>";
+                newLabel.setText("<html><b><font color=yellow>" + name + "</font></b></html>");
             } else {
-                outBsTmp = outBsTmp + "<b>" + name + "</b><br>";
+                newLabel.setText("<html><b>" + name + "</b></html>");
             }
+            
+            newLabel.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+            this.jToolBarActiveBs.add(newLabel);
             
             it.remove();
         }
+        
+        this.jToolBarActivePres.removeAll();
         
         it = this.activePreEvents.entrySet().iterator();
                     
@@ -123,32 +160,38 @@ public class OverlayGui extends javax.swing.JFrame {
 
             Map.Entry pairs = (Map.Entry) it.next();
 
-            String name = (String) pairs.getKey();
+            final String name = (String) pairs.getKey();
             String color = (String) pairs.getValue();
             
+            final JLabel newLabel = new javax.swing.JLabel();
+            newLabel.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+            newLabel.setForeground(new java.awt.Color(102, 255, 0));
+            
+            newLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/media/looted.png")));
+            
+            final int index = (int) this.activePreEventsIndexes.get(name);
+            
+            newLabel.addMouseListener(new java.awt.event.MouseAdapter() {
+                @Override
+                public void mousePressed(java.awt.event.MouseEvent evt) {
+                        setLooted(index, true);
+                        newLabel.setText("<html><b><font color=yellow>" + name + "</font></b></html>");
+                    }
+            });
+            
             if (color.equals("yellow")) {
-                outPresTmp = outPresTmp + "<b><font color=yellow>" + name + "</font></b><br>";
+                newLabel.setText("<html><b><font color=yellow>" + name + "</font></b></html>");
             } else {
-                outPresTmp = outPresTmp + "<b>" + name + "</b><br>";
+                newLabel.setText("<html><b>" + name + "</b></html>");
             }
+            
+            newLabel.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+            this.jToolBarActivePres.add(newLabel);
             
             it.remove();
         }
         
-        if (outBsTmp.equals("")) {
-            outBsTmp = "-";
-        } else {
-            outBsTmp = "<html>" + outBsTmp + "</html>";
-        }
-        
-        if (outPresTmp.equals("")) {
-            outPresTmp = "-";
-        } else {
-            outPresTmp = "<html>" + outPresTmp + "</html>";
-        }
-        
-        this.jLabelActiveBs.setText(outBsTmp);
-        this.jLabelActivePres.setText(outPresTmp);
+        pack();
     }
     
     /**
@@ -169,9 +212,9 @@ public class OverlayGui extends javax.swing.JFrame {
         jButtonClose = new javax.swing.JButton();
         jToolBarContent = new javax.swing.JToolBar();
         jLabel1 = new javax.swing.JLabel();
-        jLabelActiveBs = new javax.swing.JLabel();
+        jToolBarActiveBs = new javax.swing.JToolBar();
         jLabel2 = new javax.swing.JLabel();
-        jLabelActivePres = new javax.swing.JLabel();
+        jToolBarActivePres = new javax.swing.JToolBar();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("GW2 Eventer overlay");
@@ -270,26 +313,28 @@ public class OverlayGui extends javax.swing.JFrame {
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("active B events:");
         jLabel1.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
+        jLabel1.setFocusable(false);
         jToolBarContent.add(jLabel1);
 
-        jLabelActiveBs.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
-        jLabelActiveBs.setForeground(new java.awt.Color(102, 255, 0));
-        jLabelActiveBs.setText("-");
-        jLabelActiveBs.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-        jToolBarContent.add(jLabelActiveBs);
+        jToolBarActiveBs.setFloatable(false);
+        jToolBarActiveBs.setOrientation(javax.swing.SwingConstants.VERTICAL);
+        jToolBarActiveBs.setFocusable(false);
+        jToolBarActiveBs.setOpaque(false);
+        jToolBarContent.add(jToolBarActiveBs);
 
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("active pre Events:");
         jLabel2.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
+        jLabel2.setFocusable(false);
         jToolBarContent.add(jLabel2);
 
-        jLabelActivePres.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
-        jLabelActivePres.setForeground(new java.awt.Color(102, 255, 0));
-        jLabelActivePres.setText("-");
-        jLabelActivePres.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-        jToolBarContent.add(jLabelActivePres);
+        jToolBarActivePres.setFloatable(false);
+        jToolBarActivePres.setOrientation(javax.swing.SwingConstants.VERTICAL);
+        jToolBarActivePres.setFocusable(false);
+        jToolBarActivePres.setOpaque(false);
+        jToolBarContent.add(jToolBarActivePres);
 
-        getContentPane().add(jToolBarContent, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 23, 246, 243));
+        getContentPane().add(jToolBarContent, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 23, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -364,9 +409,9 @@ public class OverlayGui extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabelActiveBs;
-    private javax.swing.JLabel jLabelActivePres;
     private javax.swing.JLabel jLabelMenu;
+    private javax.swing.JToolBar jToolBarActiveBs;
+    private javax.swing.JToolBar jToolBarActivePres;
     private javax.swing.JToolBar jToolBarContent;
     private javax.swing.JToolBar jToolBarMenu;
     // End of variables declaration//GEN-END:variables

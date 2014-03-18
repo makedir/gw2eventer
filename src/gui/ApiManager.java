@@ -288,6 +288,17 @@ public class ApiManager {
         }
     }
     
+    public void setLooted(int index, boolean looted) {
+        
+        this.eventPlaySounds[index][2] = looted;
+        
+        if (looted) {
+            ((JLabel) this.eventLabels.get(index)).setForeground(Color.yellow);
+        } else {
+            ((JLabel) this.eventLabels.get(index)).setForeground(Color.green);
+        }
+    }
+    
     public String getMatchId() {
         
         return this.gui.getMatchId();
