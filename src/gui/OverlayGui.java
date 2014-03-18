@@ -94,15 +94,69 @@ public class OverlayGui extends javax.swing.JFrame {
         
         this.activeBEvents.put(name, color);
         this.activeBEventsIndexes.put(name, index);
+        this.activeBEventsIndexes.put(index + "", name);
     }
     
     public void addActivePreEvent(String name, String color, int index) {
         
         this.activePreEvents.put(name, color);
         this.activePreEventsIndexes.put(name, index);
+        this.activePreEventsIndexes.put(index + "", name);
     }
     
-    private void setLooted(int index, boolean looted) {
+    private void setLooted(int index, int preBoss) {
+        
+        boolean looted = false;
+        
+        if (preBoss == 1) {
+            String name = (String) this.activePreEventsIndexes.get(index + "");
+            String color = (String) this.activePreEvents.get(name);
+            
+            if (color.equals("yellow")) {
+                looted = false;
+                this.activePreEvents.remove(name);
+                this.activePreEvents.put(name, "green");
+            } else {
+                looted = true;
+                this.activePreEvents.remove(name);
+                this.activePreEvents.put(name, "yellow");
+            }
+            
+            if (this.containsActiveB(name)) {
+                if (color.equals("yellow")) {
+                    this.activeBEvents.remove(name);
+                    this.activeBEvents.put(name, "green");
+                } else {
+                    this.activeBEvents.remove(name);
+                    this.activeBEvents.put(name, "yellow");
+                }
+            }
+        } else {
+            String name = (String) this.activeBEventsIndexes.get(index + "");
+            String color = (String) this.activeBEvents.get(name);
+            
+            if (color.equals("yellow")) {
+                looted = false;
+                this.activeBEvents.remove(name);
+                this.activeBEvents.put(name, "green");
+            } else {
+                looted = true;
+                this.activeBEvents.remove(name);
+                this.activeBEvents.put(name, "yellow");
+            }
+            
+            if (this.containsActivePre(name)) {
+                if (color.equals("yellow")) {
+                    this.activePreEvents.remove(name);
+                    this.activePreEvents.put(name, "green");
+                } else {
+                    this.activePreEvents.remove(name);
+                    this.activePreEvents.put(name, "yellow");
+                }
+            }
+        }
+        
+        this.renderActive();
         
         this.mainGui.setLooted(index, looted);
     }
@@ -135,7 +189,7 @@ public class OverlayGui extends javax.swing.JFrame {
             newLabel.addMouseListener(new java.awt.event.MouseAdapter() {
                 @Override
                 public void mousePressed(java.awt.event.MouseEvent evt) {
-                        setLooted(index, true);
+                        setLooted(index, 0);
                         newLabel.setText("<html><b><font color=yellow>" + name + "</font></b></html>");
                     }
             });
@@ -149,7 +203,7 @@ public class OverlayGui extends javax.swing.JFrame {
             newLabel.setVerticalAlignment(javax.swing.SwingConstants.TOP);
             this.jToolBarActiveBs.add(newLabel);
             
-            it.remove();
+            //it.remove();
         }
         
         this.jToolBarActivePres.removeAll();
@@ -174,7 +228,7 @@ public class OverlayGui extends javax.swing.JFrame {
             newLabel.addMouseListener(new java.awt.event.MouseAdapter() {
                 @Override
                 public void mousePressed(java.awt.event.MouseEvent evt) {
-                        setLooted(index, true);
+                        setLooted(index, 1);
                         newLabel.setText("<html><b><font color=yellow>" + name + "</font></b></html>");
                     }
             });
@@ -188,7 +242,7 @@ public class OverlayGui extends javax.swing.JFrame {
             newLabel.setVerticalAlignment(javax.swing.SwingConstants.TOP);
             this.jToolBarActivePres.add(newLabel);
             
-            it.remove();
+            //it.remove();
         }
         
         pack();
