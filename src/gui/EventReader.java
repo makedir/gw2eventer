@@ -189,7 +189,8 @@ public class EventReader extends Thread {
         //HttpClient client = new DefaultHttpClient();
         
         HttpGet request = new HttpGet(
-                "https://api.guildwars2.com/v1/events.json?world_id="
+                //"https://api.guildwars2.com/v1/events.json?world_id="
+                "http://gw2eventer.sourceforge.net/api/events.php?world_id="
                         + this.worldID);
         
         HttpResponse response;
@@ -342,10 +343,15 @@ public class EventReader extends Thread {
 
                                         toolTip = activeLabel.getToolTipText();
 
-                                        if (toolTip.length() > 35) {
-                                            toolTip = toolTip.substring(0, 35) + "...";
+                                        if (toolTip != null) {
+                                            
+                                            if (toolTip.length() > 35) {
+                                                toolTip = toolTip.substring(0, 35) + "...";
+                                            }
+                                        } else {
+                                            toolTip = "";
                                         }
-
+                                        
                                         if (tmpEventName.equals("B")) {
 
                                             this.markedBs[activeLabelInt] = true;
