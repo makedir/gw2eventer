@@ -327,19 +327,20 @@ public class EventReader extends Thread {
                                         activeLabelTimer.setText(minsdiff + " mins (B)");
                                     }
 
+                                    /*
                                     if (activeLabel != null) {
                                         if (activeLabel.getToolTipText() != null) {
                                             if (activeLabel.getToolTipText().equals("")) { // null pointer??
                                                 activeLabel.setToolTipText((String) this.allEvents.get(obj2.get("event_id")));
                                             }
                                         }
-                                    }
+                                    }*/
 
                                     if (obj2.get("state").equals("Active")) {
 
                                         activeLabel.setEnabled(true);
 
-                                        activeLabel.setToolTipText((String) this.allEvents.get(obj2.get("event_id")));
+                                        //activeLabel.setToolTipText((String) this.allEvents.get(obj2.get("event_id")));
 
                                         toolTip = activeLabel.getToolTipText();
 
