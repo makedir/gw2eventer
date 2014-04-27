@@ -50,6 +50,8 @@ public class SoundSelectGui extends JDialog implements ActionListener {
         this.jCheckBoxPreEvent.setSelected(preBoss[0]);
         this.jCheckBoxBoss.setSelected(preBoss[1]);
         this.jCheckBoxDaily.setSelected(preBoss[2]);
+        
+        this.jCheckBoxPreEvent.setEnabled(false);
     }
 
     /**

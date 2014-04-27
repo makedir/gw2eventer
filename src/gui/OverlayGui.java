@@ -64,12 +64,14 @@ public class OverlayGui extends javax.swing.JFrame {
         this.activePreEventsIndexes = new HashMap();
         
         initComponents();
+        
+        this.jLabelPreEvents.setVisible(false);
     }
 
     public void setTranslations(String activeBEventsLabel, String activePreEventsLabel) {
         
-        this.jLabel1.setText(activeBEventsLabel);
-        this.jLabel2.setText(activePreEventsLabel);
+        this.jLabelBossEvents.setText(activeBEventsLabel);
+        this.jLabelPreEvents.setText(activePreEventsLabel);
     }
     
     public void clearActive() {
@@ -266,9 +268,9 @@ public class OverlayGui extends javax.swing.JFrame {
         jButtonMove = new javax.swing.JButton();
         jButtonClose = new javax.swing.JButton();
         jToolBarContent = new javax.swing.JToolBar();
-        jLabel1 = new javax.swing.JLabel();
+        jLabelBossEvents = new javax.swing.JLabel();
         jToolBarActiveBs = new javax.swing.JToolBar();
-        jLabel2 = new javax.swing.JLabel();
+        jLabelPreEvents = new javax.swing.JLabel();
         jToolBarActivePres = new javax.swing.JToolBar();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
@@ -365,11 +367,11 @@ public class OverlayGui extends javax.swing.JFrame {
         jToolBarContent.setFocusable(false);
         jToolBarContent.setOpaque(false);
 
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("active B events:");
-        jLabel1.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
-        jLabel1.setFocusable(false);
-        jToolBarContent.add(jLabel1);
+        jLabelBossEvents.setForeground(new java.awt.Color(255, 255, 255));
+        jLabelBossEvents.setText("active events:");
+        jLabelBossEvents.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
+        jLabelBossEvents.setFocusable(false);
+        jToolBarContent.add(jLabelBossEvents);
 
         jToolBarActiveBs.setFloatable(false);
         jToolBarActiveBs.setOrientation(javax.swing.SwingConstants.VERTICAL);
@@ -377,11 +379,11 @@ public class OverlayGui extends javax.swing.JFrame {
         jToolBarActiveBs.setOpaque(false);
         jToolBarContent.add(jToolBarActiveBs);
 
-        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("active pre Events:");
-        jLabel2.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
-        jLabel2.setFocusable(false);
-        jToolBarContent.add(jLabel2);
+        jLabelPreEvents.setForeground(new java.awt.Color(255, 255, 255));
+        jLabelPreEvents.setText("active pre Events:");
+        jLabelPreEvents.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
+        jLabelPreEvents.setFocusable(false);
+        jToolBarContent.add(jLabelPreEvents);
 
         jToolBarActivePres.setFloatable(false);
         jToolBarActivePres.setOrientation(javax.swing.SwingConstants.VERTICAL);
@@ -461,10 +463,10 @@ public class OverlayGui extends javax.swing.JFrame {
     private javax.swing.JButton jButtonMaximize;
     private javax.swing.JButton jButtonMinimize;
     private javax.swing.JButton jButtonMove;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabelBossEvents;
     private javax.swing.JLabel jLabelMenu;
+    private javax.swing.JLabel jLabelPreEvents;
     private javax.swing.JToolBar jToolBarActiveBs;
     private javax.swing.JToolBar jToolBarActivePres;
     private javax.swing.JToolBar jToolBarContent;

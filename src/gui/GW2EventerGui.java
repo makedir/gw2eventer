@@ -190,10 +190,10 @@ public class GW2EventerGui extends javax.swing.JFrame {
     private static final String LANG_NEWVERSION_ES = "New version is out! Get it here.";
     private static final String LANG_NEWVERSION_FR = "New version is out! Get it here.";
     
-    private static final String LANG_OVERLAY_B_ACTIVE_DE = "Aktive Boss Events:";
-    private static final String LANG_OVERLAY_B_ACTIVE_EN = "Active boss events:";
-    private static final String LANG_OVERLAY_B_ACTIVE_ES = "Active boss events:";
-    private static final String LANG_OVERLAY_B_ACTIVE_FR = "Active boss events:";
+    private static final String LANG_OVERLAY_B_ACTIVE_DE = "Aktive Events:";
+    private static final String LANG_OVERLAY_B_ACTIVE_EN = "Active events:";
+    private static final String LANG_OVERLAY_B_ACTIVE_ES = "Active events:";
+    private static final String LANG_OVERLAY_B_ACTIVE_FR = "Active events:";
     
     private static final String LANG_OVERLAY_PRE_ACTIVE_DE = "Aktive Pre Events:";
     private static final String LANG_OVERLAY_PRE_ACTIVE_EN = "Active pre events:";
