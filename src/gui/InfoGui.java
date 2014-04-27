@@ -45,6 +45,8 @@ public class InfoGui extends javax.swing.JDialog {
         this.parentGui = (GW2EventerGui) parent;
         
         initComponents();
+        
+        this.jLabelVersion.setText("v" + this.parentGui.VERSION);
     }
 
     /**
@@ -56,6 +58,7 @@ public class InfoGui extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabelVersion = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
@@ -67,6 +70,9 @@ public class InfoGui extends javax.swing.JDialog {
         setBackground(new java.awt.Color(70, 59, 49));
         setModalityType(java.awt.Dialog.ModalityType.APPLICATION_MODAL);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabelVersion.setForeground(new java.awt.Color(255, 255, 255));
+        getContentPane().add(jLabelVersion, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 140, -1, -1));
 
         jLabel3.setForeground(new java.awt.Color(153, 153, 153));
         jLabel3.setText("http://gw2eventer.com");
@@ -139,5 +145,6 @@ public class InfoGui extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabelVersion;
     // End of variables declaration//GEN-END:variables
 }

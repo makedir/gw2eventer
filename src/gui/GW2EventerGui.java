@@ -227,7 +227,7 @@ public class GW2EventerGui extends javax.swing.JFrame {
     
     public static final int EVENT_COUNT = 23;
     
-    private static final String VERSION = "1.8";
+    public static final String VERSION = "1.81";
     
     private JButton workingButton;
     private JCheckBox refreshSelector;
@@ -369,7 +369,7 @@ public class GW2EventerGui extends javax.swing.JFrame {
                 Field f = getClass().getDeclaredField("labelEvent" + i);
                 JLabel l = (JLabel) f.get(this);
                 l.setPreferredSize(new Dimension(70,28));
-                l.setToolTipText("");
+                //l.setToolTipText("");
                 
                 //int width2 = l.getX();
                 //int height2 = l.getY();
@@ -399,6 +399,28 @@ public class GW2EventerGui extends javax.swing.JFrame {
                 this.eventLabelsTimer.add(l);
                 
             } catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException ex) {
+                Logger.getLogger(GW2EventerGui.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        
+        int[] disabledEvents = {6, 8, 11, 12, 17, 18, 19, 20, 21, 22};
+        
+        for (int i = 0; i < disabledEvents.length; i++) {
+            
+            Field f;
+            JLabel l;
+            
+            try {
+                f = getClass().getDeclaredField("labelEvent" + disabledEvents[i]);
+                l = (JLabel) f.get(this);
+                l.setEnabled(false);
+                l.setVisible(false);
+                
+                f = getClass().getDeclaredField("labelTimer" + disabledEvents[i]);
+                l = (JLabel) f.get(this);
+                l.setEnabled(false);
+                l.setVisible(false);
+            } catch (    NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException ex) {
                 Logger.getLogger(GW2EventerGui.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
@@ -832,7 +854,7 @@ public class GW2EventerGui extends javax.swing.JFrame {
         labelEvent1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         labelEvent1.setForeground(new java.awt.Color(255, 51, 0));
         labelEvent1.setText("x");
-        labelEvent1.setToolTipText("123");
+        labelEvent1.setToolTipText("Shadow Behemoth");
         labelEvent1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         labelEvent1.setEnabled(false);
         jPanel4.add(labelEvent1, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 160, -1, -1));
@@ -840,21 +862,21 @@ public class GW2EventerGui extends javax.swing.JFrame {
         labelEvent2.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         labelEvent2.setForeground(new java.awt.Color(255, 51, 0));
         labelEvent2.setText("x");
-        labelEvent2.setToolTipText("123");
+        labelEvent2.setToolTipText("Fire Elemental");
         labelEvent2.setEnabled(false);
         jPanel4.add(labelEvent2, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 350, -1, -1));
 
         labelEvent3.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         labelEvent3.setForeground(new java.awt.Color(255, 51, 0));
         labelEvent3.setText("x");
-        labelEvent3.setToolTipText("123");
+        labelEvent3.setToolTipText("Great Jungle Wurm");
         labelEvent3.setEnabled(false);
         jPanel4.add(labelEvent3, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 330, -1, -1));
 
         labelEvent4.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         labelEvent4.setForeground(new java.awt.Color(255, 51, 0));
         labelEvent4.setText("x");
-        labelEvent4.setToolTipText("123");
+        labelEvent4.setToolTipText("Inquest Golem Mark II");
         labelEvent4.setEnabled(false);
         jPanel4.add(labelEvent4, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 580, -1, -1));
 
@@ -862,7 +884,7 @@ public class GW2EventerGui extends javax.swing.JFrame {
         labelEvent5.setForeground(new java.awt.Color(255, 51, 0));
         labelEvent5.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         labelEvent5.setText("x");
-        labelEvent5.setToolTipText("123");
+        labelEvent5.setToolTipText("The Frozen Maw");
         labelEvent5.setEnabled(false);
         jPanel4.add(labelEvent5, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 130, -1, -1));
 
@@ -870,7 +892,7 @@ public class GW2EventerGui extends javax.swing.JFrame {
         labelEvent6.setForeground(new java.awt.Color(255, 51, 0));
         labelEvent6.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         labelEvent6.setText("x");
-        labelEvent6.setToolTipText("123");
+        labelEvent6.setToolTipText("Ogre Wars");
         labelEvent6.setEnabled(false);
         labelEvent6.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         jPanel4.add(labelEvent6, new org.netbeans.lib.awtextra.AbsoluteConstraints(1200, 410, -1, -1));
@@ -878,70 +900,70 @@ public class GW2EventerGui extends javax.swing.JFrame {
         labelEvent7.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         labelEvent7.setForeground(new java.awt.Color(255, 51, 0));
         labelEvent7.setText("x");
-        labelEvent7.setToolTipText("123");
+        labelEvent7.setToolTipText("Ulgoth the Modniir");
         labelEvent7.setEnabled(false);
         jPanel4.add(labelEvent7, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 40, -1, -1));
 
         labelEvent8.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         labelEvent8.setForeground(new java.awt.Color(255, 51, 0));
         labelEvent8.setText("x");
-        labelEvent8.setToolTipText("123");
+        labelEvent8.setToolTipText("Champion Dredge Commissar");
         labelEvent8.setEnabled(false);
         jPanel4.add(labelEvent8, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 410, -1, -1));
 
         labelEvent9.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         labelEvent9.setForeground(new java.awt.Color(255, 51, 0));
         labelEvent9.setText("x");
-        labelEvent9.setToolTipText("123");
+        labelEvent9.setToolTipText("Admiral Taidha Covington");
         labelEvent9.setEnabled(false);
         jPanel4.add(labelEvent9, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 340, -1, -1));
 
         labelEvent10.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         labelEvent10.setForeground(new java.awt.Color(255, 51, 0));
         labelEvent10.setText("x");
-        labelEvent10.setToolTipText("123");
+        labelEvent10.setToolTipText("Megadestroyer");
         labelEvent10.setEnabled(false);
         jPanel4.add(labelEvent10, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 610, -1, -1));
 
         labelEvent11.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         labelEvent11.setForeground(new java.awt.Color(255, 51, 0));
         labelEvent11.setText("x");
-        labelEvent11.setToolTipText("123");
+        labelEvent11.setToolTipText("Fire Shaman");
         labelEvent11.setEnabled(false);
         jPanel4.add(labelEvent11, new org.netbeans.lib.awtextra.AbsoluteConstraints(1100, 40, -1, -1));
 
         labelEvent12.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         labelEvent12.setForeground(new java.awt.Color(255, 51, 0));
         labelEvent12.setText("x");
-        labelEvent12.setToolTipText("123");
+        labelEvent12.setToolTipText("Eye of Zhaitan");
         labelEvent12.setEnabled(false);
         jPanel4.add(labelEvent12, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 625, -1, -1));
 
         labelEvent13.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         labelEvent13.setForeground(new java.awt.Color(255, 51, 0));
         labelEvent13.setText("x");
-        labelEvent13.setToolTipText("123");
+        labelEvent13.setToolTipText("The Legendary Karka Queen");
         labelEvent13.setEnabled(false);
         jPanel4.add(labelEvent13, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 480, -1, -1));
 
         labelEvent14.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         labelEvent14.setForeground(new java.awt.Color(255, 51, 0));
         labelEvent14.setText("x");
-        labelEvent14.setToolTipText("123");
+        labelEvent14.setToolTipText("The Shatterer");
         labelEvent14.setEnabled(false);
         jPanel4.add(labelEvent14, new org.netbeans.lib.awtextra.AbsoluteConstraints(1210, 160, -1, -1));
 
         labelEvent15.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         labelEvent15.setForeground(new java.awt.Color(255, 51, 0));
         labelEvent15.setText("x");
-        labelEvent15.setToolTipText("123");
+        labelEvent15.setToolTipText("Tequatl the Sunless");
         labelEvent15.setEnabled(false);
         jPanel4.add(labelEvent15, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 560, -1, -1));
 
         labelEvent16.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         labelEvent16.setForeground(new java.awt.Color(255, 51, 0));
         labelEvent16.setText("x");
-        labelEvent16.setToolTipText("123");
+        labelEvent16.setToolTipText("Jormag");
         labelEvent16.setEnabled(false);
         labelEvent16.setPreferredSize(new java.awt.Dimension(15, 28));
         jPanel4.add(labelEvent16, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 40, -1, -1));
@@ -949,49 +971,49 @@ public class GW2EventerGui extends javax.swing.JFrame {
         labelEvent17.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         labelEvent17.setForeground(new java.awt.Color(255, 51, 0));
         labelEvent17.setText("x");
-        labelEvent17.setToolTipText("123");
+        labelEvent17.setToolTipText("City of Arah");
         labelEvent17.setEnabled(false);
         jPanel4.add(labelEvent17, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 690, -1, -1));
 
         labelEvent18.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         labelEvent18.setForeground(new java.awt.Color(255, 51, 0));
         labelEvent18.setText("x");
-        labelEvent18.setToolTipText("123");
+        labelEvent18.setToolTipText("Temple of Balthazar");
         labelEvent18.setEnabled(false);
         jPanel4.add(labelEvent18, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 620, -1, -1));
 
         labelEvent19.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         labelEvent19.setForeground(new java.awt.Color(255, 51, 0));
         labelEvent19.setText("x");
-        labelEvent19.setToolTipText("123");
+        labelEvent19.setToolTipText("Temple of Dwayna");
         labelEvent19.setEnabled(false);
         jPanel4.add(labelEvent19, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 600, -1, -1));
 
         labelEvent20.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         labelEvent20.setForeground(new java.awt.Color(255, 51, 0));
         labelEvent20.setText("x");
-        labelEvent20.setToolTipText("123");
+        labelEvent20.setToolTipText("Temple of Grenth");
         labelEvent20.setEnabled(false);
         jPanel4.add(labelEvent20, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 690, -1, -1));
 
         labelEvent21.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         labelEvent21.setForeground(new java.awt.Color(255, 51, 0));
         labelEvent21.setText("x");
-        labelEvent21.setToolTipText("123");
+        labelEvent21.setToolTipText("Temple of Lyssa");
         labelEvent21.setEnabled(false);
         jPanel4.add(labelEvent21, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 580, -1, -1));
 
         labelEvent22.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         labelEvent22.setForeground(new java.awt.Color(255, 51, 0));
         labelEvent22.setText("x");
-        labelEvent22.setToolTipText("123");
+        labelEvent22.setToolTipText("Temple of Melandru");
         labelEvent22.setEnabled(false);
         jPanel4.add(labelEvent22, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 660, -1, -1));
 
         labelEvent23.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         labelEvent23.setForeground(new java.awt.Color(255, 51, 0));
         labelEvent23.setText("x");
-        labelEvent23.setToolTipText("123");
+        labelEvent23.setToolTipText("Three-Headed Wurm");
         labelEvent23.setEnabled(false);
         jPanel4.add(labelEvent23, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 400, -1, -1));
 
@@ -1069,7 +1091,7 @@ public class GW2EventerGui extends javax.swing.JFrame {
 
         labelTimer5.setText("x min ago");
         labelTimer5.setEnabled(false);
-        jPanel4.add(labelTimer5, new org.netbeans.lib.awtextra.AbsoluteConstraints(885, 155, -1, -1));
+        jPanel4.add(labelTimer5, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 160, -1, -1));
 
         labelTimer4.setText("x min ago");
         labelTimer4.setEnabled(false);
@@ -1845,7 +1867,7 @@ public class GW2EventerGui extends javax.swing.JFrame {
             
             ((JLabel) this.eventLabels.get(i)).setEnabled(false);
             ((JLabel) this.eventLabels.get(i)).setText("x");
-            ((JLabel) this.eventLabels.get(i)).setToolTipText("");
+            //((JLabel) this.eventLabels.get(i)).setToolTipText("");
             
             ((JLabel) this.eventLabelsTimer.get(i)).setVisible(false);
         }

@@ -600,6 +600,7 @@ public class ApiManager {
     
     public void allEventsReload(String language) {
         
+        /*
         EventAllReader allEventReader = new EventAllReader(this);
 
         this.language = language;
@@ -607,7 +608,7 @@ public class ApiManager {
         allEventReader.setHashMap(allEvents);
         allEventReader.setLanguage(this.language);
         
-        allEventReader.start();
+        allEventReader.start();*/
     }
     
     public void homeWorldsReload(String language) {
