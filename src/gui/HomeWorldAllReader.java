@@ -163,6 +163,10 @@ public class HomeWorldAllReader extends Thread {
         servers.put("1020", "Ferguson’s Crossing");
         servers.put("1019", "Blackgate");
         
+        this.homeWorlds.removeAllItems();
+        this.homeWorldsList.clear();
+        this.result.clear();
+        
         Iterator it = servers.entrySet().iterator();
         
         while (it.hasNext()) {
