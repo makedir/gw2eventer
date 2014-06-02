@@ -227,7 +227,7 @@ public class GW2EventerGui extends javax.swing.JFrame {
     
     public static final int EVENT_COUNT = 23;
     
-    public static final String VERSION = "1.81";
+    public static final String VERSION = "1.82";
     
     private JButton workingButton;
     private JCheckBox refreshSelector;
@@ -674,7 +674,6 @@ public class GW2EventerGui extends javax.swing.JFrame {
 
         jPanel3.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
 
-        jComboBoxHomeWorld.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Riverside" }));
         jComboBoxHomeWorld.setEnabled(false);
         jComboBoxHomeWorld.setMinimumSize(new java.awt.Dimension(22, 22));
         jComboBoxHomeWorld.setPreferredSize(new java.awt.Dimension(170, 22));
