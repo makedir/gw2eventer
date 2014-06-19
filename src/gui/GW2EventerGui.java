@@ -227,7 +227,7 @@ public class GW2EventerGui extends javax.swing.JFrame {
     
     public static final int EVENT_COUNT = 23;
     
-    public static final String VERSION = "1.82";
+    public static final String VERSION = "1.83";
     
     private JButton workingButton;
     private JCheckBox refreshSelector;
@@ -613,6 +613,7 @@ public class GW2EventerGui extends javax.swing.JFrame {
         jLabelNewVersion = new javax.swing.JLabel();
         jLabelWorking = new javax.swing.JLabel();
         jLabelServer = new javax.swing.JLabel();
+        labelMapDate = new javax.swing.JLabel();
         labelEvent1 = new javax.swing.JLabel();
         labelEvent2 = new javax.swing.JLabel();
         labelEvent3 = new javax.swing.JLabel();
@@ -849,6 +850,11 @@ public class GW2EventerGui extends javax.swing.JFrame {
         jLabelServer.setText("not running");
         jLabelServer.setEnabled(false);
         jPanel4.add(jLabelServer, new org.netbeans.lib.awtextra.AbsoluteConstraints(1090, 690, 170, -1));
+
+        labelMapDate.setForeground(new java.awt.Color(204, 204, 204));
+        labelMapDate.setText("<html>Event Patch<br>17.06.2014</html>");
+        labelMapDate.setToolTipText("Event data from 17.06.2014");
+        jPanel4.add(labelMapDate, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 680, -1, -1));
 
         labelEvent1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         labelEvent1.setForeground(new java.awt.Color(255, 51, 0));
@@ -1957,6 +1963,7 @@ public class GW2EventerGui extends javax.swing.JFrame {
     private javax.swing.JLabel labelEvent7;
     private javax.swing.JLabel labelEvent8;
     private javax.swing.JLabel labelEvent9;
+    private javax.swing.JLabel labelMapDate;
     private javax.swing.JLabel labelTimer1;
     private javax.swing.JLabel labelTimer10;
     private javax.swing.JLabel labelTimer11;
