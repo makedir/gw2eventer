@@ -227,7 +227,7 @@ public class GW2EventerGui extends javax.swing.JFrame {
     
     public static final int EVENT_COUNT = 23;
     
-    public static final String VERSION = "1.83";
+    public static final String VERSION = "1.84";
     
     private JButton workingButton;
     private JCheckBox refreshSelector;
@@ -443,7 +443,7 @@ public class GW2EventerGui extends javax.swing.JFrame {
         
         this.preventSleepMode();
         this.runUpdateService();
-        //this.runPushService();
+        this.runPushService();
         this.runTips();
         //this.runTest();
     }
@@ -613,7 +613,7 @@ public class GW2EventerGui extends javax.swing.JFrame {
         jLabelNewVersion = new javax.swing.JLabel();
         jLabelWorking = new javax.swing.JLabel();
         jLabelServer = new javax.swing.JLabel();
-        labelMapDate = new javax.swing.JLabel();
+        labelPushMessage = new javax.swing.JLabel();
         labelEvent1 = new javax.swing.JLabel();
         labelEvent2 = new javax.swing.JLabel();
         labelEvent3 = new javax.swing.JLabel();
@@ -851,10 +851,9 @@ public class GW2EventerGui extends javax.swing.JFrame {
         jLabelServer.setEnabled(false);
         jPanel4.add(jLabelServer, new org.netbeans.lib.awtextra.AbsoluteConstraints(1090, 690, 170, -1));
 
-        labelMapDate.setForeground(new java.awt.Color(204, 204, 204));
-        labelMapDate.setText("<html>Event Patch<br>17.06.2014</html>");
-        labelMapDate.setToolTipText("Event data from 17.06.2014");
-        jPanel4.add(labelMapDate, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 680, -1, -1));
+        labelPushMessage.setForeground(new java.awt.Color(204, 204, 204));
+        labelPushMessage.setToolTipText("");
+        jPanel4.add(labelPushMessage, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 680, -1, -1));
 
         labelEvent1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         labelEvent1.setForeground(new java.awt.Color(255, 51, 0));
@@ -1561,7 +1560,7 @@ public class GW2EventerGui extends javax.swing.JFrame {
                 RequestConfig requestConfig = RequestConfig.custom().setConnectTimeout(10 * 1000).build();
                 HttpClient client = HttpClientBuilder.create().setDefaultRequestConfig(requestConfig).build();
 
-                HttpGet request = new HttpGet("http://gw2eventer.sourceforge.net/gw2/push");
+                HttpGet request = new HttpGet("http://gw2eventer.sourceforge.net/push/");
 
                 HttpResponse response;
 
@@ -1577,12 +1576,6 @@ public class GW2EventerGui extends javax.swing.JFrame {
                 while (!this.isInterrupted()) {
                     
                     try {
-                        
-                        try {
-                            Thread.sleep(60000 * 33);
-                        } catch (InterruptedException ex) {
-                            Logger.getLogger(GW2EventerGui.class.getName()).log(Level.SEVERE, null, ex);
-                        }
                         
                         response = client.execute(request);
                         
@@ -1620,7 +1613,7 @@ public class GW2EventerGui extends javax.swing.JFrame {
                                 }
                                 
                                 if (!date.equals("") && enabled.equals("true")) {
-
+                                    
                                     try {
 
                                         Date dateData = new Date(Long.parseLong(date));
@@ -1629,11 +1622,14 @@ public class GW2EventerGui extends javax.swing.JFrame {
                                         if (!dateData.equals(getLastPushDate())) {
 
                                             setLastPushDate(dateData);
-                                            showPushGui(title, message, 100);
+                                            //showPushGui(title, message, 100);
+                                            setPushMessage(title, message);
                                         }
                                     } catch (java.lang.NumberFormatException ex) {
                                         //
                                     }
+                                } else {
+                                    clearPushMessage();
                                 }
                             } catch (ParseException ex) {
                                 
@@ -1643,6 +1639,12 @@ public class GW2EventerGui extends javax.swing.JFrame {
                             
                             request.releaseConnection();
                             //this.interrupt();
+                            
+                            try {
+                                Thread.sleep(60000 * 5);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(GW2EventerGui.class.getName()).log(Level.SEVERE, null, ex);
+                            }
                         } else {
                             try {
                                 request.releaseConnection();
@@ -1827,6 +1829,18 @@ public class GW2EventerGui extends javax.swing.JFrame {
         this.pushGui.setVisible(true);
     }  
     
+    private void setPushMessage(String title, String message) {
+        
+        this.labelPushMessage.setText("<html><b><font style=\"color: red;\">" + title + "</font></b><br><font style=\"color: white;\">" + message + "</font></html>");
+        this.labelPushMessage.setToolTipText(message);
+    } 
+    
+    private void clearPushMessage() {
+        
+        this.labelPushMessage.setText("");
+        this.labelPushMessage.setToolTipText("");
+    } 
+    
     private void showFeedbackGui() {
         
         this.feedbackGui.setLocationRelativeTo(this);
@@ -1963,7 +1977,7 @@ public class GW2EventerGui extends javax.swing.JFrame {
     private javax.swing.JLabel labelEvent7;
     private javax.swing.JLabel labelEvent8;
     private javax.swing.JLabel labelEvent9;
-    private javax.swing.JLabel labelMapDate;
+    private javax.swing.JLabel labelPushMessage;
     private javax.swing.JLabel labelTimer1;
     private javax.swing.JLabel labelTimer10;
     private javax.swing.JLabel labelTimer11;
