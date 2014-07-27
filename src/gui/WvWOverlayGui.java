@@ -25,6 +25,7 @@
 package gui;
 
 import java.awt.AWTException;
+import java.awt.Color;
 import java.awt.MouseInfo;
 import java.awt.Point;
 import java.awt.Robot;
@@ -241,6 +242,21 @@ public class WvWOverlayGui extends javax.swing.JFrame {
         this.jLabelMatchId.setText("<html>" + matchId + "(<b>" + this.matchIdColor + "</b>)</html>");
     }
     
+    private void setTick(int tick) {
+        
+        this.jLabelTick.setText("+" + tick);
+    }
+    
+    private void setDiff1(int difference) {
+        
+        this.jLabelDiff1.setText(difference + "");
+    }
+    
+    private void setDiff2(int difference) {
+        
+        this.jLabelDiff2.setText(difference + "");
+    }
+    
     public void refresh(int timeDifference) {
         
         this.setAlwaysOnTop(true);
@@ -270,6 +286,59 @@ public class WvWOverlayGui extends javax.swing.JFrame {
             }
         }
         
+        String[] points = ((String) this.ownerData.get("0")).split(",");
+        String[] pointsOld = ((String) this.ownerDataOld.get("0")).split(",");
+        
+        int diff1 = 0;
+        int diff1Old = 0;
+        int diff2 = 0;
+        int diff2Old = 0;
+        
+        switch (this.matchIdColor) {
+            case "red":
+                diff1 = Integer.parseInt(points[0]) - Integer.parseInt(points[1]);
+                diff2 = Integer.parseInt(points[0]) - Integer.parseInt(points[2]);
+                
+                diff1Old = Integer.parseInt(pointsOld[0]) - Integer.parseInt(pointsOld[1]);
+                diff2Old = Integer.parseInt(pointsOld[0]) - Integer.parseInt(pointsOld[2]);
+            break;
+            case "blue":
+                diff1 = Integer.parseInt(points[1]) - Integer.parseInt(points[0]);
+                diff2 = Integer.parseInt(points[1]) - Integer.parseInt(points[2]);
+                
+                diff1Old = Integer.parseInt(pointsOld[1]) - Integer.parseInt(pointsOld[0]);
+                diff2Old = Integer.parseInt(pointsOld[1]) - Integer.parseInt(pointsOld[2]);
+            break;
+            case "green":
+                diff1 = Integer.parseInt(points[2]) - Integer.parseInt(points[0]);
+                diff2 = Integer.parseInt(points[2]) - Integer.parseInt(points[1]);
+                
+                diff1Old = Integer.parseInt(pointsOld[2]) - Integer.parseInt(pointsOld[0]);
+                diff2Old = Integer.parseInt(pointsOld[2]) - Integer.parseInt(pointsOld[1]);
+            break;
+        }
+        
+        if (diff1Old < diff1) {
+            this.jLabelDiff1.setForeground(Color.green);
+        } else if (diff1Old == diff1) {
+            this.jLabelDiff1.setForeground(Color.white);
+        } else {
+            this.jLabelDiff1.setForeground(Color.red);
+        }
+        
+        if (diff2Old < diff2) {
+            this.jLabelDiff2.setForeground(Color.green);
+        } else if (diff2Old == diff2) {
+            this.jLabelDiff2.setForeground(Color.white);
+        } else {
+            this.jLabelDiff2.setForeground(Color.red);
+        }
+        
+        this.setDiff1(diff1);
+        this.setDiff2(diff2);
+        
+        int newTick = 0;
+        
         it = this.ownerData.entrySet().iterator();
                     
         while (it.hasNext()) {
@@ -288,6 +357,26 @@ public class WvWOverlayGui extends javax.swing.JFrame {
                 
                 EventTimerLabel currentTimer = null;
                 JLabel currentLabel = null;
+                
+                if (owner.toLowerCase().equals(this.matchIdColor)) {
+                    
+                    switch (labelType) {
+                        case "keep":
+                            newTick = newTick + 25;
+                        break;
+                        case "camp":
+                            newTick = newTick + 5;
+                        break;
+                        case "tower":
+                            newTick = newTick + 10;
+                        break;
+                        case "castle":
+                            newTick = newTick + 35;
+                        break;
+                    }
+                }
+                
+                this.setTick(newTick);
                 
                 switch (labelHome) {
                     case "Center":
@@ -802,6 +891,9 @@ public class WvWOverlayGui extends javax.swing.JFrame {
         jLabelMatchId = new javax.swing.JLabel();
         jLabelMenu = new javax.swing.JLabel();
         jLabelToolTip = new javax.swing.JLabel();
+        jLabelTick = new javax.swing.JLabel();
+        jLabelDiff1 = new javax.swing.JLabel();
+        jLabelDiff2 = new javax.swing.JLabel();
         jToolBarInfo = new javax.swing.JToolBar();
         jButtonCoherent = new javax.swing.JButton();
         eventTimerLabelCoherent = new gui.EventTimerLabel();
@@ -1066,6 +1158,16 @@ public class WvWOverlayGui extends javax.swing.JFrame {
         jLabelToolTip.setFocusable(false);
         getContentPane().add(jLabelToolTip, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 14, -1, -1));
 
+        jLabelTick.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        jLabelTick.setForeground(new java.awt.Color(255, 255, 255));
+        getContentPane().add(jLabelTick, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 42, -1, -1));
+
+        jLabelDiff1.setForeground(new java.awt.Color(255, 255, 255));
+        getContentPane().add(jLabelDiff1, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 60, -1, -1));
+
+        jLabelDiff2.setForeground(new java.awt.Color(255, 255, 255));
+        getContentPane().add(jLabelDiff2, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 80, -1, -1));
+
         jToolBarInfo.setFloatable(false);
         jToolBarInfo.setFocusable(false);
         jToolBarInfo.setOpaque(false);
@@ -1234,6 +1336,8 @@ public class WvWOverlayGui extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelBorderlands7;
     private javax.swing.JLabel jLabelBorderlands8;
     private javax.swing.JLabel jLabelBorderlands9;
+    private javax.swing.JLabel jLabelDiff1;
+    private javax.swing.JLabel jLabelDiff2;
     private javax.swing.JLabel jLabelEternal1;
     private javax.swing.JLabel jLabelEternal10;
     private javax.swing.JLabel jLabelEternal11;
@@ -1258,6 +1362,7 @@ public class WvWOverlayGui extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelEternal9;
     private javax.swing.JLabel jLabelMatchId;
     private javax.swing.JLabel jLabelMenu;
+    private javax.swing.JLabel jLabelTick;
     private javax.swing.JLabel jLabelToolTip;
     private javax.swing.JToolBar jToolBarInfo;
     private javax.swing.JToolBar jToolBarMenu;

@@ -120,7 +120,11 @@ public class WvWReader extends Thread {
 
                         JSONObject obj2 = (JSONObject) obj;
                         JSONArray data = (JSONArray) obj2.get("maps");
-
+                        JSONArray scores = (JSONArray) obj2.get("scores");
+                        
+                        this.result.put("0", scores.get(0) + ","
+                                + scores.get(1) + "," + scores.get(2));
+                        
                         for (int i = 0; i < data.size(); i++) {
 
                             obj2 = (JSONObject) data.get(i);

@@ -140,12 +140,12 @@ public class ApiManager {
         this.events.put("5E4E9CD9-DD7C-49DB-8392-C99E1EF4E7DF", new String[]{"2","1/3","elemental_pre", "Fire Elemental"});
         this.events.put("2C833C11-5CD5-4D96-A4CE-A74C04C9A278", new String[]{"2","2/3","elemental_pre", "Fire Elemental"});
         this.events.put("33F76E9E-0BB6-46D0-A3A9-BE4CDFC4A3A4", new String[]{"2","B","elemental", "Fire Elemental"});
-        this.events.put("613A7660-8F3A-4897-8FAC-8747C12E42F8", new String[]{"3","1/6","junglewurm_pre", "Great Jungle Wurm"});
-        this.events.put("CF6F0BB2-BD6C-4210-9216-F0A9810AA2BD", new String[]{"3","2/6","junglewurm_pre", "Great Jungle Wurm"});
-        this.events.put("456DD563-9FDA-4411-B8C7-4525F0AC4A6F", new String[]{"3","3/6","junglewurm_pre", "Great Jungle Wurm"});
-        this.events.put("1DCFE4AA-A2BD-44AC-8655-BBD508C505D1", new String[]{"3","4/6","junglewurm_pre", "Great Jungle Wurm"});
-        this.events.put("61BA7299-6213-4569-948B-864100F35E16", new String[]{"3","5/6","junglewurm_pre", "Great Jungle Wurm"});
-        this.events.put("C5972F64-B894-45B4-BC31-2DEEA6B7C033", new String[]{"3","B","junglewurm", "Great Jungle Wurm"});
+        this.events.put("613A7660-8F3A-4897-8FAC-8747C12E42F8", new String[]{"3","1/6","junglewurm_pre", "Jungle Wurm"});
+        this.events.put("CF6F0BB2-BD6C-4210-9216-F0A9810AA2BD", new String[]{"3","2/6","junglewurm_pre", "Jungle Wurm"});
+        this.events.put("456DD563-9FDA-4411-B8C7-4525F0AC4A6F", new String[]{"3","3/6","junglewurm_pre", "Jungle Wurm"});
+        this.events.put("1DCFE4AA-A2BD-44AC-8655-BBD508C505D1", new String[]{"3","4/6","junglewurm_pre", "Jungle Wurm"});
+        this.events.put("61BA7299-6213-4569-948B-864100F35E16", new String[]{"3","5/6","junglewurm_pre", "Jungle Wurm"});
+        this.events.put("C5972F64-B894-45B4-BC31-2DEEA6B7C033", new String[]{"3","B","junglewurm", "Jungle Wurm"});
         this.events.put("3ED4FEB4-A976-4597-94E8-8BFD9053522F", new String[]{"4","1/2","golem_pre", "Inquest Golem Mark II"});
         this.events.put("9AA133DC-F630-4A0E-BB5D-EE34A2B306C2", new String[]{"4","B","golem", "Inquest Golem Mark II"});
         this.events.put("90B241F5-9E59-46E8-B608-2507F8810E00", new String[]{"5","1/3","frozenmaw_pre", "The Frozen Maw"});
@@ -220,10 +220,10 @@ public class ApiManager {
         this.events.put("7E24F244-52AF-49D8-A1D7-8A1EE18265E0", new String[]{"22","7/9","melandru_pre", "Temple of Melandru"});
         this.events.put("04902E61-A102-4D32-860D-C14B150BD4F5", new String[]{"22","8/9","melandru_pre", "Temple of Melandru"});
         this.events.put("A5B5C2AF-22B1-4619-884D-F231A0EE0877", new String[]{"22","B","melandru", "Temple of Melandru"});
-        this.events.put("B081F000-5928-4B69-8980-20AD93827B6C", new String[]{"23","1/4","threehworm_pre", "Three-Headed Wurm"});
-        this.events.put("743B0A35-118E-43D7-ACCE-10FDF00139BD", new String[]{"23","2/4","threehworm_pre", "Three-Headed Wurm"});
-        this.events.put("96E9213C-54FD-4D66-B546-EF02FACEACEB", new String[]{"23","3/4","threehworm_pre", "Three-Headed Wurm"});
-        this.events.put("5F91ED03-6A1B-4A54-9BB4-6A94AE97FC4F", new String[]{"23","B","threehworm", "Three-Headed Wurm"});
+        this.events.put("B081F000-5928-4B69-8980-20AD93827B6C", new String[]{"23","1/4","threehworm_pre", "Evolved Jungle Wurm"});
+        this.events.put("743B0A35-118E-43D7-ACCE-10FDF00139BD", new String[]{"23","2/4","threehworm_pre", "Evolved Jungle Wurm"});
+        this.events.put("96E9213C-54FD-4D66-B546-EF02FACEACEB", new String[]{"23","3/4","threehworm_pre", "Evolved Jungle Wurm"});
+        this.events.put("5F91ED03-6A1B-4A54-9BB4-6A94AE97FC4F", new String[]{"23","B","threehworm", "Evolved Jungle Wurm"});
 
         this.eventPlaySounds = new boolean[GW2EventerGui.EVENT_COUNT][];
         
