@@ -31,6 +31,7 @@ import java.awt.Point;
 import java.awt.Robot;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -81,6 +82,8 @@ public class WvWOverlayGui extends javax.swing.JFrame {
     private ImageIcon keepRed;
     private ImageIcon keepBlue;
     private ImageIcon keepGreen;
+    
+    private Object[] eventLog;
     
     /**
      * Creates new form BorderlandsOverlayGui
@@ -210,6 +213,8 @@ public class WvWOverlayGui extends javax.swing.JFrame {
         this.idsToLabel.put("76", new String[]{"1", "", "", ""});
         */
         
+        this.eventLog = new Object[]{null,null,null};
+        
         initComponents();
         
         this.jLabelMatchId.setText("matchid: " + this.matchId);
@@ -255,6 +260,46 @@ public class WvWOverlayGui extends javax.swing.JFrame {
     private void setDiff2(int difference) {
         
         this.jLabelDiff2.setText(difference + "");
+    }
+    
+    private void pushEvent(String event) {
+        
+        this.eventLog[2] = this.eventLog[1];
+        this.eventLog[1] = this.eventLog[0];
+        this.eventLog[0] = new Object[]{event, new Date()};
+    }
+    
+    private String getEvent(int i) {
+        
+        String event = "";
+        
+        Object[] eventObject = (Object[]) this.eventLog[i];
+        
+        if (eventObject != null) {
+            
+            Date date = (Date) eventObject[1];
+            Date currentDate = new Date();
+            int secDiff = (int) ((currentDate.getTime() - date.getTime()) / 1000);
+            
+            if (secDiff >= 300) {
+                
+                eventObject = null;
+            } else {
+            
+                int minDiff = secDiff / 60;
+                secDiff = secDiff % 60;
+
+                String secDiffString = secDiff + "";
+
+                if (secDiff < 10) {
+                    secDiffString = "0" + secDiffString;
+                }
+
+                event = (String) eventObject[0] + " (" + minDiff + ":" + secDiffString + ")</html>";
+            }
+        }
+        
+        return event;
     }
     
     public void refresh(int timeDifference) {
@@ -353,6 +398,7 @@ public class WvWOverlayGui extends javax.swing.JFrame {
                 
                 int labelNumber = Integer.parseInt(((String[]) this.idsToLabel.get(id))[0]);
                 String labelType = ((String[]) this.idsToLabel.get(id))[1];
+                String labelName = ((String[]) this.idsToLabel.get(id))[2];
                 String labelHome = ((String[]) this.idsToLabel.get(id))[3];
                 
                 EventTimerLabel currentTimer = null;
@@ -398,6 +444,17 @@ public class WvWOverlayGui extends javax.swing.JFrame {
                         currentTimer.resetTimer(); // ??
                         currentTimer.setCounter(currentTimer.getCounter() - timeDifference);
                         currentTimer.startTimer();
+                        
+                        /*
+                        this.pushEvent("<html>" + labelName
+                                + "(" + labelHome + ") <b><font color="
+                                + onwerOld + ">" + onwerOld
+                                + "</font></b> => <b><font color="
+                                + owner + ">" + owner + "</font></b>");*/
+                        
+                        this.pushEvent("<html>" + labelName
+                                + "(" + labelHome + ") => <b><font color="
+                                + owner + ">" + owner + "</font></b>");
                         
                         if (this.activeMap.equals(labelHome)) {
                             currentTimer.setVisible(true);
@@ -446,6 +503,10 @@ public class WvWOverlayGui extends javax.swing.JFrame {
         } else {
             this.setBorderlandsColors();
         }*/
+        
+        this.jLabelEventLog1.setText(this.getEvent(0));
+        this.jLabelEventLog2.setText(this.getEvent(1));
+        this.jLabelEventLog3.setText(this.getEvent(2));
     }
     
     private void resetTimer() {
@@ -894,6 +955,9 @@ public class WvWOverlayGui extends javax.swing.JFrame {
         jLabelTick = new javax.swing.JLabel();
         jLabelDiff1 = new javax.swing.JLabel();
         jLabelDiff2 = new javax.swing.JLabel();
+        jLabelEventLog1 = new javax.swing.JLabel();
+        jLabelEventLog2 = new javax.swing.JLabel();
+        jLabelEventLog3 = new javax.swing.JLabel();
         jToolBarInfo = new javax.swing.JToolBar();
         jButtonCoherent = new javax.swing.JButton();
         eventTimerLabelCoherent = new gui.EventTimerLabel();
@@ -1168,6 +1232,15 @@ public class WvWOverlayGui extends javax.swing.JFrame {
         jLabelDiff2.setForeground(new java.awt.Color(255, 255, 255));
         getContentPane().add(jLabelDiff2, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 80, -1, -1));
 
+        jLabelEventLog1.setForeground(new java.awt.Color(255, 255, 255));
+        getContentPane().add(jLabelEventLog1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 380, -1, -1));
+
+        jLabelEventLog2.setForeground(new java.awt.Color(255, 255, 255));
+        getContentPane().add(jLabelEventLog2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 395, -1, -1));
+
+        jLabelEventLog3.setForeground(new java.awt.Color(255, 255, 255));
+        getContentPane().add(jLabelEventLog3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 410, -1, -1));
+
         jToolBarInfo.setFloatable(false);
         jToolBarInfo.setFocusable(false);
         jToolBarInfo.setOpaque(false);
@@ -1360,6 +1433,9 @@ public class WvWOverlayGui extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelEternal7;
     private javax.swing.JLabel jLabelEternal8;
     private javax.swing.JLabel jLabelEternal9;
+    private javax.swing.JLabel jLabelEventLog1;
+    private javax.swing.JLabel jLabelEventLog2;
+    private javax.swing.JLabel jLabelEventLog3;
     private javax.swing.JLabel jLabelMatchId;
     private javax.swing.JLabel jLabelMenu;
     private javax.swing.JLabel jLabelTick;
