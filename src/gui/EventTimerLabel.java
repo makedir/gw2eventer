@@ -67,6 +67,10 @@ public class EventTimerLabel extends JLabel implements ActionListener {
         this.timer = new Timer(1000, this);
     }
 
+    public void finished() {
+        
+    }
+    
     public void setCustomText(String customText) {
         
         this.customText = customText;
@@ -146,6 +150,7 @@ public class EventTimerLabel extends JLabel implements ActionListener {
         
         if (this.counter <= 0) {
             
+            this.finished();
             this.resetTimer();
         }
     }

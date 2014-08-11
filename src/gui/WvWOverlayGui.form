@@ -793,6 +793,9 @@
           </Events>
         </Component>
         <Component class="gui.EventTimerLabel" name="eventTimerLabelCoherent">
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new gui.EventTimerLabel() {  &#xa;    @Override public void finished() {&#xa;        jButtonCoherent.setVisible(false);&#xa;    }&#xa;};"/>
+          </AuxValues>
         </Component>
       </SubComponents>
     </Container>

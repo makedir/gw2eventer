@@ -538,6 +538,8 @@ public class WvWOverlayGui extends javax.swing.JFrame {
     
     public void startGui() {
         
+        this.eventLog = new Object[]{null,null,null};
+        
         this.jButtonRefresh.setEnabled(true);
         
         this.jToolBarMenu.setVisible(true);
@@ -960,7 +962,11 @@ public class WvWOverlayGui extends javax.swing.JFrame {
         jLabelEventLog3 = new javax.swing.JLabel();
         jToolBarInfo = new javax.swing.JToolBar();
         jButtonCoherent = new javax.swing.JButton();
-        eventTimerLabelCoherent = new gui.EventTimerLabel();
+        eventTimerLabelCoherent = new gui.EventTimerLabel() {
+            @Override public void finished() {
+                jButtonCoherent.setVisible(false);
+            }
+        };
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setAlwaysOnTop(true);
