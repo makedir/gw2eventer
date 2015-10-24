@@ -47,7 +47,13 @@ import org.json.simple.parser.ParseException;
  */
 public class WvWReader extends Thread {
     
-    private HashMap result;
+    //private HashMap result;
+    
+    private HashMap resultMapRed;
+    private HashMap resultMapBlue;
+    private HashMap resultMapGreen;
+    private HashMap resultMapCenter;
+    private HashMap resultMapScores;
     
     private String matchId;
     
@@ -59,11 +65,46 @@ public class WvWReader extends Thread {
         
         this.wvwOverlayGui = wvwOverlayGui;
         this.timeDifference = 0;
+        
+        /*
+        this.resultMapRed = new HashMap();
+        this.resultMapBlue = new HashMap();
+        this.resultMapGreen = new HashMap();
+        this.resultMapCenter = new HashMap();
+        this.resultMapScores = new HashMap();*/
     }
     
+    /*
     public void setResult(HashMap hashMap) {
                 
         this.result = hashMap;
+    }*/
+    
+    public void setResultMaps(HashMap red, HashMap blue, HashMap green, HashMap center, HashMap scores) {
+                
+        this.resultMapRed = red;
+        this.resultMapBlue = blue;
+        this.resultMapGreen = green;
+        this.resultMapCenter = center;
+        this.resultMapScores = scores;
+    }
+    
+    public String[] getScores(String type) {
+        
+        return (String[]) this.resultMapScores.get(type);
+    }
+    
+    public String getMapFromId(String id, String home) {
+               
+        if (home.equals("RedHome")) {
+            return (String) this.resultMapRed.get(id);
+        } else if (home.equals("BlueHome")) {
+            return (String) this.resultMapBlue.get(id);
+        } else if (home.equals("GreenHome")) {
+            return (String) this.resultMapGreen.get(id);
+        } else {
+            return (String) this.resultMapCenter.get(id);
+        }
     }
     
     public void setMatchId(String matchId) {
@@ -112,7 +153,12 @@ public class WvWReader extends Thread {
 
                     Object obj;
 
-                    this.result.clear();
+                    //this.result.clear();
+                    this.resultMapRed.clear();
+                    this.resultMapBlue.clear();
+                    this.resultMapGreen.clear();
+                    this.resultMapCenter.clear();
+                    this.resultMapScores.clear();
 
                     try {
 
@@ -122,22 +168,44 @@ public class WvWReader extends Thread {
                         JSONArray data = (JSONArray) obj2.get("maps");
                         JSONArray scores = (JSONArray) obj2.get("scores");
                         
+                        /*
                         this.result.put("0", scores.get(0) + ","
-                                + scores.get(1) + "," + scores.get(2));
+                                + scores.get(1) + "," + scores.get(2));*/
+                        
+                        this.resultMapScores.put("all", new String[]{"" + scores.get(0), "" + scores.get(1), "" + scores.get(2)});
                         
                         for (int i = 0; i < data.size(); i++) {
 
                             obj2 = (JSONObject) data.get(i);
+                            String type = (String) obj2.get("type");
+                            scores = (JSONArray) obj2.get("scores");
                             JSONArray innerData = (JSONArray) obj2.get("objectives");
+                            
+                            this.resultMapScores.put(type, new String[]{"" + scores.get(0), "" + scores.get(1), "" + scores.get(2)});
                             
                             for (int j = 0; j < innerData.size(); j++) {
                                 
                                 JSONObject innerObj = (JSONObject) innerData.get(j);
-                                this.result.put("" + innerObj.get("id"), "" + innerObj.get("owner"));
+                                
+                                //this.result.put("" + innerObj.get("id"), "" + innerObj.get("owner"));
+                                
+                                if (type.equals("RedHome")) {
+                                    this.resultMapRed.put("" + innerObj.get("id"), innerObj.get("owner"));
+                                } else if (type.equals("BlueHome")) {
+                                    this.resultMapBlue.put("" + innerObj.get("id"), innerObj.get("owner"));
+                                } else if (type.equals("GreenHome")) {
+                                    this.resultMapGreen.put("" + innerObj.get("id"), innerObj.get("owner"));
+                                } else {
+                                    this.resultMapCenter.put("" + innerObj.get("id"), innerObj.get("owner"));
+                                }
+                                
+                                //this.result.put("" + innerObj.get("id"), "" + innerObj.get("owner") + "," + type);
+                                //System.out.println(result);
                             }
                         }
                         
                         try {
+                            
                             request.releaseConnection();
                             this.wvwOverlayGui.refresh(this.timeDifference);
                             
@@ -145,12 +213,15 @@ public class WvWReader extends Thread {
                             
                             Thread.sleep(10000);
                         } catch (InterruptedException ex) {
+                            
                             Logger.getLogger(WvWReader.class.getName()).log(Level.SEVERE, null, ex);
 
                             this.interrupt();
                         }
                     } catch (ParseException ex) {
+                        
                         try {
+                            
                             Logger.getLogger(ApiManager.class.getName()).log(
                                     Level.SEVERE, null, ex);
                             
@@ -165,13 +236,16 @@ public class WvWReader extends Thread {
                             
                             Thread.sleep(3000);
                         } catch (InterruptedException ex1) {
+                            
                             Logger.getLogger(WvWReader.class.getName()).log(Level.SEVERE, null, ex1);
                             
                             this.interrupt();
                         }
                     }
                 } else {
+                    
                     try {
+                        
                         Logger.getLogger(EventReader.class.getName()).log(
                             Level.SEVERE, null, "Connection error.");
                         
@@ -186,13 +260,16 @@ public class WvWReader extends Thread {
                         
                         Thread.sleep(3000);
                     } catch (InterruptedException ex) {
+                        
                         Logger.getLogger(EventAllReader.class.getName()).log(Level.SEVERE, null, ex);
                         
                         this.interrupt();
                     }
                 }
             } catch (IOException | IllegalStateException ex) {
+                
                 try {
+                    
                     Logger.getLogger(EventReader.class.getName()).log(
                             Level.SEVERE, null, ex);
                     
@@ -207,6 +284,7 @@ public class WvWReader extends Thread {
                     
                     Thread.sleep(3000);
                 } catch (InterruptedException ex1) {
+                    
                     Logger.getLogger(EventAllReader.class.getName()).log(Level.SEVERE, null, ex1);
                     
                     this.interrupt();

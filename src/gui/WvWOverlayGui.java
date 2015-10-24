@@ -21,7 +21,6 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-
 package gui;
 
 import java.awt.AWTException;
@@ -47,245 +46,298 @@ import javax.swing.JLabel;
 public class WvWOverlayGui extends javax.swing.JFrame {
 
     private GW2EventerGui mainGui;
-    
+
     private ArrayList labelsEternal;
     private ArrayList labelsBorderlands;
-    
+
     private ArrayList timerLabelEternal;
     private ArrayList timerLabelBorderlandsRed;
     private ArrayList timerLabelBorderlandsBlue;
     private ArrayList timerLabelBorderlandsGreen;
-    
+
     private String matchId;
     private String matchIdColor;
     private String activeMap;
-    
+
     private WvWReader wvwReader;
-    
-    private HashMap ownerData;
-    private HashMap ownerDataOld;
-    
-    private HashMap idsToLabel;
-    
+
+    private HashMap ownerDataCenter;
+    private HashMap ownerDataOldCenter;
+    private HashMap ownerDataRed;
+    private HashMap ownerDataOldRed;
+    private HashMap ownerDataBlue;
+    private HashMap ownerDataOldBlue;
+    private HashMap ownerDataGreen;
+    private HashMap ownerDataOldGreen;
+
+    private HashMap ownerDataPoints;
+    private HashMap ownerDataOldPoints;
+
+    private HashMap idsMap;
+
+    private HashMap idsToLabelCenter;
+    private HashMap idsToLabelRed;
+    private HashMap idsToLabelBlue;
+    private HashMap idsToLabelGreen;
+
     private ImageIcon castleRed;
     private ImageIcon castleBlue;
     private ImageIcon castleGreen;
-    
+
     private ImageIcon campRed;
     private ImageIcon campBlue;
     private ImageIcon campGreen;
-    
+
     private ImageIcon towerRed;
     private ImageIcon towerBlue;
     private ImageIcon towerGreen;
-    
+
     private ImageIcon keepRed;
     private ImageIcon keepBlue;
     private ImageIcon keepGreen;
-    
+
     private Object[] eventLog;
-    
+
     /**
      * Creates new form BorderlandsOverlayGui
      */
     public WvWOverlayGui(GW2EventerGui mainGui) {
-        
+
         this.mainGui = mainGui;
-        
+
         this.castleRed = new ImageIcon(getClass().getResource("/media/wvw/castle_red.png"));
         this.castleBlue = new ImageIcon(getClass().getResource("/media/wvw/castle_blue.png"));
         this.castleGreen = new ImageIcon(getClass().getResource("/media/wvw/castle_green.png"));
-        
+
         this.campRed = new ImageIcon(getClass().getResource("/media/wvw/camp_red.png"));
         this.campBlue = new ImageIcon(getClass().getResource("/media/wvw/camp_blue.png"));
         this.campGreen = new ImageIcon(getClass().getResource("/media/wvw/camp_green.png"));
-        
+
         this.towerRed = new ImageIcon(getClass().getResource("/media/wvw/tower_red.png"));
         this.towerBlue = new ImageIcon(getClass().getResource("/media/wvw/tower_blue.png"));
         this.towerGreen = new ImageIcon(getClass().getResource("/media/wvw/tower_green.png"));
-        
+
         this.keepRed = new ImageIcon(getClass().getResource("/media/wvw/keep_red.png"));
         this.keepBlue = new ImageIcon(getClass().getResource("/media/wvw/keep_blue.png"));
         this.keepGreen = new ImageIcon(getClass().getResource("/media/wvw/keep_green.png"));
-        
+
         this.labelsEternal = new ArrayList();
         this.labelsBorderlands = new ArrayList();
-        
+
         this.timerLabelEternal = new ArrayList();
         this.timerLabelBorderlandsRed = new ArrayList();
         this.timerLabelBorderlandsBlue = new ArrayList();
         this.timerLabelBorderlandsGreen = new ArrayList();
-        
+
         this.activeMap = "Center"; //Center=eternal, RedHome, BlueHome, GreenHome
-        
+
         this.matchId = this.mainGui.getMatchId();
         this.matchIdColor = this.mainGui.getMatchIdColor();
-        
-        this.ownerData = new HashMap();
-        this.ownerDataOld = new HashMap();
-        
+
+        this.ownerDataCenter = new HashMap();
+        this.ownerDataOldCenter = new HashMap();
+        this.ownerDataRed = new HashMap();
+        this.ownerDataOldRed = new HashMap();
+        this.ownerDataBlue = new HashMap();
+        this.ownerDataOldBlue = new HashMap();
+        this.ownerDataGreen = new HashMap();
+        this.ownerDataOldGreen = new HashMap();
+        this.ownerDataPoints = new HashMap();
+        this.ownerDataOldPoints = new HashMap();
+
+        this.idsMap = new HashMap();
+
         /*
-        this.wvwReader = new WvWReader(this);
-        this.wvwReader.setResult(this.ownerData);
-        this.wvwReader.setMatchId(this.matchId);
-        */
-        
-        this.idsToLabel = new HashMap();
-        
-        this.idsToLabel.put("1", new String[]{"3", "keep", "Overlook", "Center"});
-        this.idsToLabel.put("2", new String[]{"18", "keep", "Valley", "Center"});
-        this.idsToLabel.put("3", new String[]{"15", "keep", "Lowlands", "Center"});
-        this.idsToLabel.put("4", new String[]{"20", "camp", "Golanta Clearing", "Center"});
-        this.idsToLabel.put("5", new String[]{"6", "camp", "Pangloss Rise", "Center"});
-        this.idsToLabel.put("6", new String[]{"1", "camp", "Speldan Clearcut", "Center"});
-        this.idsToLabel.put("7", new String[]{"21", "camp", "Danelon Passage", "Center"});
-        this.idsToLabel.put("8", new String[]{"12", "camp", "Umberglade Woods", "Center"});
-        this.idsToLabel.put("9", new String[]{"10", "castle", "Stonemist Castle", "Center"});
-        this.idsToLabel.put("10", new String[]{"8", "camp", "Rogue's Quarry", "Center"});
-        this.idsToLabel.put("11", new String[]{"13", "tower", "Aldon's Ledge", "Center"});
-        this.idsToLabel.put("12", new String[]{"9", "tower", "Wildcreek Run", "Center"});
-        this.idsToLabel.put("13", new String[]{"19", "tower", "Jerrifer's Slough", "Center"});
-        this.idsToLabel.put("14", new String[]{"16", "tower", "Klovan Gully", "Center"});
-        this.idsToLabel.put("15", new String[]{"22", "tower", "Langor Gulch", "Center"});
-        this.idsToLabel.put("16", new String[]{"17", "tower", "Quentin Lake", "Center"});
-        this.idsToLabel.put("17", new String[]{"2", "tower", "Mendon's Gap", "Center"});
-        this.idsToLabel.put("18", new String[]{"7", "tower", "Anzalias Pass", "Center"});
-        this.idsToLabel.put("19", new String[]{"5", "tower", "Ogrewatch Cut", "Center"});
-        this.idsToLabel.put("20", new String[]{"4", "tower", "Veloka Slope", "Center"});
-        this.idsToLabel.put("21", new String[]{"11", "tower", "Durios Gulch", "Center"});
-        this.idsToLabel.put("22", new String[]{"14", "tower", "Bravost Escarpment", "Center"});
-        
-        this.idsToLabel.put("23", new String[]{"6", "keep", "Garrison", "BlueHome"});
-        this.idsToLabel.put("24", new String[]{"13", "camp", "Champion's demense", "BlueHome"});
-        this.idsToLabel.put("25", new String[]{"10", "tower", "Redbriar", "BlueHome"});
-        this.idsToLabel.put("26", new String[]{"11", "tower", "Greenlake", "BlueHome"});
-        this.idsToLabel.put("27", new String[]{"7", "keep", "Ascension Bay", "BlueHome"});
-        this.idsToLabel.put("28", new String[]{"4", "tower", "Dawn's Eyrie", "BlueHome"});
-        this.idsToLabel.put("29", new String[]{"1", "camp", "The Spiritholme", "BlueHome"});
-        this.idsToLabel.put("30", new String[]{"3", "tower", "Woodhaven", "BlueHome"});
-        this.idsToLabel.put("31", new String[]{"8", "keep", "Askalion Hills", "BlueHome"});
-        this.idsToLabel.put("32", new String[]{"8", "keep", "Etheron Hills", "RedHome"});
-        this.idsToLabel.put("33", new String[]{"7", "keep", "Dreaming Bay", "RedHome"});
-        this.idsToLabel.put("34", new String[]{"13", "camp", "Victors's Lodge", "RedHome"});
-        this.idsToLabel.put("35", new String[]{"10", "tower", "Greenbriar", "RedHome"});
-        this.idsToLabel.put("36", new String[]{"11", "tower", "Bluelake", "RedHome"});
-        this.idsToLabel.put("37", new String[]{"6", "keep", "Garrison", "RedHome"});
-        this.idsToLabel.put("38", new String[]{"3", "tower", "Longview", "RedHome"});
-        this.idsToLabel.put("39", new String[]{"1", "camp", "The Godsword", "RedHome"});
-        this.idsToLabel.put("40", new String[]{"4", "tower", "Cliffside", "RedHome"});
-        this.idsToLabel.put("41", new String[]{"8", "keep", "Shadaran Hills", "GreenHome"});
-        this.idsToLabel.put("42", new String[]{"11", "tower", "Redlake", "GreenHome"});
-        this.idsToLabel.put("43", new String[]{"13", "camp", "Hero's Lodge", "GreenHome"});
-        this.idsToLabel.put("44", new String[]{"7", "keep", "Dreadfall Bay", "GreenHome"});
-        this.idsToLabel.put("45", new String[]{"10", "tower", "Bluebriar", "GreenHome"});
-        this.idsToLabel.put("46", new String[]{"6", "keep", "Garrison", "GreenHome"});
-        this.idsToLabel.put("47", new String[]{"3", "tower", "Sunnyhill", "GreenHome"});
-        this.idsToLabel.put("48", new String[]{"2", "camp", "Faithleap", "GreenHome"});
-        this.idsToLabel.put("49", new String[]{"9", "camp", "Bluevale Refuge", "GreenHome"});
-        this.idsToLabel.put("50", new String[]{"12", "camp", "Bluewater Lowlands", "RedHome"});
-        this.idsToLabel.put("51", new String[]{"5", "camp", "Astralholme", "RedHome"});
-        this.idsToLabel.put("52", new String[]{"2", "camp", "Arah's Hope", "RedHome"});
-        this.idsToLabel.put("53", new String[]{"9", "camp", "Greenvale Refuge", "RedHome"});
-        this.idsToLabel.put("54", new String[]{"5", "camp", "Foghaven", "GreenHome"});
-        this.idsToLabel.put("55", new String[]{"12", "camp", "Redwater Lowlands", "GreenHome"});
-        this.idsToLabel.put("56", new String[]{"1", "camp", "The Titanpaw", "GreenHome"});
-        this.idsToLabel.put("57", new String[]{"4", "tower", "Cragtop", "GreenHome"});
-        this.idsToLabel.put("58", new String[]{"2", "camp", "Godslore", "BlueHome"});
-        this.idsToLabel.put("59", new String[]{"9", "camp", "Redvale Refuge", "BlueHome"});
-        this.idsToLabel.put("60", new String[]{"5", "camp", "Stargrove", "BlueHome"});
-        this.idsToLabel.put("61", new String[]{"12", "camp", "Greenwater Lowlands", "BlueHome"});
-        
+         this.wvwReader = new WvWReader(this);
+         this.wvwReader.setResult(this.ownerData);
+         this.wvwReader.setMatchId(this.matchId);
+         */
+        this.idsToLabelCenter = new HashMap();
+        this.idsToLabelRed = new HashMap();
+        this.idsToLabelBlue = new HashMap();
+        this.idsToLabelGreen = new HashMap();
+
+        //id: api, id: icon
+        this.idsToLabelCenter.put("1", new String[]{"3", "keep", "Overlook", "Center"});
+        this.idsToLabelCenter.put("2", new String[]{"18", "keep", "Valley", "Center"});
+        this.idsToLabelCenter.put("3", new String[]{"15", "keep", "Lowlands", "Center"});
+        this.idsToLabelCenter.put("4", new String[]{"20", "camp", "Golanta Clearing", "Center"});
+        this.idsToLabelCenter.put("5", new String[]{"6", "camp", "Pangloss Rise", "Center"});
+        this.idsToLabelCenter.put("6", new String[]{"1", "camp", "Speldan Clearcut", "Center"});
+        this.idsToLabelCenter.put("7", new String[]{"21", "camp", "Danelon Passage", "Center"});
+        this.idsToLabelCenter.put("8", new String[]{"12", "camp", "Umberglade Woods", "Center"});
+        this.idsToLabelCenter.put("9", new String[]{"10", "castle", "Stonemist Castle", "Center"});
+        this.idsToLabelCenter.put("10", new String[]{"8", "camp", "Rogue's Quarry", "Center"});
+        this.idsToLabelCenter.put("11", new String[]{"13", "tower", "Aldon's Ledge", "Center"});
+        this.idsToLabelCenter.put("12", new String[]{"9", "tower", "Wildcreek Run", "Center"});
+        this.idsToLabelCenter.put("13", new String[]{"19", "tower", "Jerrifer's Slough", "Center"});
+        this.idsToLabelCenter.put("14", new String[]{"16", "tower", "Klovan Gully", "Center"});
+        this.idsToLabelCenter.put("15", new String[]{"22", "tower", "Langor Gulch", "Center"});
+        this.idsToLabelCenter.put("16", new String[]{"17", "tower", "Quentin Lake", "Center"});
+        this.idsToLabelCenter.put("17", new String[]{"2", "tower", "Mendon's Gap", "Center"});
+        this.idsToLabelCenter.put("18", new String[]{"7", "tower", "Anzalias Pass", "Center"});
+        this.idsToLabelCenter.put("19", new String[]{"5", "tower", "Ogrewatch Cut", "Center"});
+        this.idsToLabelCenter.put("20", new String[]{"4", "tower", "Veloka Slope", "Center"});
+        this.idsToLabelCenter.put("21", new String[]{"11", "tower", "Durios Gulch", "Center"});
+        this.idsToLabelCenter.put("22", new String[]{"14", "tower", "Bravost Escarpment", "Center"});
+
         /*
-        this.idsToLabel.put("62", new String[]{"1", "", "", ""});
-        this.idsToLabel.put("63", new String[]{"1", "", "", ""});
-        this.idsToLabel.put("64", new String[]{"1", "", "", ""});
-        this.idsToLabel.put("65", new String[]{"1", "", "", ""});
-        this.idsToLabel.put("66", new String[]{"1", "", "", ""});
-        this.idsToLabel.put("67", new String[]{"1", "", "", ""});
-        this.idsToLabel.put("68", new String[]{"1", "", "", ""});
-        this.idsToLabel.put("69", new String[]{"1", "", "", ""});
-        this.idsToLabel.put("70", new String[]{"1", "", "", ""});
-        this.idsToLabel.put("71", new String[]{"1", "", "", ""});
-        this.idsToLabel.put("72", new String[]{"1", "", "", ""});
-        this.idsToLabel.put("73", new String[]{"1", "", "", ""});
-        this.idsToLabel.put("74", new String[]{"1", "", "", ""});
-        this.idsToLabel.put("75", new String[]{"1", "", "", ""});
-        this.idsToLabel.put("76", new String[]{"1", "", "", ""});
-        */
-        
-        this.eventLog = new Object[]{null,null,null};
-        
+         this.idsToLabel.put("23", new String[]{"6", "keep", "Garrison", "BlueHome"});
+         this.idsToLabel.put("24", new String[]{"13", "camp", "Champion's demense", "BlueHome"});
+         this.idsToLabel.put("25", new String[]{"10", "tower", "Redbriar", "BlueHome"});
+         this.idsToLabel.put("26", new String[]{"11", "tower", "Greenlake", "BlueHome"});
+         this.idsToLabel.put("27", new String[]{"7", "keep", "Ascension Bay", "BlueHome"});
+         this.idsToLabel.put("28", new String[]{"4", "tower", "Dawn's Eyrie", "BlueHome"});
+         this.idsToLabel.put("29", new String[]{"1", "camp", "The Spiritholme", "BlueHome"});
+         this.idsToLabel.put("30", new String[]{"3", "tower", "Woodhaven", "BlueHome"});
+         this.idsToLabel.put("31", new String[]{"8", "keep", "Askalion Hills", "BlueHome"});
+         this.idsToLabel.put("32", new String[]{"8", "keep", "Etheron Hills", "RedHome"});
+         this.idsToLabel.put("33", new String[]{"7", "keep", "Dreaming Bay", "RedHome"});
+         this.idsToLabel.put("34", new String[]{"13", "camp", "Victors's Lodge", "RedHome"});
+         this.idsToLabel.put("35", new String[]{"10", "tower", "Greenbriar", "RedHome"});
+         this.idsToLabel.put("36", new String[]{"11", "tower", "Bluelake", "RedHome"});
+         this.idsToLabel.put("37", new String[]{"6", "keep", "Garrison", "RedHome"});
+         this.idsToLabel.put("38", new String[]{"3", "tower", "Longview", "RedHome"});
+         this.idsToLabel.put("39", new String[]{"1", "camp", "The Godsword", "RedHome"});
+         this.idsToLabel.put("40", new String[]{"4", "tower", "Cliffside", "RedHome"});
+         this.idsToLabel.put("41", new String[]{"8", "keep", "Shadaran Hills", "GreenHome"});
+         this.idsToLabel.put("42", new String[]{"11", "tower", "Redlake", "GreenHome"});
+         this.idsToLabel.put("43", new String[]{"13", "camp", "Hero's Lodge", "GreenHome"});
+         this.idsToLabel.put("44", new String[]{"7", "keep", "Dreadfall Bay", "GreenHome"});
+         this.idsToLabel.put("45", new String[]{"10", "tower", "Bluebriar", "GreenHome"});
+         this.idsToLabel.put("46", new String[]{"6", "keep", "Garrison", "GreenHome"});
+         this.idsToLabel.put("47", new String[]{"3", "tower", "Sunnyhill", "GreenHome"});
+         this.idsToLabel.put("48", new String[]{"2", "camp", "Faithleap", "GreenHome"});
+         this.idsToLabel.put("49", new String[]{"9", "camp", "Bluevale Refuge", "GreenHome"});
+         this.idsToLabel.put("50", new String[]{"12", "camp", "Bluewater Lowlands", "RedHome"});
+         this.idsToLabel.put("51", new String[]{"5", "camp", "Astralholme", "RedHome"});
+         this.idsToLabel.put("52", new String[]{"2", "camp", "Arah's Hope", "RedHome"});
+         this.idsToLabel.put("53", new String[]{"9", "camp", "Greenvale Refuge", "RedHome"});
+         this.idsToLabel.put("54", new String[]{"5", "camp", "Foghaven", "GreenHome"});
+         this.idsToLabel.put("55", new String[]{"12", "camp", "Redwater Lowlands", "GreenHome"});
+         this.idsToLabel.put("56", new String[]{"1", "camp", "The Titanpaw", "GreenHome"});
+         this.idsToLabel.put("57", new String[]{"4", "tower", "Cragtop", "GreenHome"});
+         this.idsToLabel.put("58", new String[]{"2", "camp", "Godslore", "BlueHome"});
+         this.idsToLabel.put("59", new String[]{"9", "camp", "Redvale Refuge", "BlueHome"});
+         this.idsToLabel.put("60", new String[]{"5", "camp", "Stargrove", "BlueHome"});
+         this.idsToLabel.put("61", new String[]{"12", "camp", "Greenwater Lowlands", "BlueHome"});
+         */
+        // neu
+        this.idsToLabelRed.put("99", new String[]{"2", "camp", "Hamm's Lab", "RedHome"});
+        this.idsToLabelRed.put("100", new String[]{"12", "camp", "Bauer Farmstead", "RedHome"});
+        this.idsToLabelRed.put("101", new String[]{"9", "camp", "McLain's Encampment", "RedHome"});
+        this.idsToLabelRed.put("102", new String[]{"1", "tower", "O'del Academy", "RedHome"});
+        this.idsToLabelRed.put("104", new String[]{"3", "tower", "Eternal Necropolis", "RedHome"});
+        this.idsToLabelRed.put("105", new String[]{"11", "tower", "Crankshaft Depot", "RedHome"});
+        this.idsToLabelRed.put("106", new String[]{"7", "keep", "Blistering Undercroft", "RedHome"});
+        this.idsToLabelRed.put("109", new String[]{"8", "camp", "Osprey's Palace", "RedHome"});
+        this.idsToLabelRed.put("110", new String[]{"10", "tower", "Parched Outpost", "RedHome"});
+        this.idsToLabelRed.put("113", new String[]{"5", "keep", "Stoic Rampart", "RedHome"});
+        this.idsToLabelRed.put("114", new String[]{"6", "keep", "Roy's Refuge", "RedHome"});
+        this.idsToLabelRed.put("115", new String[]{"4", "camp", "Boettiger's Hideaway", "RedHome"});
+        this.idsToLabelRed.put("116", new String[]{"13", "camp", "Dustwhisper Well", "RedHome"});
+
+        this.idsToLabelBlue.put("99", new String[]{"2", "camp", "Zakk's Lab", "BlueHome"});
+        this.idsToLabelBlue.put("100", new String[]{"12", "camp", "Gee Farmstead", "BlueHome"});
+        this.idsToLabelBlue.put("101", new String[]{"9", "camp", "Habib's Encampment", "BlueHome"});
+        this.idsToLabelBlue.put("102", new String[]{"1", "tower", "Kay'li Academy", "BlueHome"});
+        this.idsToLabelBlue.put("104", new String[]{"3", "tower", "Undying Necropolis", "BlueHome"});
+        this.idsToLabelBlue.put("105", new String[]{"11", "tower", "Flywheel Depot", "BlueHome"});
+        this.idsToLabelBlue.put("106", new String[]{"7", "keep", "Torrid Undercroft", "BlueHome"});
+        this.idsToLabelBlue.put("109", new String[]{"8", "camp", "Shrike's Palace", "BlueHome"});
+        this.idsToLabelBlue.put("110", new String[]{"10", "tower", "Barren Outpost", "BlueHome"});
+        this.idsToLabelBlue.put("113", new String[]{"5", "keep", "Hardened Rampart", "BlueHome"});
+        this.idsToLabelBlue.put("114", new String[]{"6", "keep", "Oliver's Refuge", "BlueHome"});
+        this.idsToLabelBlue.put("115", new String[]{"4", "camp", "Berdrow's Hideaway", "BlueHome"});
+        this.idsToLabelBlue.put("116", new String[]{"13", "camp", "Lastgasp Well", "BlueHome"});
+
+        this.idsToLabelGreen.put("99", new String[]{"2", "camp", "Lesh's Lab", "GreenHome"});
+        this.idsToLabelGreen.put("100", new String[]{"12", "camp", "Barrett Farmstead", "GreenHome"});
+        this.idsToLabelGreen.put("101", new String[]{"9", "camp", "Patrick's Encampment", "GreenHome"});
+        this.idsToLabelGreen.put("102", new String[]{"1", "tower", "Y'lan Academy", "GreenHome"});
+        this.idsToLabelGreen.put("104", new String[]{"3", "tower", "Deathless Necropolis", "GreenHome"});
+        this.idsToLabelGreen.put("105", new String[]{"11", "tower", "Sparkplug Depot", "GreenHome"});
+        this.idsToLabelGreen.put("106", new String[]{"7", "keep", "Scorching Undercroft", "GreenHome"});
+        this.idsToLabelGreen.put("109", new String[]{"8", "camp", "Harrier's Palace", "GreenHome"});
+        this.idsToLabelGreen.put("110", new String[]{"10", "tower", "Withered Outpost", "GreenHome"});
+        this.idsToLabelGreen.put("113", new String[]{"5", "keep", "Impassive Rampart", "GreenHome"});
+        this.idsToLabelGreen.put("114", new String[]{"6", "keep", "Norfolk's Refuge", "GreenHome"});
+        this.idsToLabelGreen.put("115", new String[]{"4", "camp", "Hughe's Hideaway", "GreenHome"});
+        this.idsToLabelGreen.put("116", new String[]{"13", "camp", "Smashedhope Well", "GreenHome"});
+
+        this.eventLog = new Object[]{null, null, null};
+
         initComponents();
-        
+
         this.jLabelMatchId.setText("matchid: " + this.matchId);
-        
+
         this.eventTimerLabelCoherent.setCustomText("Time until data is coherent: ");
-        
+
         this.showBorderlands(false);
         this.initTimerandLabels();
     }
-    
+
     public void setTranslations(String coherent, String eternal, String green, String red, String blue) {
-        
+
         this.eventTimerLabelCoherent.setCustomText(coherent);
-        
+
         this.jComboBoxWvW.removeAllItems();
         this.jComboBoxWvW.addItem(eternal);
         this.jComboBoxWvW.addItem(green);
         this.jComboBoxWvW.addItem(red);
         this.jComboBoxWvW.addItem(blue);
     }
-    
+
     public void setMatchIdColor(String color) {
-        
+
         this.matchIdColor = color;
     }
-    
+
     public void setMatchId(String matchId) {
-        
+
         this.matchId = matchId;
         this.jLabelMatchId.setText("<html>" + matchId + "(<b>" + this.matchIdColor + "</b>)</html>");
     }
-    
+
     private void setTick(int tick) {
-        
+
         this.jLabelTick.setText("+" + tick);
     }
-    
+
     private void setDiff1(int difference) {
-        
+
         this.jLabelDiff1.setText(difference + "");
     }
-    
+
     private void setDiff2(int difference) {
-        
+
         this.jLabelDiff2.setText(difference + "");
     }
-    
+
     private void pushEvent(String event) {
-        
+
         this.eventLog[2] = this.eventLog[1];
         this.eventLog[1] = this.eventLog[0];
         this.eventLog[0] = new Object[]{event, new Date()};
     }
-    
+
     private String getEvent(int i) {
-        
+
         String event = "";
-        
+
         Object[] eventObject = (Object[]) this.eventLog[i];
-        
+
         if (eventObject != null) {
-            
+
             Date date = (Date) eventObject[1];
             Date currentDate = new Date();
             int secDiff = (int) ((currentDate.getTime() - date.getTime()) / 1000);
-            
+
             if (secDiff >= 300) {
-                
+
                 eventObject = null;
             } else {
-            
+
                 int minDiff = secDiff / 60;
                 secDiff = secDiff % 60;
 
@@ -298,71 +350,121 @@ public class WvWOverlayGui extends javax.swing.JFrame {
                 event = (String) eventObject[0] + " (" + minDiff + ":" + secDiffString + ")</html>";
             }
         }
-        
+
         return event;
     }
-    
+
     public void refresh(int timeDifference) {
-        
+
         this.setAlwaysOnTop(true);
         this.toFront();
         this.repaint();
-        
+
         Iterator it;
-        
-        if (this.ownerDataOld.isEmpty()) {
-            
-            it = this.ownerData.entrySet().iterator();
-            
+
+        if (this.ownerDataOldCenter.isEmpty()) {
+
+            it = this.ownerDataCenter.entrySet().iterator();
+
             while (it.hasNext()) {
 
-                Map.Entry pairs = (Map.Entry)it.next();
+                Map.Entry pairs = (Map.Entry) it.next();
 
                 String id = (String) pairs.getKey();
                 String owner = (String) pairs.getValue();
-                
-                this.ownerDataOld.put(new String(id), new String(owner));
+
+                this.ownerDataOldCenter.put(new String(id), new String(owner));
+            }
+
+            it = this.ownerDataRed.entrySet().iterator();
+
+            while (it.hasNext()) {
+
+                Map.Entry pairs = (Map.Entry) it.next();
+
+                String id = (String) pairs.getKey();
+                String owner = (String) pairs.getValue();
+
+                this.ownerDataOldRed.put(new String(id), new String(owner));
+            }
+
+            it = this.ownerDataBlue.entrySet().iterator();
+
+            while (it.hasNext()) {
+
+                Map.Entry pairs = (Map.Entry) it.next();
+
+                String id = (String) pairs.getKey();
+                String owner = (String) pairs.getValue();
+
+                this.ownerDataOldBlue.put(new String(id), new String(owner));
+            }
+
+            it = this.ownerDataGreen.entrySet().iterator();
+
+            while (it.hasNext()) {
+
+                Map.Entry pairs = (Map.Entry) it.next();
+
+                String id = (String) pairs.getKey();
+                String owner = (String) pairs.getValue();
+
+                this.ownerDataOldGreen.put(new String(id), new String(owner));
             }
             
+            it = this.ownerDataPoints.entrySet().iterator();
+
+            while (it.hasNext()) {
+
+                Map.Entry pairs = (Map.Entry) it.next();
+
+                String owner = (String) pairs.getKey();
+                String[] points = (String[]) pairs.getValue();
+
+                this.ownerDataOldPoints.put(new String(owner), new String[]{points[0], points[1], points[2]});
+            }
+
             if (this.activeMap.equals("Center")) {
                 this.setEternalColors();
             } else {
                 this.setBorderlandsColors();
             }
         }
-        
-        String[] points = ((String) this.ownerData.get("0")).split(",");
-        String[] pointsOld = ((String) this.ownerDataOld.get("0")).split(",");
-        
+
+        //String[] points = ((String) this.ownerData.get("0")).split(",");
+        //String[] pointsOld = ((String) this.ownerDataOld.get("0")).split(",");
+        String[] points = ((String[]) this.ownerDataPoints.get("all"));
+        String[] pointsOld = ((String[]) this.ownerDataOldPoints.get("all"));
+
         int diff1 = 0;
         int diff1Old = 0;
         int diff2 = 0;
         int diff2Old = 0;
-        
+
         switch (this.matchIdColor) {
             case "red":
                 diff1 = Integer.parseInt(points[0]) - Integer.parseInt(points[1]);
                 diff2 = Integer.parseInt(points[0]) - Integer.parseInt(points[2]);
-                
+
                 diff1Old = Integer.parseInt(pointsOld[0]) - Integer.parseInt(pointsOld[1]);
                 diff2Old = Integer.parseInt(pointsOld[0]) - Integer.parseInt(pointsOld[2]);
-            break;
+                break;
             case "blue":
                 diff1 = Integer.parseInt(points[1]) - Integer.parseInt(points[0]);
                 diff2 = Integer.parseInt(points[1]) - Integer.parseInt(points[2]);
-                
+
                 diff1Old = Integer.parseInt(pointsOld[1]) - Integer.parseInt(pointsOld[0]);
                 diff2Old = Integer.parseInt(pointsOld[1]) - Integer.parseInt(pointsOld[2]);
-            break;
+                break;
             case "green":
                 diff1 = Integer.parseInt(points[2]) - Integer.parseInt(points[0]);
                 diff2 = Integer.parseInt(points[2]) - Integer.parseInt(points[1]);
-                
+
                 diff1Old = Integer.parseInt(pointsOld[2]) - Integer.parseInt(pointsOld[0]);
                 diff2Old = Integer.parseInt(pointsOld[2]) - Integer.parseInt(pointsOld[1]);
-            break;
+                break;
         }
-        
+
         if (diff1Old < diff1) {
             this.jLabelDiff1.setForeground(Color.green);
         } else if (diff1Old == diff1) {
@@ -370,7 +472,7 @@ public class WvWOverlayGui extends javax.swing.JFrame {
         } else {
             this.jLabelDiff1.setForeground(Color.red);
         }
-        
+
         if (diff2Old < diff2) {
             this.jLabelDiff2.setForeground(Color.green);
         } else if (diff2Old == diff2) {
@@ -378,84 +480,114 @@ public class WvWOverlayGui extends javax.swing.JFrame {
         } else {
             this.jLabelDiff2.setForeground(Color.red);
         }
-        
+
         this.setDiff1(diff1);
         this.setDiff2(diff2);
-        
+
         int newTick = 0;
-        
-        it = this.ownerData.entrySet().iterator();
-                    
-        while (it.hasNext()) {
 
-            Map.Entry pairs = (Map.Entry)it.next();
+        for (int i = 0; i <= 3; i++) {
 
-            String id = (String) pairs.getKey();
-            String owner = (String) pairs.getValue();
-            String onwerOld = (String) this.ownerDataOld.get(id);
-            
-            if (this.idsToLabel.containsKey(id)) {
-                
-                int labelNumber = Integer.parseInt(((String[]) this.idsToLabel.get(id))[0]);
-                String labelType = ((String[]) this.idsToLabel.get(id))[1];
-                String labelName = ((String[]) this.idsToLabel.get(id))[2];
-                String labelHome = ((String[]) this.idsToLabel.get(id))[3];
-                
-                EventTimerLabel currentTimer = null;
-                JLabel currentLabel = null;
-                
-                if (owner.toLowerCase().equals(this.matchIdColor)) {
-                    
-                    switch (labelType) {
-                        case "keep":
-                            newTick = newTick + 25;
-                        break;
-                        case "camp":
-                            newTick = newTick + 5;
-                        break;
-                        case "tower":
-                            newTick = newTick + 10;
-                        break;
-                        case "castle":
-                            newTick = newTick + 35;
-                        break;
+            HashMap currentOwnerData;
+            HashMap currentOwnerDataOld;
+            HashMap currentIdsToLabel;
+            String homeLand;
+
+            if (i == 0) {
+                currentOwnerData = this.ownerDataCenter;
+                currentOwnerDataOld = this.ownerDataOldCenter;
+                currentIdsToLabel = this.idsToLabelCenter;
+                homeLand = "Center";
+            } else if (i == 1) {
+                currentOwnerData = this.ownerDataRed;
+                currentOwnerDataOld = this.ownerDataOldRed;
+                currentIdsToLabel = this.idsToLabelRed;
+                homeLand = "RedHome";
+            } else if (i == 2) {
+                currentOwnerData = this.ownerDataBlue;
+                currentOwnerDataOld = this.ownerDataOldBlue;
+                currentIdsToLabel = this.idsToLabelBlue;
+                homeLand = "BlueHome";
+            } else {
+                currentOwnerData = this.ownerDataGreen;
+                currentOwnerDataOld = this.ownerDataOldGreen;
+                currentIdsToLabel = this.idsToLabelGreen;
+                homeLand = "GreenHome";
+            }
+
+            it = currentOwnerData.entrySet().iterator();
+
+            while (it.hasNext()) {
+
+                Map.Entry pairs = (Map.Entry) it.next();
+
+                String id = (String) pairs.getKey();
+                String owner = (String) pairs.getValue();
+                String onwerOld = (String) currentOwnerDataOld.get(id);
+
+                if (currentIdsToLabel.containsKey(id)) {
+
+                    int labelNumber = Integer.parseInt(((String[]) currentIdsToLabel.get(id))[0]);
+
+                    String labelType = ((String[]) currentIdsToLabel.get(id))[1];
+                    String labelName = ((String[]) currentIdsToLabel.get(id))[2];
+
+                    String labelHome = ((String[]) currentIdsToLabel.get(id))[3];
+
+                    EventTimerLabel currentTimer = null;
+                    JLabel currentLabel = null;
+
+                    if (owner.toLowerCase().equals(this.matchIdColor)) {
+
+                        switch (labelType) {
+                            case "keep":
+                                newTick = newTick + 25;
+                                break;
+                            case "camp":
+                                newTick = newTick + 5;
+                                break;
+                            case "tower":
+                                newTick = newTick + 10;
+                                break;
+                            case "castle":
+                                newTick = newTick + 35;
+                                break;
+                        }
                     }
-                }
-                
-                this.setTick(newTick);
-                
-                switch (labelHome) {
-                    case "Center":
-                        currentTimer = (EventTimerLabel) this.timerLabelEternal.get(labelNumber - 1);
-                        break;
-                    case "RedHome":
-                        currentTimer = (EventTimerLabel) this.timerLabelBorderlandsRed.get(labelNumber - 1);
-                        break;
-                    case "BlueHome":
-                        currentTimer = (EventTimerLabel) this.timerLabelBorderlandsBlue.get(labelNumber - 1);
-                        break;
-                    case "GreenHome":
-                        currentTimer = (EventTimerLabel) this.timerLabelBorderlandsGreen.get(labelNumber - 1);
-                        break;
-                }
-                
-                if ((!owner.equals(onwerOld)) && (currentTimer != null)) {
-                    //if (!currentTimer.isTicking()) { // ??
+
+                    this.setTick(newTick);
+
+                    switch (labelHome) {
+                        case "Center":
+                            currentTimer = (EventTimerLabel) this.timerLabelEternal.get(labelNumber - 1);
+                            break;
+                        case "RedHome":
+                            currentTimer = (EventTimerLabel) this.timerLabelBorderlandsRed.get(labelNumber - 1);
+                            break;
+                        case "BlueHome":
+                            currentTimer = (EventTimerLabel) this.timerLabelBorderlandsBlue.get(labelNumber - 1);
+                            break;
+                        case "GreenHome":
+                            currentTimer = (EventTimerLabel) this.timerLabelBorderlandsGreen.get(labelNumber - 1);
+                            break;
+                    }
+
+                    if ((!owner.equals(onwerOld)) && (currentTimer != null)) {
+                        //if (!currentTimer.isTicking()) { // ??
                         currentTimer.resetTimer(); // ??
                         currentTimer.setCounter(currentTimer.getCounter() - timeDifference);
                         currentTimer.startTimer();
-                        
+
                         /*
-                        this.pushEvent("<html>" + labelName
-                                + "(" + labelHome + ") <b><font color="
-                                + onwerOld + ">" + onwerOld
-                                + "</font></b> => <b><font color="
-                                + owner + ">" + owner + "</font></b>");*/
-                        
+                         this.pushEvent("<html>" + labelName
+                         + "(" + labelHome + ") <b><font color="
+                         + onwerOld + ">" + onwerOld
+                         + "</font></b> => <b><font color="
+                         + owner + ">" + owner + "</font></b>");*/
                         this.pushEvent("<html>" + labelName
                                 + "(" + labelHome + ") => <b><font color="
                                 + owner + ">" + owner + "</font></b>");
-                        
+
                         if (this.activeMap.equals(labelHome)) {
                             currentTimer.setVisible(true);
 
@@ -464,7 +596,7 @@ public class WvWOverlayGui extends javax.swing.JFrame {
                             } else {
                                 currentLabel = (JLabel) this.labelsBorderlands.get(labelNumber - 1);
                             }
-                            
+
                             try {
                                 Field f = getClass().getDeclaredField(labelType + owner);
                                 ImageIcon icon;
@@ -472,132 +604,178 @@ public class WvWOverlayGui extends javax.swing.JFrame {
                                 try {
                                     icon = (ImageIcon) f.get(this);
                                     currentLabel.setIcon(icon);
-                                } catch (        IllegalArgumentException | IllegalAccessException ex) {
+                                } catch (IllegalArgumentException | IllegalAccessException ex) {
                                     Logger.getLogger(WvWOverlayGui.class.getName()).log(Level.SEVERE, null, ex);
                                 }
-                            } catch (    NoSuchFieldException | SecurityException ex) {
+                            } catch (NoSuchFieldException | SecurityException ex) {
                                 Logger.getLogger(WvWOverlayGui.class.getName()).log(Level.SEVERE, null, ex);
                             }
                         }
-                    //}
+                        //}
+                    }
                 }
             }
         }
-        
-        this.ownerDataOld.clear();
-        it = this.ownerData.entrySet().iterator();
-                    
+
+        for (int i = 0; i <= 3; i++) {
+
+            HashMap currentOwnerData;
+            HashMap currentOwnerDataOld;
+
+            if (i == 0) {
+                currentOwnerData = this.ownerDataCenter;
+                currentOwnerDataOld = this.ownerDataOldCenter;
+            } else if (i == 1) {
+                currentOwnerData = this.ownerDataRed;
+                currentOwnerDataOld = this.ownerDataOldRed;
+            } else if (i == 2) {
+                currentOwnerData = this.ownerDataBlue;
+                currentOwnerDataOld = this.ownerDataOldBlue;
+            } else {
+                currentOwnerData = this.ownerDataGreen;
+                currentOwnerDataOld = this.ownerDataOldGreen;
+            }
+            
+            currentOwnerDataOld.clear();
+            it = currentOwnerData.entrySet().iterator();
+
+            while (it.hasNext()) {
+
+                Map.Entry pairs = (Map.Entry) it.next();
+
+                String id = (String) pairs.getKey();
+                String owner = (String) pairs.getValue();
+
+                currentOwnerDataOld.put(new String(id), new String(owner));
+            }
+        }
+
+        it = this.ownerDataPoints.entrySet().iterator();
+
         while (it.hasNext()) {
 
-            Map.Entry pairs = (Map.Entry)it.next();
+            Map.Entry pairs = (Map.Entry) it.next();
 
-            String id = (String) pairs.getKey();
-            String owner = (String) pairs.getValue();
-            
-            this.ownerDataOld.put(new String(id), new String(owner));
+            String owner = (String) pairs.getKey();
+            String[] curpoints = (String[]) pairs.getValue();
+
+            this.ownerDataOldPoints.put(new String(owner), new String[]{curpoints[0], curpoints[1], curpoints[2]});
         }
         
         /*
-        if (this.activeMap.equals("Center")) {
-            this.setEternalColors();
-        } else {
-            this.setBorderlandsColors();
-        }*/
-        
+         if (this.activeMap.equals("Center")) {
+         this.setEternalColors();
+         } else {
+         this.setBorderlandsColors();
+         }*/
         this.jLabelEventLog1.setText(this.getEvent(0));
         this.jLabelEventLog2.setText(this.getEvent(1));
         this.jLabelEventLog3.setText(this.getEvent(2));
     }
-    
+
     private void resetTimer() {
-        
+
         for (int i = 0; i < this.timerLabelEternal.size(); i++) {
-            
+
             EventTimerLabel timer = (EventTimerLabel) this.timerLabelEternal.get(i);
             timer.resetTimer();
         }
-        
+
         for (int i = 0; i < this.timerLabelBorderlandsRed.size(); i++) {
-            
+
             EventTimerLabel timer = (EventTimerLabel) this.timerLabelBorderlandsRed.get(i);
             timer.resetTimer();
         }
-        
+
         for (int i = 0; i < this.timerLabelBorderlandsBlue.size(); i++) {
-            
+
             EventTimerLabel timer = (EventTimerLabel) this.timerLabelBorderlandsBlue.get(i);
             timer.resetTimer();
         }
-        
+
         for (int i = 0; i < this.timerLabelBorderlandsGreen.size(); i++) {
-            
+
             EventTimerLabel timer = (EventTimerLabel) this.timerLabelBorderlandsGreen.get(i);
             timer.resetTimer();
         }
     }
-    
+
     public void startGui() {
-        
-        this.eventLog = new Object[]{null,null,null};
-        
+
+        this.eventLog = new Object[]{null, null, null};
+
         this.jButtonRefresh.setEnabled(true);
-        
+
         this.jToolBarMenu.setVisible(true);
         this.jComboBoxWvW.setVisible(true);
         this.jLabelMatchId.setVisible(true);
-        
+
         this.jToolBarInfo.setVisible(true);
         this.jButtonCoherent.setVisible(true);
-        
+
         this.mainGui.setMatchId();
-        
+
         this.setMatchIdColor(this.mainGui.getMatchIdColor());
         this.setMatchId(this.mainGui.getMatchId());
-        
-        this.ownerDataOld.clear();
+
+        this.ownerDataOldCenter.clear();
+        this.ownerDataOldRed.clear();
+        this.ownerDataOldBlue.clear();
+        this.ownerDataOldGreen.clear();
+        this.ownerDataOldPoints.clear();
+
         this.resetTimer();
-        
-        this.ownerData = new HashMap();
-        
+
+        this.ownerDataCenter = new HashMap();
+        this.ownerDataRed = new HashMap();
+        this.ownerDataBlue = new HashMap();
+        this.ownerDataGreen = new HashMap();
+        this.ownerDataPoints = new HashMap();
+
         this.wvwReader = new WvWReader(this);
-        this.wvwReader.setResult(this.ownerData);
+        this.wvwReader.setResultMaps(this.ownerDataRed, this.ownerDataBlue, this.ownerDataGreen, this.ownerDataCenter, this.ownerDataPoints);
         this.wvwReader.setMatchId(this.matchId);
-        
+
         this.wvwReader.start();
-        
+
         this.eventTimerLabelCoherent.startTimer();
         this.eventTimerLabelCoherent.setVisible(true);
-        
+
         this.setVisible(true);
     }
-    
+
     public void deactivateGui() {
-        
+
         if (this.wvwReader != null) {
-            
+
             this.wvwReader.interrupt();
-        
-            this.ownerDataOld.clear();
+
+            this.ownerDataOldCenter.clear();
+            this.ownerDataOldRed.clear();
+            this.ownerDataOldBlue.clear();
+            this.ownerDataOldGreen.clear();
+            this.ownerDataOldPoints.clear();
+
             this.resetTimer();
 
             this.eventTimerLabelCoherent.resetTimer();
             this.setVisible(false);
         }
     }
-    
+
     private void showToolTip(String toolTip) {
-        
+
         this.jLabelToolTip.setText(toolTip);
         this.jLabelToolTip.setVisible(true);
     }
-    
+
     private void hideToolTip() {
-        
+
         this.jLabelToolTip.setVisible(false);
     }
-    
+
     private void initTimerandLabels() {
-        
+
         for (int i = 1; i <= 22; i++) {
 
             Field f;
@@ -606,30 +784,31 @@ public class WvWOverlayGui extends javax.swing.JFrame {
                 f = getClass().getDeclaredField("jLabelEternal" + i);
 
                 final JLabel l = (JLabel) f.get(this);
-                
+
                 l.addMouseListener(new java.awt.event.MouseAdapter() {
                     public void mouseEntered(java.awt.event.MouseEvent evt) {
                         showToolTip(l.getToolTipText());
                     }
+
                     public void mouseExited(java.awt.event.MouseEvent evt) {
                         hideToolTip();
                     }
                 });
-                
+
                 int width = l.getX();
                 int height = l.getY();
-                
+
                 this.labelsEternal.add(l);
-                
+
                 EventTimerLabel eventTimerLabel = new EventTimerLabel();
                 this.timerLabelEternal.add(eventTimerLabel);
-                
+
                 getContentPane().add(eventTimerLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(width + 6, height + 10, -1, -1), 0);
-            } catch (    NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException ex) {
+            } catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException ex) {
                 Logger.getLogger(WvWOverlayGui.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        
+
         for (int i = 1; i <= 13; i++) {
 
             Field f;
@@ -638,47 +817,48 @@ public class WvWOverlayGui extends javax.swing.JFrame {
                 f = getClass().getDeclaredField("jLabelBorderlands" + i);
 
                 final JLabel l = (JLabel) f.get(this);
-                
+
                 l.addMouseListener(new java.awt.event.MouseAdapter() {
                     public void mouseEntered(java.awt.event.MouseEvent evt) {
                         showToolTip(l.getToolTipText());
                     }
+
                     public void mouseExited(java.awt.event.MouseEvent evt) {
                         hideToolTip();
                     }
                 });
-                
+
                 int width = l.getX();
                 int height = l.getY();
-                
+
                 this.labelsBorderlands.add(l);
-                
+
                 EventTimerLabel eventTimerLabel = new EventTimerLabel();
                 this.timerLabelBorderlandsRed.add(eventTimerLabel);
-                
+
                 getContentPane().add(eventTimerLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(width + 6, height + 10, -1, -1), 0);
-                
+
                 eventTimerLabel = new EventTimerLabel();
                 this.timerLabelBorderlandsGreen.add(eventTimerLabel);
-                
+
                 getContentPane().add(eventTimerLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(width + 6, height + 10, -1, -1), 0);
-                
+
                 eventTimerLabel = new EventTimerLabel();
                 this.timerLabelBorderlandsBlue.add(eventTimerLabel);
-                
+
                 getContentPane().add(eventTimerLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(width + 6, height + 10, -1, -1), 0);
-            } catch (    NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException ex) {
+            } catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException ex) {
                 Logger.getLogger(WvWOverlayGui.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
-    
+
     private void showEternal(boolean show) {
-        
+
         if (show) {
             this.setEternalColors();
         }
-        
+
         for (int i = 1; i <= 22; i++) {
 
             Field f;
@@ -688,21 +868,21 @@ public class WvWOverlayGui extends javax.swing.JFrame {
 
                 JLabel l = (JLabel) f.get(this);
                 l.setVisible(show);
-            } catch (    NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException ex) {
+            } catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException ex) {
                 Logger.getLogger(WvWOverlayGui.class.getName()).log(Level.SEVERE, null, ex);
             }
 
         }
-        
+
         this.showEternalTimer(show);
     }
-    
+
     private void showEternalTimer(boolean show) {
-        
+
         for (int i = 0; i < this.timerLabelEternal.size(); i++) {
 
             EventTimerLabel label = (EventTimerLabel) this.timerLabelEternal.get(i);
-            
+
             if (show && label.isTicking()) {
                 label.setVisible(true);
             } else {
@@ -710,9 +890,9 @@ public class WvWOverlayGui extends javax.swing.JFrame {
             }
         }
     }
-    
+
     private void showBorderlandsTimer(boolean show) {
-        
+
         switch (this.activeMap) {
             case "RedHome":
                 this.showBorderlandsRedTimer(show);
@@ -736,9 +916,9 @@ public class WvWOverlayGui extends javax.swing.JFrame {
                 break;
         }
     }
-    
+
     private void showBorderlandsRedTimer(boolean show) {
-        
+
         for (int i = 0; i < this.timerLabelBorderlandsRed.size(); i++) {
 
             EventTimerLabel label = (EventTimerLabel) this.timerLabelBorderlandsRed.get(i);
@@ -750,9 +930,9 @@ public class WvWOverlayGui extends javax.swing.JFrame {
             }
         }
     }
-    
+
     private void showBorderlandsBlueTimer(boolean show) {
-        
+
         for (int i = 0; i < this.timerLabelBorderlandsBlue.size(); i++) {
 
             EventTimerLabel label = (EventTimerLabel) this.timerLabelBorderlandsBlue.get(i);
@@ -764,9 +944,9 @@ public class WvWOverlayGui extends javax.swing.JFrame {
             }
         }
     }
-    
+
     private void showBorderlandsGreenTimer(boolean show) {
-        
+
         for (int i = 0; i < this.timerLabelBorderlandsGreen.size(); i++) {
 
             EventTimerLabel label = (EventTimerLabel) this.timerLabelBorderlandsGreen.get(i);
@@ -778,109 +958,173 @@ public class WvWOverlayGui extends javax.swing.JFrame {
             }
         }
     }
-    
+
     private void setEternalColors() {
-        
-        if (!this.ownerDataOld.isEmpty()) {
-            
+
+        if (!this.ownerDataOldCenter.isEmpty()) {
+
             Field f;
-            Iterator it = this.ownerDataOld.entrySet().iterator();
             
-            while (it.hasNext()) {
+            for (int i = 0; i <= 0; i++) {
 
-                Map.Entry pairs = (Map.Entry)it.next();
+                HashMap currentOwnerData;
+                HashMap currentOwnerDataOld;
+                HashMap currentIdsToLabel;
+                String homeLand;
 
-                String id = (String) pairs.getKey();
-                String owner = (String) pairs.getValue();
+                if (i == 0) {
+                    currentOwnerData = this.ownerDataCenter;
+                    currentOwnerDataOld = this.ownerDataOldCenter;
+                    currentIdsToLabel = this.idsToLabelCenter;
+                    homeLand = "Center";
+                } else if (i == 1) {
+                    currentOwnerData = this.ownerDataRed;
+                    currentOwnerDataOld = this.ownerDataOldRed;
+                    currentIdsToLabel = this.idsToLabelRed;
+                    homeLand = "RedHome";
+                } else if (i == 2) {
+                    currentOwnerData = this.ownerDataBlue;
+                    currentOwnerDataOld = this.ownerDataOldBlue;
+                    currentIdsToLabel = this.idsToLabelBlue;
+                    homeLand = "BlueHome";
+                } else {
+                    currentOwnerData = this.ownerDataGreen;
+                    currentOwnerDataOld = this.ownerDataOldGreen;
+                    currentIdsToLabel = this.idsToLabelGreen;
+                    homeLand = "GreenHome";
+                }
+                
+                Iterator it = currentOwnerDataOld.entrySet().iterator();
 
-                if (this.idsToLabel.containsKey(id)) {
+                while (it.hasNext()) {
 
-                    int labelNumber = Integer.parseInt(((String[]) this.idsToLabel.get(id))[0]);
-                    String labelType = ((String[]) this.idsToLabel.get(id))[1];
-                    String labelHome = ((String[]) this.idsToLabel.get(id))[3];
-                    String labelToolTip = ((String[]) this.idsToLabel.get(id))[2];
+                    Map.Entry pairs = (Map.Entry) it.next();
+
+                    String id = (String) pairs.getKey();
+                    String owner = (String) pairs.getValue();
                     
-                    if (labelHome.equals(this.activeMap)) {
+                    if (currentIdsToLabel.containsKey(id)) {
+
+                        int labelNumber = Integer.parseInt(((String[]) currentIdsToLabel.get(id))[0]);
+
+                        String labelType = ((String[]) currentIdsToLabel.get(id))[1];
+                        String labelToolTip = ((String[]) currentIdsToLabel.get(id))[2];
                         
-                        //System.out.println("id: " + id + ", labelnumber: " + labelNumber + ", type: " + labelType);
+                        String labelHome = ((String[]) currentIdsToLabel.get(id))[3];
                         
-                        JLabel currentLabel = (JLabel) this.labelsEternal.get(labelNumber - 1);
-                        
-                        currentLabel.setToolTipText(labelToolTip);
-                        
-                        try {
-                            f = getClass().getDeclaredField(labelType + owner);
-                            ImageIcon icon;
+                        if (labelHome.equals(this.activeMap)) {
+
+                            //System.out.println("id: " + id + ", labelnumber: " + labelNumber + ", type: " + labelType);
+                            JLabel currentLabel = (JLabel) this.labelsEternal.get(labelNumber - 1);
+                            
+                            currentLabel.setToolTipText(labelToolTip);
 
                             try {
-                                icon = (ImageIcon) f.get(this);
-                                currentLabel.setIcon(icon);
-                            } catch (        IllegalArgumentException | IllegalAccessException ex) {
+                                f = getClass().getDeclaredField(labelType + owner);
+                                ImageIcon icon;
+
+                                try {
+                                    icon = (ImageIcon) f.get(this);
+                                    currentLabel.setIcon(icon);
+                                } catch (IllegalArgumentException | IllegalAccessException ex) {
+                                    Logger.getLogger(WvWOverlayGui.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            } catch (NoSuchFieldException | SecurityException ex) {
                                 Logger.getLogger(WvWOverlayGui.class.getName()).log(Level.SEVERE, null, ex);
                             }
-                        } catch (    NoSuchFieldException | SecurityException ex) {
-                            Logger.getLogger(WvWOverlayGui.class.getName()).log(Level.SEVERE, null, ex);
                         }
                     }
                 }
-            } 
+            }
         }
     }
-    
+
     private void setBorderlandsColors() {
-        
-        if (!this.ownerDataOld.isEmpty()) {
-            
+
+        if (!this.ownerDataOldCenter.isEmpty()) {
+
             Field f;
-            Iterator it = this.ownerDataOld.entrySet().iterator();
             
-            while (it.hasNext()) {
+            for (int i = 1; i <= 3; i++) {
 
-                Map.Entry pairs = (Map.Entry)it.next();
+                HashMap currentOwnerData;
+                HashMap currentOwnerDataOld;
+                HashMap currentIdsToLabel;
+                String homeLand;
 
-                String id = (String) pairs.getKey();
-                String owner = (String) pairs.getValue();
+                if (i == 0) {
+                    currentOwnerData = this.ownerDataCenter;
+                    currentOwnerDataOld = this.ownerDataOldCenter;
+                    currentIdsToLabel = this.idsToLabelCenter;
+                    homeLand = "Center";
+                } else if (i == 1) {
+                    currentOwnerData = this.ownerDataRed;
+                    currentOwnerDataOld = this.ownerDataOldRed;
+                    currentIdsToLabel = this.idsToLabelRed;
+                    homeLand = "RedHome";
+                } else if (i == 2) {
+                    currentOwnerData = this.ownerDataBlue;
+                    currentOwnerDataOld = this.ownerDataOldBlue;
+                    currentIdsToLabel = this.idsToLabelBlue;
+                    homeLand = "BlueHome";
+                } else {
+                    currentOwnerData = this.ownerDataGreen;
+                    currentOwnerDataOld = this.ownerDataOldGreen;
+                    currentIdsToLabel = this.idsToLabelGreen;
+                    homeLand = "GreenHome";
+                }
+                
+                Iterator it = currentOwnerDataOld.entrySet().iterator();
 
-                if (this.idsToLabel.containsKey(id)) {
+                while (it.hasNext()) {
 
-                    int labelNumber = Integer.parseInt(((String[]) this.idsToLabel.get(id))[0]);
-                    String labelType = ((String[]) this.idsToLabel.get(id))[1];
-                    String labelHome = ((String[]) this.idsToLabel.get(id))[3];
-                    String labelToolTip = ((String[]) this.idsToLabel.get(id))[2];
-                    
-                    if (labelHome.equals(this.activeMap)) {
+                    Map.Entry pairs = (Map.Entry) it.next();
+
+                    String id = (String) pairs.getKey();
+                    String owner = (String) pairs.getValue();
+
+                    if (currentIdsToLabel.containsKey(id)) {
+
+                        int labelNumber = Integer.parseInt(((String[]) currentIdsToLabel.get(id))[0]);
+
+                        String labelType = ((String[]) currentIdsToLabel.get(id))[1];
+                        String labelToolTip = ((String[]) currentIdsToLabel.get(id))[2];
+
+                        String labelHome = ((String[]) currentIdsToLabel.get(id))[3];
                         
-                        //System.out.println("id: " + id + ", labelnumber: " + labelNumber + ", type: " + labelType);
-                        
-                        JLabel currentLabel = (JLabel) this.labelsBorderlands.get(labelNumber - 1);
+                        if (labelHome.equals(this.activeMap)) {
 
-                        currentLabel.setToolTipText(labelToolTip);
-                        
-                        try {
-                            f = getClass().getDeclaredField(labelType + owner);
-                            ImageIcon icon;
+                            //System.out.println("id: " + id + ", labelnumber: " + labelNumber + ", type: " + labelType);
+                            JLabel currentLabel = (JLabel) this.labelsBorderlands.get(labelNumber - 1);
+
+                            currentLabel.setToolTipText(labelToolTip);
 
                             try {
-                                icon = (ImageIcon) f.get(this);
-                                currentLabel.setIcon(icon);
-                            } catch (        IllegalArgumentException | IllegalAccessException ex) {
+                                f = getClass().getDeclaredField(labelType + owner);
+                                ImageIcon icon;
+
+                                try {
+                                    icon = (ImageIcon) f.get(this);
+                                    currentLabel.setIcon(icon);
+                                } catch (IllegalArgumentException | IllegalAccessException ex) {
+                                    Logger.getLogger(WvWOverlayGui.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            } catch (NoSuchFieldException | SecurityException ex) {
                                 Logger.getLogger(WvWOverlayGui.class.getName()).log(Level.SEVERE, null, ex);
                             }
-                        } catch (    NoSuchFieldException | SecurityException ex) {
-                            Logger.getLogger(WvWOverlayGui.class.getName()).log(Level.SEVERE, null, ex);
                         }
                     }
                 }
-            } 
+            }
         }
     }
-    
+
     private void showBorderlands(boolean show) {
-        
+
         if (show) {
             this.setBorderlandsColors();
         }
-        
+
         for (int i = 1; i <= 13; i++) {
 
             Field f;
@@ -890,15 +1134,15 @@ public class WvWOverlayGui extends javax.swing.JFrame {
 
                 JLabel l = (JLabel) f.get(this);
                 l.setVisible(show);
-            } catch (    NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException ex) {
+            } catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException ex) {
                 Logger.getLogger(WvWOverlayGui.class.getName()).log(Level.SEVERE, null, ex);
             }
 
         }
-        
+
         this.showBorderlandsTimer(show);
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -1159,55 +1403,55 @@ public class WvWOverlayGui extends javax.swing.JFrame {
 
         jLabelBorderlands5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/media/wvw/camp_red.png"))); // NOI18N
         jLabelBorderlands5.setFocusable(false);
-        getContentPane().add(jLabelBorderlands5, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 130, -1, -1));
+        getContentPane().add(jLabelBorderlands5, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 150, -1, -1));
 
         jLabelBorderlands9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/media/wvw/camp_red.png"))); // NOI18N
         jLabelBorderlands9.setFocusable(false);
-        getContentPane().add(jLabelBorderlands9, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 270, -1, -1));
+        getContentPane().add(jLabelBorderlands9, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 280, -1, -1));
 
         jLabelBorderlands3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/media/wvw/camp_red.png"))); // NOI18N
         jLabelBorderlands3.setFocusable(false);
-        getContentPane().add(jLabelBorderlands3, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 120, -1, -1));
+        getContentPane().add(jLabelBorderlands3, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 70, -1, -1));
 
         jLabelBorderlands1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/media/wvw/camp_red.png"))); // NOI18N
         jLabelBorderlands1.setFocusable(false);
-        getContentPane().add(jLabelBorderlands1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 30, -1, -1));
+        getContentPane().add(jLabelBorderlands1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 70, -1, -1));
 
         jLabelBorderlands6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/media/wvw/camp_red.png"))); // NOI18N
         jLabelBorderlands6.setFocusable(false);
-        getContentPane().add(jLabelBorderlands6, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 150, -1, -1));
+        getContentPane().add(jLabelBorderlands6, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 130, -1, -1));
 
         jLabelBorderlands8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/media/wvw/camp_red.png"))); // NOI18N
         jLabelBorderlands8.setFocusable(false);
-        getContentPane().add(jLabelBorderlands8, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 200, -1, -1));
+        getContentPane().add(jLabelBorderlands8, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 220, -1, -1));
 
         jLabelBorderlands4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/media/wvw/camp_red.png"))); // NOI18N
         jLabelBorderlands4.setFocusable(false);
-        getContentPane().add(jLabelBorderlands4, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 110, -1, -1));
+        getContentPane().add(jLabelBorderlands4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 140, -1, -1));
 
         jLabelBorderlands2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/media/wvw/camp_red.png"))); // NOI18N
         jLabelBorderlands2.setFocusable(false);
-        getContentPane().add(jLabelBorderlands2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 130, -1, -1));
+        getContentPane().add(jLabelBorderlands2, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 60, -1, -1));
 
         jLabelBorderlands7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/media/wvw/camp_red.png"))); // NOI18N
         jLabelBorderlands7.setFocusable(false);
-        getContentPane().add(jLabelBorderlands7, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 210, -1, -1));
+        getContentPane().add(jLabelBorderlands7, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 210, -1, -1));
 
         jLabelBorderlands10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/media/wvw/camp_red.png"))); // NOI18N
         jLabelBorderlands10.setFocusable(false);
-        getContentPane().add(jLabelBorderlands10, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 250, -1, -1));
+        getContentPane().add(jLabelBorderlands10, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 290, -1, -1));
 
         jLabelBorderlands13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/media/wvw/camp_red.png"))); // NOI18N
         jLabelBorderlands13.setFocusable(false);
-        getContentPane().add(jLabelBorderlands13, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 330, -1, -1));
+        getContentPane().add(jLabelBorderlands13, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 330, -1, -1));
 
         jLabelBorderlands11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/media/wvw/camp_red.png"))); // NOI18N
         jLabelBorderlands11.setFocusable(false);
-        getContentPane().add(jLabelBorderlands11, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 250, -1, -1));
+        getContentPane().add(jLabelBorderlands11, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 300, -1, -1));
 
         jLabelBorderlands12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/media/wvw/camp_red.png"))); // NOI18N
         jLabelBorderlands12.setFocusable(false);
-        getContentPane().add(jLabelBorderlands12, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 260, -1, -1));
+        getContentPane().add(jLabelBorderlands12, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 270, -1, -1));
 
         jLabelMatchId.setForeground(new java.awt.Color(255, 255, 255));
         jLabelMatchId.setText("matchid:");
@@ -1294,16 +1538,15 @@ public class WvWOverlayGui extends javax.swing.JFrame {
         this.jComboBoxWvW.setVisible(false);
         this.jLabelMatchId.setVisible(false);
         this.jToolBarMenu.setVisible(false);
-        
+
         int selection = this.jComboBoxWvW.getSelectedIndex();
-        
+
         /*
-        if (this.activeMap.equals("Center")) {
-            this.setEternalColors();
-        } else {
-            this.setBorderlandsColors();
-        }*/
-        
+         if (this.activeMap.equals("Center")) {
+         this.setEternalColors();
+         } else {
+         this.setBorderlandsColors();
+         }*/
         switch (selection) {
             case 0:
                 this.activeMap = "Center";
@@ -1388,7 +1631,7 @@ public class WvWOverlayGui extends javax.swing.JFrame {
             this.setLocation(newx, newy);
         } catch (AWTException ex) {
             Logger.getLogger(OverlayGui.class.getName()).log(Level.SEVERE, null, ex);
-        } 
+        }
     }//GEN-LAST:event_jButtonMoveMouseDragged
 
 
