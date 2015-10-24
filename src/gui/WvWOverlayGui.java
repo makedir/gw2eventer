@@ -230,10 +230,10 @@ public class WvWOverlayGui extends javax.swing.JFrame {
         this.idsToLabelRed.put("104", new String[]{"3", "tower", "Eternal Necropolis", "RedHome"});
         this.idsToLabelRed.put("105", new String[]{"11", "tower", "Crankshaft Depot", "RedHome"});
         this.idsToLabelRed.put("106", new String[]{"7", "keep", "Blistering Undercroft", "RedHome"});
-        this.idsToLabelRed.put("109", new String[]{"8", "camp", "Osprey's Palace", "RedHome"});
+        this.idsToLabelRed.put("109", new String[]{"6", "camp", "Osprey's Palace", "RedHome"});
         this.idsToLabelRed.put("110", new String[]{"10", "tower", "Parched Outpost", "RedHome"});
         this.idsToLabelRed.put("113", new String[]{"5", "keep", "Stoic Rampart", "RedHome"});
-        this.idsToLabelRed.put("114", new String[]{"6", "keep", "Roy's Refuge", "RedHome"});
+        this.idsToLabelRed.put("114", new String[]{"8", "keep", "Roy's Refuge", "RedHome"});
         this.idsToLabelRed.put("115", new String[]{"4", "camp", "Boettiger's Hideaway", "RedHome"});
         this.idsToLabelRed.put("116", new String[]{"13", "camp", "Dustwhisper Well", "RedHome"});
 
@@ -244,10 +244,10 @@ public class WvWOverlayGui extends javax.swing.JFrame {
         this.idsToLabelBlue.put("104", new String[]{"3", "tower", "Undying Necropolis", "BlueHome"});
         this.idsToLabelBlue.put("105", new String[]{"11", "tower", "Flywheel Depot", "BlueHome"});
         this.idsToLabelBlue.put("106", new String[]{"7", "keep", "Torrid Undercroft", "BlueHome"});
-        this.idsToLabelBlue.put("109", new String[]{"8", "camp", "Shrike's Palace", "BlueHome"});
+        this.idsToLabelBlue.put("109", new String[]{"6", "camp", "Shrike's Palace", "BlueHome"});
         this.idsToLabelBlue.put("110", new String[]{"10", "tower", "Barren Outpost", "BlueHome"});
         this.idsToLabelBlue.put("113", new String[]{"5", "keep", "Hardened Rampart", "BlueHome"});
-        this.idsToLabelBlue.put("114", new String[]{"6", "keep", "Oliver's Refuge", "BlueHome"});
+        this.idsToLabelBlue.put("114", new String[]{"8", "keep", "Oliver's Refuge", "BlueHome"});
         this.idsToLabelBlue.put("115", new String[]{"4", "camp", "Berdrow's Hideaway", "BlueHome"});
         this.idsToLabelBlue.put("116", new String[]{"13", "camp", "Lastgasp Well", "BlueHome"});
 
@@ -258,10 +258,10 @@ public class WvWOverlayGui extends javax.swing.JFrame {
         this.idsToLabelGreen.put("104", new String[]{"3", "tower", "Deathless Necropolis", "GreenHome"});
         this.idsToLabelGreen.put("105", new String[]{"11", "tower", "Sparkplug Depot", "GreenHome"});
         this.idsToLabelGreen.put("106", new String[]{"7", "keep", "Scorching Undercroft", "GreenHome"});
-        this.idsToLabelGreen.put("109", new String[]{"8", "camp", "Harrier's Palace", "GreenHome"});
+        this.idsToLabelGreen.put("109", new String[]{"6", "camp", "Harrier's Palace", "GreenHome"});
         this.idsToLabelGreen.put("110", new String[]{"10", "tower", "Withered Outpost", "GreenHome"});
         this.idsToLabelGreen.put("113", new String[]{"5", "keep", "Impassive Rampart", "GreenHome"});
-        this.idsToLabelGreen.put("114", new String[]{"6", "keep", "Norfolk's Refuge", "GreenHome"});
+        this.idsToLabelGreen.put("114", new String[]{"8", "keep", "Norfolk's Refuge", "GreenHome"});
         this.idsToLabelGreen.put("115", new String[]{"4", "camp", "Hughe's Hideaway", "GreenHome"});
         this.idsToLabelGreen.put("116", new String[]{"13", "camp", "Smashedhope Well", "GreenHome"});
 
