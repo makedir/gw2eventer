@@ -45,15 +45,15 @@ import javax.swing.JLabel;
  */
 public class WvWOverlayGui extends javax.swing.JFrame {
 
-    private GW2EventerGui mainGui;
+    private final GW2EventerGui mainGui;
 
-    private ArrayList labelsEternal;
-    private ArrayList labelsBorderlands;
+    private final ArrayList labelsEternal;
+    private final ArrayList labelsBorderlands;
 
-    private ArrayList timerLabelEternal;
-    private ArrayList timerLabelBorderlandsRed;
-    private ArrayList timerLabelBorderlandsBlue;
-    private ArrayList timerLabelBorderlandsGreen;
+    private final ArrayList timerLabelEternal;
+    private final ArrayList timerLabelBorderlandsRed;
+    private final ArrayList timerLabelBorderlandsBlue;
+    private final ArrayList timerLabelBorderlandsGreen;
 
     private String matchId;
     private String matchIdColor;
@@ -62,42 +62,43 @@ public class WvWOverlayGui extends javax.swing.JFrame {
     private WvWReader wvwReader;
 
     private HashMap ownerDataCenter;
-    private HashMap ownerDataOldCenter;
+    private final HashMap ownerDataOldCenter;
     private HashMap ownerDataRed;
-    private HashMap ownerDataOldRed;
+    private final HashMap ownerDataOldRed;
     private HashMap ownerDataBlue;
-    private HashMap ownerDataOldBlue;
+    private final HashMap ownerDataOldBlue;
     private HashMap ownerDataGreen;
-    private HashMap ownerDataOldGreen;
+    private final HashMap ownerDataOldGreen;
 
     private HashMap ownerDataPoints;
-    private HashMap ownerDataOldPoints;
+    private final HashMap ownerDataOldPoints;
 
-    private HashMap idsMap;
+    private final HashMap idsToLabelCenter;
+    private final HashMap idsToLabelRed;
+    private final HashMap idsToLabelBlue;
+    private final HashMap idsToLabelGreen;
 
-    private HashMap idsToLabelCenter;
-    private HashMap idsToLabelRed;
-    private HashMap idsToLabelBlue;
-    private HashMap idsToLabelGreen;
+    private final ImageIcon castleRed;
+    private final ImageIcon castleBlue;
+    private final ImageIcon castleGreen;
 
-    private ImageIcon castleRed;
-    private ImageIcon castleBlue;
-    private ImageIcon castleGreen;
+    private final ImageIcon campRed;
+    private final ImageIcon campBlue;
+    private final ImageIcon campGreen;
 
-    private ImageIcon campRed;
-    private ImageIcon campBlue;
-    private ImageIcon campGreen;
+    private final ImageIcon towerRed;
+    private final ImageIcon towerBlue;
+    private final ImageIcon towerGreen;
 
-    private ImageIcon towerRed;
-    private ImageIcon towerBlue;
-    private ImageIcon towerGreen;
-
-    private ImageIcon keepRed;
-    private ImageIcon keepBlue;
-    private ImageIcon keepGreen;
+    private final ImageIcon keepRed;
+    private final ImageIcon keepBlue;
+    private final ImageIcon keepGreen;
 
     private Object[] eventLog;
 
+    private Runnable infoBlinkRunnable;
+    private Thread infoBlinkThread;
+    
     /**
      * Creates new form BorderlandsOverlayGui
      */
@@ -105,6 +106,31 @@ public class WvWOverlayGui extends javax.swing.JFrame {
 
         this.mainGui = mainGui;
 
+        this.infoBlinkRunnable = new Runnable() {
+
+            @Override
+            public void run() {
+                
+                Color oldColor = jToolBarEvents.getBackground();
+                Color alarmColor = new Color(255, 0, 0, 200);
+                
+                try {
+                    
+                    jToolBarEvents.setBackground(alarmColor);
+                    Thread.sleep(200);
+                    jToolBarEvents.setBackground(oldColor);
+                    Thread.sleep(200);
+                    jToolBarEvents.setBackground(alarmColor);
+                    Thread.sleep(200);
+                    jToolBarEvents.setBackground(oldColor);
+                    //Thread.sleep(200);
+                    repaint();
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(WvWOverlayGui.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        };
+        
         this.castleRed = new ImageIcon(getClass().getResource("/media/wvw/castle_red.png"));
         this.castleBlue = new ImageIcon(getClass().getResource("/media/wvw/castle_blue.png"));
         this.castleGreen = new ImageIcon(getClass().getResource("/media/wvw/castle_green.png"));
@@ -144,8 +170,6 @@ public class WvWOverlayGui extends javax.swing.JFrame {
         this.ownerDataOldGreen = new HashMap();
         this.ownerDataPoints = new HashMap();
         this.ownerDataOldPoints = new HashMap();
-
-        this.idsMap = new HashMap();
 
         /*
          this.wvwReader = new WvWReader(this);
@@ -314,11 +338,22 @@ public class WvWOverlayGui extends javax.swing.JFrame {
         this.jLabelDiff2.setText(difference + "");
     }
 
+    private void startInfoBlink() {
+        
+        if ((this.infoBlinkThread == null) || (this.infoBlinkThread.getState() == Thread.State.TERMINATED)) {
+
+            this.infoBlinkThread = new Thread(this.infoBlinkRunnable);
+            this.infoBlinkThread.start();
+        }
+    }
+    
     private void pushEvent(String event) {
 
         this.eventLog[2] = this.eventLog[1];
         this.eventLog[1] = this.eventLog[0];
         this.eventLog[0] = new Object[]{event, new Date()};
+        
+        this.startInfoBlink();
     }
 
     private String getEvent(int i) {
@@ -333,10 +368,7 @@ public class WvWOverlayGui extends javax.swing.JFrame {
             Date currentDate = new Date();
             int secDiff = (int) ((currentDate.getTime() - date.getTime()) / 1000);
 
-            if (secDiff >= 300) {
-
-                eventObject = null;
-            } else {
+            if (secDiff < 300) {
 
                 int minDiff = secDiff / 60;
                 secDiff = secDiff % 60;
@@ -557,19 +589,41 @@ public class WvWOverlayGui extends javax.swing.JFrame {
 
                     this.setTick(newTick);
 
-                    switch (labelHome) {
-                        case "Center":
-                            currentTimer = (EventTimerLabel) this.timerLabelEternal.get(labelNumber - 1);
-                            break;
-                        case "RedHome":
-                            currentTimer = (EventTimerLabel) this.timerLabelBorderlandsRed.get(labelNumber - 1);
-                            break;
-                        case "BlueHome":
-                            currentTimer = (EventTimerLabel) this.timerLabelBorderlandsBlue.get(labelNumber - 1);
-                            break;
-                        case "GreenHome":
-                            currentTimer = (EventTimerLabel) this.timerLabelBorderlandsGreen.get(labelNumber - 1);
-                            break;
+                    String homeSpeak;
+                    String homeSpeakColor;
+                    
+                    if (labelHome.equals("BlueHome")) {
+                        currentTimer = (EventTimerLabel) this.timerLabelBorderlandsBlue.get(labelNumber - 1);
+                        homeSpeak = "blue";
+                        homeSpeakColor = "#26c9ff";
+                        
+                        if (mainGui.getLanguage().equals("DE")) {
+                            homeSpeak = "Blau";
+                        }
+                    } else if (labelHome.equals("RedHome")) {
+                        currentTimer = (EventTimerLabel) this.timerLabelBorderlandsRed.get(labelNumber - 1);
+                        homeSpeak = "red";
+                        homeSpeakColor = "#ff6d6d";
+                        
+                        if (mainGui.getLanguage().equals("DE")) {
+                            homeSpeak = "Rot";
+                        }
+                    } else if(labelHome.equals("GreenHome")) {
+                        currentTimer = (EventTimerLabel) this.timerLabelBorderlandsGreen.get(labelNumber - 1);
+                        homeSpeak = "green";
+                        homeSpeakColor = "#6dff88";
+                        
+                        if (mainGui.getLanguage().equals("DE")) {
+                            homeSpeak = "Grün";
+                        }
+                    } else {
+                        currentTimer = (EventTimerLabel) this.timerLabelEternal.get(labelNumber - 1);
+                        homeSpeak = "center";
+                        homeSpeakColor = "white";
+                        
+                        if (mainGui.getLanguage().equals("DE")) {
+                            homeSpeak = "Ewige";
+                        }
                     }
 
                     if ((!owner.equals(onwerOld)) && (currentTimer != null)) {
@@ -578,16 +632,59 @@ public class WvWOverlayGui extends javax.swing.JFrame {
                         currentTimer.setCounter(currentTimer.getCounter() - timeDifference);
                         currentTimer.startTimer();
 
+                        String ownerSpeak;
+                        String ownerSpeakColor;
+                        
+                        if (mainGui.getLanguage().equals("DE")) {
+                            
+                            if (owner.equals("Blue")) {
+                                ownerSpeak = "Blau";
+                                ownerSpeakColor = "#26c9ff";
+                            } else if (owner.equals("Red")) {
+                                ownerSpeak = "Rot";
+                                ownerSpeakColor = "#ff6d6d";
+                            } else {
+                                ownerSpeak = "Grün";
+                                ownerSpeakColor = "#6dff88";
+                            }
+                            
+                            mainGui.writeAndSpeak(labelName + ", auf " + homeSpeak + ", geht zu " + ownerSpeak);
+                        } else {
+                            
+                            if (owner.equals("Blue")) {
+                                ownerSpeak = "blue";
+                                ownerSpeakColor = "#26c9ff";
+                            } else if (owner.equals("Red")) {
+                                ownerSpeak = "red";
+                                ownerSpeakColor = "#ff6d6d";
+                            } else {
+                                ownerSpeak = "green";
+                                ownerSpeakColor = "#6dff88";
+                            }
+                            
+                            mainGui.writeAndSpeak(labelName + ", on " + homeSpeak + ", change to " + ownerSpeak);
+                        }
+                        
                         /*
                          this.pushEvent("<html>" + labelName
                          + "(" + labelHome + ") <b><font color="
                          + onwerOld + ">" + onwerOld
                          + "</font></b> => <b><font color="
                          + owner + ">" + owner + "</font></b>");*/
-                        this.pushEvent("<html>" + labelName
-                                + "(" + labelHome + ") => <b><font color="
-                                + owner + ">" + owner + "</font></b>");
+                        
+                        String subLabelName = labelName;
+                        
+                        if (labelName.length() >= 20) {
+                            subLabelName = labelName.substring(0, 17) + "...";
+                        }
+                        
+                        this.pushEvent("<html>" + subLabelName
+                                + " (M: <b><font color="
+                                + homeSpeakColor + ">" + homeSpeak + "</font></b>) => <b><font color="
+                                + ownerSpeakColor + ">" + ownerSpeak + "</font></b>");
 
+                        //this.repaint();
+                        
                         if (this.activeMap.equals(labelHome)) {
                             currentTimer.setVisible(true);
 
@@ -668,9 +765,16 @@ public class WvWOverlayGui extends javax.swing.JFrame {
          } else {
          this.setBorderlandsColors();
          }*/
-        this.jLabelEventLog1.setText(this.getEvent(0));
-        this.jLabelEventLog2.setText(this.getEvent(1));
-        this.jLabelEventLog3.setText(this.getEvent(2));
+        
+        String event1 = this.getEvent(0);
+        String event2 = this.getEvent(1);
+        String event3 = this.getEvent(2);
+        
+        this.jLabelEventLog1.setText(event1);
+        this.jLabelEventLog2.setText(event2);
+        this.jLabelEventLog3.setText(event3);
+        
+        this.repaint();
     }
 
     private void resetTimer() {
@@ -710,8 +814,8 @@ public class WvWOverlayGui extends javax.swing.JFrame {
         this.jComboBoxWvW.setVisible(true);
         this.jLabelMatchId.setVisible(true);
 
-        this.jToolBarInfo.setVisible(true);
-        this.jButtonCoherent.setVisible(true);
+        //this.jToolBarInfo.setVisible(true);
+        //this.jButtonCoherent.setVisible(true);
 
         this.mainGui.setMatchId();
 
@@ -1201,16 +1305,11 @@ public class WvWOverlayGui extends javax.swing.JFrame {
         jLabelTick = new javax.swing.JLabel();
         jLabelDiff1 = new javax.swing.JLabel();
         jLabelDiff2 = new javax.swing.JLabel();
+        jToolBarEvents = new javax.swing.JToolBar();
+        eventTimerLabelCoherent = new gui.EventTimerLabel();
         jLabelEventLog1 = new javax.swing.JLabel();
         jLabelEventLog2 = new javax.swing.JLabel();
         jLabelEventLog3 = new javax.swing.JLabel();
-        jToolBarInfo = new javax.swing.JToolBar();
-        jButtonCoherent = new javax.swing.JButton();
-        eventTimerLabelCoherent = new gui.EventTimerLabel() {
-            @Override public void finished() {
-                jButtonCoherent.setVisible(false);
-            }
-        };
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setAlwaysOnTop(true);
@@ -1316,90 +1415,90 @@ public class WvWOverlayGui extends javax.swing.JFrame {
 
         jLabelEternal22.setIcon(new javax.swing.ImageIcon(getClass().getResource("/media/wvw/camp_red.png"))); // NOI18N
         jLabelEternal22.setFocusable(false);
-        getContentPane().add(jLabelEternal22, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 250, -1, -1));
+        getContentPane().add(jLabelEternal22, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 300, -1, -1));
 
         jLabelEternal21.setIcon(new javax.swing.ImageIcon(getClass().getResource("/media/wvw/camp_red.png"))); // NOI18N
         jLabelEternal21.setFocusable(false);
-        getContentPane().add(jLabelEternal21, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 250, -1, -1));
+        getContentPane().add(jLabelEternal21, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 300, -1, -1));
 
         jLabelEternal20.setIcon(new javax.swing.ImageIcon(getClass().getResource("/media/wvw/camp_red.png"))); // NOI18N
         jLabelEternal20.setFocusable(false);
-        getContentPane().add(jLabelEternal20, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 230, -1, -1));
+        getContentPane().add(jLabelEternal20, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 280, -1, -1));
 
         jLabelEternal19.setIcon(new javax.swing.ImageIcon(getClass().getResource("/media/wvw/camp_red.png"))); // NOI18N
         jLabelEternal19.setFocusable(false);
-        getContentPane().add(jLabelEternal19, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 240, -1, -1));
+        getContentPane().add(jLabelEternal19, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 290, -1, -1));
 
         jLabelEternal18.setIcon(new javax.swing.ImageIcon(getClass().getResource("/media/wvw/camp_red.png"))); // NOI18N
         jLabelEternal18.setFocusable(false);
-        getContentPane().add(jLabelEternal18, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 210, -1, -1));
+        getContentPane().add(jLabelEternal18, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 260, -1, -1));
 
         jLabelEternal17.setIcon(new javax.swing.ImageIcon(getClass().getResource("/media/wvw/camp_red.png"))); // NOI18N
         jLabelEternal17.setFocusable(false);
-        getContentPane().add(jLabelEternal17, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 220, -1, -1));
+        getContentPane().add(jLabelEternal17, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 270, -1, -1));
 
         jLabelEternal16.setIcon(new javax.swing.ImageIcon(getClass().getResource("/media/wvw/camp_red.png"))); // NOI18N
-        getContentPane().add(jLabelEternal16, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 200, -1, -1));
+        getContentPane().add(jLabelEternal16, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 250, -1, -1));
 
         jLabelEternal15.setIcon(new javax.swing.ImageIcon(getClass().getResource("/media/wvw/camp_red.png"))); // NOI18N
         jLabelEternal15.setFocusable(false);
-        getContentPane().add(jLabelEternal15, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 210, -1, -1));
+        getContentPane().add(jLabelEternal15, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 260, -1, -1));
 
         jLabelEternal14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/media/wvw/camp_red.png"))); // NOI18N
         jLabelEternal14.setFocusable(false);
-        getContentPane().add(jLabelEternal14, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 170, -1, -1));
+        getContentPane().add(jLabelEternal14, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 220, -1, -1));
 
         jLabelEternal13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/media/wvw/camp_red.png"))); // NOI18N
         jLabelEternal13.setFocusable(false);
-        getContentPane().add(jLabelEternal13, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 170, -1, -1));
+        getContentPane().add(jLabelEternal13, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 220, -1, -1));
 
         jLabelEternal12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/media/wvw/camp_red.png"))); // NOI18N
         jLabelEternal12.setFocusable(false);
-        getContentPane().add(jLabelEternal12, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 140, -1, -1));
+        getContentPane().add(jLabelEternal12, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 190, -1, -1));
 
         jLabelEternal11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/media/wvw/camp_red.png"))); // NOI18N
         jLabelEternal11.setFocusable(false);
-        getContentPane().add(jLabelEternal11, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 150, -1, -1));
+        getContentPane().add(jLabelEternal11, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 200, -1, -1));
 
         jLabelEternal10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/media/wvw/camp_red.png"))); // NOI18N
         jLabelEternal10.setFocusable(false);
-        getContentPane().add(jLabelEternal10, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 150, -1, -1));
+        getContentPane().add(jLabelEternal10, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 200, -1, -1));
 
         jLabelEternal9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/media/wvw/camp_red.png"))); // NOI18N
         jLabelEternal9.setFocusable(false);
-        getContentPane().add(jLabelEternal9, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 150, -1, -1));
+        getContentPane().add(jLabelEternal9, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 200, -1, -1));
 
         jLabelEternal8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/media/wvw/camp_red.png"))); // NOI18N
         jLabelEternal8.setFocusable(false);
-        getContentPane().add(jLabelEternal8, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 140, -1, -1));
+        getContentPane().add(jLabelEternal8, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 190, -1, -1));
 
         jLabelEternal7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/media/wvw/camp_red.png"))); // NOI18N
         jLabelEternal7.setFocusable(false);
-        getContentPane().add(jLabelEternal7, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 100, -1, -1));
+        getContentPane().add(jLabelEternal7, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 150, -1, -1));
 
         jLabelEternal6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/media/wvw/camp_red.png"))); // NOI18N
         jLabelEternal6.setFocusable(false);
-        getContentPane().add(jLabelEternal6, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 70, -1, -1));
+        getContentPane().add(jLabelEternal6, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 120, -1, -1));
 
         jLabelEternal5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/media/wvw/camp_red.png"))); // NOI18N
         jLabelEternal5.setFocusable(false);
-        getContentPane().add(jLabelEternal5, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 80, -1, -1));
+        getContentPane().add(jLabelEternal5, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 130, -1, -1));
 
         jLabelEternal4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/media/wvw/camp_red.png"))); // NOI18N
         jLabelEternal4.setFocusable(false);
-        getContentPane().add(jLabelEternal4, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 40, -1, -1));
+        getContentPane().add(jLabelEternal4, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 90, -1, -1));
 
         jLabelEternal3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/media/wvw/camp_red.png"))); // NOI18N
         jLabelEternal3.setFocusable(false);
-        getContentPane().add(jLabelEternal3, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 50, -1, -1));
+        getContentPane().add(jLabelEternal3, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 100, -1, -1));
 
         jLabelEternal2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/media/wvw/camp_red.png"))); // NOI18N
         jLabelEternal2.setFocusable(false);
-        getContentPane().add(jLabelEternal2, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 30, -1, -1));
+        getContentPane().add(jLabelEternal2, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 80, -1, -1));
 
         jLabelEternal1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/media/wvw/camp_red.png"))); // NOI18N
         jLabelEternal1.setFocusable(false);
-        getContentPane().add(jLabelEternal1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 50, -1, -1));
+        getContentPane().add(jLabelEternal1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 100, -1, -1));
 
         jLabelBorderlands5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/media/wvw/camp_red.png"))); // NOI18N
         jLabelBorderlands5.setFocusable(false);
@@ -1482,38 +1581,31 @@ public class WvWOverlayGui extends javax.swing.JFrame {
         jLabelDiff2.setForeground(new java.awt.Color(255, 255, 255));
         getContentPane().add(jLabelDiff2, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 80, -1, -1));
 
-        jLabelEventLog1.setForeground(new java.awt.Color(255, 255, 255));
-        getContentPane().add(jLabelEventLog1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 380, -1, -1));
+        jToolBarEvents.setBackground(new Color(0, 0, 0, 120));
+        jToolBarEvents.setFloatable(false);
+        jToolBarEvents.setOrientation(javax.swing.SwingConstants.VERTICAL);
+        jToolBarEvents.setBorderPainted(false);
+        jToolBarEvents.setFocusable(false);
 
-        jLabelEventLog2.setForeground(new java.awt.Color(255, 255, 255));
-        getContentPane().add(jLabelEventLog2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 395, -1, -1));
-
-        jLabelEventLog3.setForeground(new java.awt.Color(255, 255, 255));
-        getContentPane().add(jLabelEventLog3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 410, -1, -1));
-
-        jToolBarInfo.setFloatable(false);
-        jToolBarInfo.setFocusable(false);
-        jToolBarInfo.setOpaque(false);
-
-        jButtonCoherent.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
-        jButtonCoherent.setForeground(new java.awt.Color(255, 255, 255));
-        jButtonCoherent.setText("X");
-        jButtonCoherent.setBorderPainted(false);
-        jButtonCoherent.setFocusPainted(false);
-        jButtonCoherent.setFocusable(false);
-        jButtonCoherent.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jButtonCoherent.setOpaque(false);
-        jButtonCoherent.setPreferredSize(new java.awt.Dimension(40, 25));
-        jButtonCoherent.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jButtonCoherent.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonCoherentActionPerformed(evt);
+        eventTimerLabelCoherent.setBackground(new java.awt.Color(0, 0, 0));
+        eventTimerLabelCoherent.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                eventTimerLabelCoherentMouseClicked(evt);
             }
         });
-        jToolBarInfo.add(jButtonCoherent);
-        jToolBarInfo.add(eventTimerLabelCoherent);
+        jToolBarEvents.add(eventTimerLabelCoherent);
 
-        getContentPane().add(jToolBarInfo, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 350, 290, -1));
+        jLabelEventLog1.setBackground(new java.awt.Color(0, 0, 0));
+        jLabelEventLog1.setForeground(new java.awt.Color(255, 255, 255));
+        jToolBarEvents.add(jLabelEventLog1);
+
+        jLabelEventLog2.setForeground(new java.awt.Color(255, 255, 255));
+        jToolBarEvents.add(jLabelEventLog2);
+
+        jLabelEventLog3.setForeground(new java.awt.Color(255, 255, 255));
+        jToolBarEvents.add(jLabelEventLog3);
+
+        getContentPane().add(jToolBarEvents, new org.netbeans.lib.awtextra.AbsoluteConstraints(45, 365, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -1577,13 +1669,6 @@ public class WvWOverlayGui extends javax.swing.JFrame {
         this.mainGui.reloadMatchIds();
     }//GEN-LAST:event_jButtonRefreshActionPerformed
 
-    private void jButtonCoherentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCoherentActionPerformed
-
-        this.eventTimerLabelCoherent.resetTimer();
-        this.jToolBarInfo.setVisible(false);
-        this.jButtonCoherent.setVisible(false);
-    }//GEN-LAST:event_jButtonCoherentActionPerformed
-
     private void jLabelMenuMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelMenuMousePressed
 
         if (this.jToolBarMenu.isVisible()) {
@@ -1634,11 +1719,15 @@ public class WvWOverlayGui extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButtonMoveMouseDragged
 
+    private void eventTimerLabelCoherentMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_eventTimerLabelCoherentMouseClicked
+
+        this.eventTimerLabelCoherent.resetTimer();
+    }//GEN-LAST:event_eventTimerLabelCoherentMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private gui.EventTimerLabel eventTimerLabelCoherent;
     private javax.swing.JButton jButtonClose;
-    private javax.swing.JButton jButtonCoherent;
     private javax.swing.JButton jButtonMaximize;
     private javax.swing.JButton jButtonMinimize;
     private javax.swing.JButton jButtonMove;
@@ -1689,7 +1778,7 @@ public class WvWOverlayGui extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelMenu;
     private javax.swing.JLabel jLabelTick;
     private javax.swing.JLabel jLabelToolTip;
-    private javax.swing.JToolBar jToolBarInfo;
+    private javax.swing.JToolBar jToolBarEvents;
     private javax.swing.JToolBar jToolBarMenu;
     // End of variables declaration//GEN-END:variables
 }

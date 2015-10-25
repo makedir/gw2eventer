@@ -76,14 +76,11 @@
             <Component class="javax.swing.JComboBox" name="jComboBoxLanguage">
               <Properties>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                  <StringArray count="4">
+                  <StringArray count="2">
                     <StringItem index="0" value="DE"/>
                     <StringItem index="1" value="EN"/>
-                    <StringItem index="2" value="ES"/>
-                    <StringItem index="3" value="FR"/>
                   </StringArray>
                 </Property>
-                <Property name="selectedIndex" type="int" value="1"/>
                 <Property name="enabled" type="boolean" value="false"/>
               </Properties>
               <Events>
@@ -119,7 +116,7 @@
             </Component>
             <Component class="javax.swing.JCheckBox" name="jCheckBoxAutoRefresh">
               <Properties>
-                <Property name="text" type="java.lang.String" value="auto refresh"/>
+                <Property name="text" type="java.lang.String" value="World events"/>
                 <Property name="enabled" type="boolean" value="false"/>
               </Properties>
               <Events>

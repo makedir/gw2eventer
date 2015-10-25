@@ -21,7 +21,6 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-
 package gui;
 
 import java.awt.AWTException;
@@ -36,8 +35,17 @@ import java.awt.Toolkit;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.Reader;
+import java.io.UnsupportedEncodingException;
+import java.io.Writer;
 import java.lang.reflect.Field;
 import java.net.URI;
 import java.nio.charset.Charset;
@@ -45,7 +53,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.Map;
+import java.util.Queue;
+import java.util.Stack;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
@@ -69,378 +80,460 @@ import org.json.simple.parser.ParseException;
  * @author mkdr <makedir@gmail.com>
  */
 public class GW2EventerGui extends javax.swing.JFrame {
-    
-    private static final String LANG_AUTO_REFRESH_DE = "Auto refresh";
-    private static final String LANG_AUTO_REFRESH_EN = "Auto refresh";
-    private static final String LANG_AUTO_REFRESH_ES = "Auto refresh";
-    private static final String LANG_AUTO_REFRESH_FR = "Auto refresh";
-    
+
+    private static final String LANG_AUTO_REFRESH_DE = "Welt events";
+    private static final String LANG_AUTO_REFRESH_EN = "World events";
+    private static final String LANG_AUTO_REFRESH_ES = "World events";
+    private static final String LANG_AUTO_REFRESH_FR = "World events";
+
     private static final String LANG_PLAY_SOUNDS_DE = "Sounds abspielen";
     private static final String LANG_PLAY_SOUNDS_EN = "Play sounds";
     private static final String LANG_PLAY_SOUNDS_ES = "Play sounds";
     private static final String LANG_PLAY_SOUNDS_FR = "Play sounds";
-    
+
     private static final String LANG_PREVENT_SLEEP_DE = "Standby verhindern";
     private static final String LANG_PREVENT_SLEEP_EN = "Prevent standby";
     private static final String LANG_PREVENT_SLEEP_ES = "Prevent standby";
     private static final String LANG_PREVENT_SLEEP_FR = "Prevent standby";
-    
+
     private static final String LANG_RELOAD_BTN_DE = "Setzen/Start";
     private static final String LANG_RELOAD_BTN_EN = "Set/Reload";
     private static final String LANG_RELOAD_BTN_ES = "Set/Reload";
     private static final String LANG_RELOAD_BTN_FR = "Set/Reload";
-    
+
     private static final String LANG_NOT_RUNNING_DE = "läuft nicht";
     private static final String LANG_NOT_RUNNING_EN = "not running";
     private static final String LANG_NOT_RUNNING_ES = "not running";
     private static final String LANG_NOT_RUNNING_FR = "not running";
-    
+
     private static final String LANG_WORKING_DE = "Bitte warten...";
     private static final String LANG_WORKING_EN = "please wait...";
     private static final String LANG_WORKING_ES = "please wait...";
     private static final String LANG_WORKING_FR = "please wait...";
-    
+
     private static final String LANG_TIP1_DE = "<html><font color=\"white\">Klicken Sie auf eines der X, Nummer oder 'B'<br>für Sound und 'looted' Optionen für das<br>jeweilige Event.</font></html>";
     private static final String LANG_TIP1_EN = "<html><font color=\"white\">You can click on each X, number or 'B'<br>for sound select and looted options for the<br>specific event.</font></html>";
     private static final String LANG_TIP1_ES = "<html><font color=\"white\">You can click on each X, number or 'B'<br>for sound select and looted options for the<br>specific event.</font></html>";
     private static final String LANG_TIP1_FR = "<html><font color=\"white\">You can click on each X, number or 'B'<br>for sound select and looted options for the<br>specific event.</font></html>";
-    
+
     private static final String LANG_DONATE1_DE = "Ich weise darauf hin, dass PayPal folgenden Betrag von jeder Spende abzieht:";
     private static final String LANG_DONATE1_EN = "Please know, that PayPal takes away the following amount of each donation:";
     private static final String LANG_DONATE1_ES = "Please know, that PayPal takes away the following amount of each donation:";
     private static final String LANG_DONATE1_FR = "Please know, that PayPal takes away the following amount of each donation:";
-    
+
     private static final String LANG_DONATE2_DE = "<html>Ich freue mich über jede Spende. Aber bitte spenden Sie keine<br>Beträge unter 1€, da PayPal sonst fast 37% Ihres gespendeten Geldes behält.<br>Oder noch mehr.<br><br>Wenn Sie z.B. 35cent spenden, würde ich nichts von Ihrem Geld erhalten<br>und PayPal 100%.<br><br>Vielen Dank.</html>";
     private static final String LANG_DONATE2_EN = "<html>I appreciate every single donation. But please don't donate under 1€,<br>otherwise PayPal would take away almost 37% of your donated money.<br>Or even more.<br><br>If you donate for example 35cent, I would get nothing of your donation<br>and PayPal would take 100% of it.<br><br>Thank you.</html>";
     private static final String LANG_DONATE2_ES = "<html>I appreciate every single donation. But please don't donate under 1€,<br>otherwise PayPal would take away almost 37% of your donated money.<br>Or even more.<br><br>If you donate for example 35cent, I would get nothing of your donation<br>and PayPal would take 100% of it.<br><br>Thank you.</html>";
     private static final String LANG_DONATE2_FR = "<html>I appreciate every single donation. But please don't donate under 1€,<br>otherwise PayPal would take away almost 37% of your donated money.<br>Or even more.<br><br>If you donate for example 35cent, I would get nothing of your donation<br>and PayPal would take 100% of it.<br><br>Thank you.</html>";
-    
+
     private static final String LANG_DONATE3_DE = "Sie können auch einfach die Geld-Senden Funktion von PayPal nutzen:";
     private static final String LANG_DONATE3_EN = "Another way is to send me a gift just via normal PayPal sending money:";
     private static final String LANG_DONATE3_ES = "Another way is to send me a gift just via normal PayPal sending money:";
     private static final String LANG_DONATE3_FR = "Another way is to send me a gift just via normal PayPal sending money:";
-    
+
     private static final String LANG_COPY_CLIP_DE = "In Zwischenablage kopieren";
     private static final String LANG_COPY_CLIP_EN = "Copy to clipboard";
     private static final String LANG_COPY_CLIP_ES = "Copy to clipboard";
     private static final String LANG_COPY_CLIP_FR = "Copy to clipboard";
-    
+
     private static final String LANG_FEEDBACK_FEEDBACK_DE = "Teilen Sie Ihre Meinung mit";
     private static final String LANG_FEEDBACK_FEEDBACK_EN = "Leave a feedback";
     private static final String LANG_FEEDBACK_FEEDBACK_ES = "Leave a feedback";
     private static final String LANG_FEEDBACK_FEEDBACK_FR = "Leave a feedback";
-    
+
     private static final String LANG_FEEDBACK_TITLE_DE = "Feedback/bug report";
     private static final String LANG_FEEDBACK_TITLE_EN = "Feedback/bug report";
     private static final String LANG_FEEDBACK_TITLE_ES = "Feedback/bug report";
     private static final String LANG_FEEDBACK_TITLE_FR = "Feedback/bug report";
-    
+
     private static final String LANG_FEEDBACK_FROM_DE = "eMail/Von";
     private static final String LANG_FEEDBACK_FROM_EN = "e-Mail/From";
     private static final String LANG_FEEDBACK_FROM_ES = "e-Mail/From";
     private static final String LANG_FEEDBACK_FROM_FR = "e-Mail/From";
-    
+
     private static final String LANG_FEEDBACK_SUBJECT_DE = "Betreff";
     private static final String LANG_FEEDBACK_SUBJECT_EN = "Subject";
     private static final String LANG_FEEDBACK_SUBJECT_ES = "Subject";
     private static final String LANG_FEEDBACK_SUBJECT_FR = "Subject";
-    
+
     private static final String LANG_FEEDBACK_MESSAGE_DE = "Nachricht";
     private static final String LANG_FEEDBACK_MESSAGE_EN = "Message";
     private static final String LANG_FEEDBACK_MESSAGE_ES = "Message";
     private static final String LANG_FEEDBACK_MESSAGE_FR = "Message";
-    
+
     private static final String LANG_SEND_BTN_DE = "Senden";
     private static final String LANG_SEND_BTN_EN = "Send";
     private static final String LANG_SEND_BTN_ES = "Send";
     private static final String LANG_SEND_BTN_FR = "Send";
-    
+
     private static final String LANG_CANCLE_BTN_DE = "Abbrechen";
     private static final String LANG_CANCLE_BTN_EN = "Cancel";
     private static final String LANG_CANCLE_BTN_ES = "Cancel";
     private static final String LANG_CANCLE_BTN_FR = "Cancel";
-    
+
     private static final String LANG_SEND_ERROR_TITLE_DE = "Verbindungs Fehler";
     private static final String LANG_SEND_ERROR_TITLE_EN = "Connection error";
     private static final String LANG_SEND_ERROR_TITLE_ES = "Connection error";
     private static final String LANG_SEND_ERROR_TITLE_FR = "Connection error";
-    
+
     private static final String LANG_SEND_ERROR_MSG_DE = "Nachricht konnte nicht gesendet werden.";
     private static final String LANG_SEND_ERROR_MSG_EN = "There was an error sending the message.";
     private static final String LANG_SEND_ERROR_MSG_ES = "There was an error sending the message.";
     private static final String LANG_SEND_ERROR_MSG_FR = "There was an error sending the message.";
-    
+
     private static final String LANG_INPUT_ERROR_TITLE_DE = "Eingabe Fehler";
     private static final String LANG_INPUT_ERROR_TITLE_EN = "Input error";
     private static final String LANG_INPUT_ERROR_TITLE_ES = "Input error";
     private static final String LANG_INPUT_ERROR_TITLE_FR = "Input error";
-    
+
     private static final String LANG_INPUT_ERROR_FROM_DE = "Von-Feld darf nicht leer bleiben.";
     private static final String LANG_INPUT_ERROR_FROM_EN = "From can't be left empty.";
     private static final String LANG_INPUT_ERROR_FROM_ES = "From can't be left empty.";
     private static final String LANG_INPUT_ERROR_FROM_FR = "From can't be left empty.";
-    
+
     private static final String LANG_INPUT_ERROR_MSG_DE = "Nachricht-Feld darf nicht leer bleiben.";
     private static final String LANG_INPUT_ERROR_MSG_EN = "Message can't be left empty.";
     private static final String LANG_INPUT_ERROR_MSG_ES = "Message can't be left empty.";
     private static final String LANG_INPUT_ERROR_MSG_FR = "Message can't be left empty.";
-    
-    private static final String LANG_NEWVERSION_DE = "Neue Version raus! Lade sie hier.";
+
+    private static final String LANG_NEWVERSION_DE = "Neue Version! Hier herunterladen.";
     private static final String LANG_NEWVERSION_EN = "New version is out! Get it here.";
     private static final String LANG_NEWVERSION_ES = "New version is out! Get it here.";
     private static final String LANG_NEWVERSION_FR = "New version is out! Get it here.";
-    
+
     private static final String LANG_OVERLAY_B_ACTIVE_DE = "Aktive Events:";
     private static final String LANG_OVERLAY_B_ACTIVE_EN = "Active events:";
     private static final String LANG_OVERLAY_B_ACTIVE_ES = "Active events:";
     private static final String LANG_OVERLAY_B_ACTIVE_FR = "Active events:";
-    
+
     private static final String LANG_OVERLAY_PRE_ACTIVE_DE = "Aktive Pre Events:";
     private static final String LANG_OVERLAY_PRE_ACTIVE_EN = "Active pre events:";
     private static final String LANG_OVERLAY_PRE_ACTIVE_ES = "Active pre events:";
     private static final String LANG_OVERLAY_PRE_ACTIVE_FR = "Active pre events:";
-    
-    private static final String LANG_OVERLAY_WVW_COHERENT_DE = "Zeit bis alle Daten koherent: ";
-    private static final String LANG_OVERLAY_WVW_COHERENT_EN = "Time until data is coherent: ";
-    private static final String LANG_OVERLAY_WVW_COHERENT_ES = "Time until data is coherent: ";
-    private static final String LANG_OVERLAY_WVW_COHERENT_FR = "Time until data is coherent: ";
-    
+
+    private static final String LANG_OVERLAY_WVW_COHERENT_DE = "x Zeit bis alle Daten koherent: ";
+    private static final String LANG_OVERLAY_WVW_COHERENT_EN = "x Time until data is coherent: ";
+    private static final String LANG_OVERLAY_WVW_COHERENT_ES = "x Time until data is coherent: ";
+    private static final String LANG_OVERLAY_WVW_COHERENT_FR = "x Time until data is coherent: ";
+
     private static final String LANG_GREEN_DE = "Grün";
     private static final String LANG_GREEN_EN = "Green";
     private static final String LANG_GREEN_ES = "Green";
     private static final String LANG_GREEN_FR = "Green";
-    
+
     private static final String LANG_RED_DE = "Rot";
     private static final String LANG_RED_EN = "Red";
     private static final String LANG_RED_ES = "Red";
     private static final String LANG_RED_FR = "Red";
-    
+
     private static final String LANG_BLUE_DE = "Blau";
     private static final String LANG_BLUE_EN = "Blue";
     private static final String LANG_BLUE_ES = "Blue";
     private static final String LANG_BLUE_FR = "Blue";
-    
+
     private static final String LANG_ETERNAL_DE = "Ewige";
     private static final String LANG_ETERNAL_EN = "Eternal";
     private static final String LANG_ETERNAL_ES = "Eternal";
     private static final String LANG_ETERNAL_FR = "Eternal";
-    
+
     public static final int EVENT_COUNT = 23;
-    
-    public static final String VERSION = "2.01";
-    
+
+    public static final String VERSION = "2.02";
+
     private JButton workingButton;
     private JCheckBox refreshSelector;
-    
+
     private Image guiIcon;
     private ApiManager apiManager;
-    
+
     private ArrayList eventLabels;
     private ArrayList eventLabelsTimer;
-    
+
     private HashMap homeWorlds;
-    
+
     private String language;
     private String worldID;
-    
+
     public boolean preventSystemSleep;
-    
+
     private PushGui pushGui;
     private DonateGui donateGui;
     private InfoGui infoGui;
     private FeedbackGui feedbackGui;
-    
+
     private Date lastPush;
-    
+
     private boolean updateInformed;
-    
+
     private OverlayGui overlayGui;
     private WvWOverlayGui wvwOverlayGui;
     private SettingsOverlayGui settingsOverlayGui;
-    
+
     private int overlayX;
     private int overlayY;
-    
+
     private int wvwOverlayX;
     private int wvwOverlayY;
-    
+
     private int settingsOverlayX;
     private int settingsOverlayY;
-    
+
     private String matchId;
     private String matchIdColor;
-    
+
     private WvWMatchReader wvwMatchReader;
     private HashMap matchIds;
+
+    private LinkedList speakQueue;
+    
+    private Thread speakThread;
+    private Runnable speakRunnable;
+
+    private String OS;
+    private boolean isWindows;
     
     /**
      * Creates new form GW2EventerGui
      */
     public GW2EventerGui() {
-       
+
         this.guiIcon = new ImageIcon(
                 ClassLoader.getSystemResource("media/icon.png")).getImage();
+
+        if (System.getProperty("os.name").startsWith("Windows")) {
+            this.OS = "Windows";
+            this.isWindows = true;
+        } else {
+            this.OS = "Other";
+            this.isWindows = false;
+        }
+        
+        if (this.isWindows == true) {
+            this.checkIniDir();
+        }
         
         initComponents();
-        
+
+        this.speakQueue = new LinkedList();
+
+        this.speakRunnable = new Runnable() {
+
+            @Override
+            public void run() {
+
+                String path = System.getProperty("user.home") + "\\.gw2eventer";
+                File f;
+                String sentence;
+                
+                while (!speakQueue.isEmpty()) {
+                    
+                    f = new File(path + "\\tts.vbs");
+
+                    if (!f.exists() && !f.isDirectory()) {
+                        
+                        sentence = (String) speakQueue.poll();
+                    
+                        try {
+
+                            Writer writer = new OutputStreamWriter(new FileOutputStream(System.getProperty("user.home") + "\\.gw2eventer\\tts.vbs"), "ISO-8859-15");
+                            BufferedWriter fout = new BufferedWriter(writer);
+
+                            fout.write("Dim Speak");
+                            fout.newLine();
+                            fout.write("Set Speak=CreateObject(\"sapi.spvoice\")");
+                            fout.newLine();
+                            fout.write("Speak.Speak \"" + sentence + "\"");
+
+                            fout.close();
+
+                            Runtime rt = Runtime.getRuntime();
+
+                            try {
+                                if (sentence.length() > 0) {
+                                    Process p = rt.exec(System.getProperty("user.home") + "\\.gw2eventer\\tts.bat");
+                                }
+                            } catch (IOException ex) {
+                                Logger.getLogger(GW2EventerGui.class
+                                        .getName()).log(Level.SEVERE, null, ex);
+                            }
+                        } catch (FileNotFoundException ex) {
+                            Logger.getLogger(GW2EventerGui.class
+                                    .getName()).log(Level.SEVERE, null, ex);
+                        } catch (IOException ex) {
+                            Logger.getLogger(GW2EventerGui.class
+                                    .getName()).log(Level.SEVERE, null, ex);
+                        }
+
+                        try {
+                            Thread.sleep(3000);
+                        } catch (InterruptedException ex) {
+                            Logger.getLogger(GW2EventerGui.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    } else {
+                        try {
+                            Thread.sleep(1000);
+                        } catch (InterruptedException ex) {
+                            Logger.getLogger(GW2EventerGui.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+                }
+            }
+        };
+
         this.matchIds = new HashMap();
         this.matchId = "2-6";
         this.matchIdColor = "green";
-        
+
         this.jLabelNewVersion.setVisible(false);
         this.updateInformed = false;
-        
+
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        this.setLocation(screenSize.width/2-this.getSize().width/2,
-                (screenSize.height/2-this.getSize().height/2) - 20);
-        
+        this.setLocation(screenSize.width / 2 - this.getSize().width / 2,
+                (screenSize.height / 2 - this.getSize().height / 2) - 20);
+
         double width = screenSize.getWidth();
         double height = screenSize.getHeight();
-         
+
         if ((width == 1280) && (height == 720 || height == 768 || height == 800)) {
             this.setExtendedState(this.MAXIMIZED_BOTH);
             //this.setLocation(0, 0);
         }
-        
-        JSpinner.NumberEditor jsEditor = (JSpinner.NumberEditor)this.jSpinnerRefreshTime.getEditor();
+
+        JSpinner.NumberEditor jsEditor = (JSpinner.NumberEditor) this.jSpinnerRefreshTime.getEditor();
         DefaultFormatter formatter = (DefaultFormatter) jsEditor.getTextField().getFormatter();
         formatter.setAllowsInvalid(false);
 
         /*
-        jsEditor = (JSpinner.NumberEditor)this.jSpinnerOverlayX.getEditor();
-        formatter = (DefaultFormatter) jsEditor.getTextField().getFormatter();
-        formatter.setAllowsInvalid(false);
+         jsEditor = (JSpinner.NumberEditor)this.jSpinnerOverlayX.getEditor();
+         formatter = (DefaultFormatter) jsEditor.getTextField().getFormatter();
+         formatter.setAllowsInvalid(false);
         
-        jsEditor = (JSpinner.NumberEditor)this.jSpinnerOverlayY.getEditor();
-        formatter = (DefaultFormatter) jsEditor.getTextField().getFormatter();
-        formatter.setAllowsInvalid(false);
-        */
-        
+         jsEditor = (JSpinner.NumberEditor)this.jSpinnerOverlayY.getEditor();
+         formatter = (DefaultFormatter) jsEditor.getTextField().getFormatter();
+         formatter.setAllowsInvalid(false);
+         */
         this.workingButton = this.jButtonRefresh;
         this.refreshSelector = this.jCheckBoxAutoRefresh;
-        
+
         this.addWindowListener(new WindowAdapter() {
-            
+
             @Override
             public void windowClosing(WindowEvent e) {
-                
+
                 apiManager.saveSettingstoFile();
                 System.exit(0);
             }
         });
-        
+
         this.pushGui = new PushGui(this, true, "", "");
         this.pushGui.setIconImage(guiIcon);
-        
+
         this.donateGui = new DonateGui(this, true);
         this.donateGui.setIconImage(guiIcon);
-        
+
         this.infoGui = new InfoGui(this, true);
         this.infoGui.setIconImage(guiIcon);
-        
+
         this.feedbackGui = new FeedbackGui(this, true);
         this.feedbackGui.setIconImage(guiIcon);
-        
+
         this.overlayGui = new OverlayGui(this);
         this.initOverlayGui();
-        
+
         this.settingsOverlayGui = new SettingsOverlayGui(this);
         this.initSettingsOverlayGui();
-        
+
         this.wvwOverlayGui = new WvWOverlayGui(this);
         this.initWvwOverlayGui();
-        
+
         this.language = "en";
         this.worldID = "2206"; //Millersund [DE]
-        
+
         this.setTranslations();
-        
+
         this.eventLabels = new ArrayList();
         this.eventLabelsTimer = new ArrayList();
-        
+
         this.homeWorlds = new HashMap();
-        
+
         this.preventSystemSleep = true;
-        
+
         for (int i = 1; i <= EVENT_COUNT; i++) {
-            
+
             try {
 
                 Field f = getClass().getDeclaredField("labelEvent" + i);
                 JLabel l = (JLabel) f.get(this);
-                l.setPreferredSize(new Dimension(70,28));
+                l.setPreferredSize(new Dimension(70, 28));
                 //l.setToolTipText("");
-                
+
                 //int width2 = l.getX();
                 //int height2 = l.getY();
                 //System.out.println("$coords .= \"{\\\"x\\\": \\\""+ width2 + "\\\", \\\"y\\\": \\\""+ height2 + "\\\"},\\n\";");
-                
                 this.eventLabels.add(l);
-                
+
                 final int ii = i;
-                
+
                 l.addMouseListener(new java.awt.event.MouseAdapter() {
                     @Override
                     public void mousePressed(java.awt.event.MouseEvent evt) {
-                            showSoundSelector(ii);
-                        }
+                        showSoundSelector(ii);
+                    }
                 });
-                
+
                 f = getClass().getDeclaredField("labelTimer" + i);
                 l = (JLabel) f.get(this);
                 l.setEnabled(true);
                 l.setVisible(false);
                 l.setForeground(Color.green);
-                
+
                 //int width2 = l.getX();
                 //int height2 = l.getY();
                 //System.out.println("$coords2 .= \"{\\\"x\\\": \\\""+ width2 + "\\\", \\\"y\\\": \\\""+ height2 + "\\\"},\\n\";");
-                
                 this.eventLabelsTimer.add(l);
-                
+
             } catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException ex) {
                 Logger.getLogger(GW2EventerGui.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        
+
         int[] disabledEvents = {6, 8, 11, 12, 17, 18, 19, 20, 21, 22};
-        
+
         for (int i = 0; i < disabledEvents.length; i++) {
-            
+
             Field f;
             JLabel l;
-            
+
             try {
                 f = getClass().getDeclaredField("labelEvent" + disabledEvents[i]);
                 l = (JLabel) f.get(this);
                 l.setEnabled(false);
                 l.setVisible(false);
-                
+
                 f = getClass().getDeclaredField("labelTimer" + disabledEvents[i]);
                 l = (JLabel) f.get(this);
                 l.setEnabled(false);
                 l.setVisible(false);
-            } catch (    NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException ex) {
+            } catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException ex) {
                 Logger.getLogger(GW2EventerGui.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        
+
         this.lastPush = new Date();
-        
+
         if (this.apiManager == null) {
-            
+
             this.apiManager = new ApiManager(this, this.jSpinnerRefreshTime,
-                this.jCheckBoxAutoRefresh.isSelected(), this.eventLabels,
-                this.language, this.worldID, this.homeWorlds,
-                this.jComboBoxHomeWorld, this.jLabelServer, this.jLabelWorking,
-                this.jCheckBoxPlaySounds.isSelected(), this.workingButton,
-                this.refreshSelector, this.eventLabelsTimer,
-                this.jComboBoxLanguage, this.overlayGui, this.jCheckBoxWvWOverlay);
+                    this.jCheckBoxAutoRefresh.isSelected(), this.eventLabels,
+                    this.language, this.worldID, this.homeWorlds,
+                    this.jComboBoxHomeWorld, this.jLabelServer, this.jLabelWorking,
+                    this.jCheckBoxPlaySounds.isSelected(), this.workingButton,
+                    this.refreshSelector, this.eventLabelsTimer,
+                    this.jComboBoxLanguage, this.overlayGui, this.jCheckBoxWvWOverlay);
         }
-        
+
         //this.wvwMatchReader = new WvWMatchReader(this.matchIds, this.jCheckBoxWvW);
         //this.wvwMatchReader.start();
-        
         this.preventSleepMode();
         this.runUpdateService();
         this.runPushService();
@@ -448,18 +541,23 @@ public class GW2EventerGui extends javax.swing.JFrame {
         //this.runTest();
     }
 
-    public void setLooted(int index, boolean looted) {
+    public String getLanguage() {
         
-        this.apiManager.setLooted(index, looted);
+        return (String) this.jComboBoxLanguage.getSelectedItem();
     }
     
+    public void setLooted(int index, boolean looted) {
+
+        this.apiManager.setLooted(index, looted);
+    }
+
     public void reloadMatchIds() {
-        
+
         this.matchIds = new HashMap();
-        
+
         this.wvwMatchReader = new WvWMatchReader(this.matchIds, this.jCheckBoxWvWOverlay);
         this.wvwMatchReader.start();
-        
+
         try {
             this.wvwMatchReader.join();
             this.wvwOverlayGui.deactivateGui();
@@ -468,23 +566,23 @@ public class GW2EventerGui extends javax.swing.JFrame {
             Logger.getLogger(GW2EventerGui.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     public void setOverlayVisible(boolean visible) {
-        
+
         this.jCheckBoxOverlay.setSelected(visible);
         this.overlayGui.setVisible(visible);
-        
+
         this.settingsOverlayGui.setEvents(visible);
     }
-    
+
     public void setSettingsOverlayVisible(boolean visible) {
-        
+
         this.jCheckBoxSettingsOverlay.setSelected(visible);
         this.settingsOverlayGui.setVisible(visible);
     }
-    
+
     public void setWvWOverlayVisible(boolean visible) {
-        
+
         if (visible) {
             this.reloadMatchIds();
             this.jCheckBoxWvWOverlay.setSelected(true);
@@ -492,92 +590,92 @@ public class GW2EventerGui extends javax.swing.JFrame {
             this.wvwOverlayGui.deactivateGui();
             this.jCheckBoxWvWOverlay.setSelected(false);
         }
-        
+
         this.settingsOverlayGui.setWvW(visible);
     }
-    
+
     public void setWvWOverlayX(int newX) {
-        
+
         //this.wvwOverlayX = newX;
         this.wvwOverlayGui.setLocation(newX, this.wvwOverlayGui.getY());
     }
-    
+
     public void setWvWOverlayY(int newY) {
-        
+
         //this.wvwOverlayY = newY;
         this.wvwOverlayGui.setLocation(this.wvwOverlayGui.getX(), newY);
     }
-    
+
     public int getWvWOverlayX() {
-        
+
         return this.wvwOverlayGui.getX();
     }
-    
+
     public int getWvWOverlayY() {
-        
+
         return this.wvwOverlayGui.getY();
     }
-    
+
     public void setOverlayX(int newX) {
-        
+
         //this.jSpinnerOverlayX.setValue(newX);
         //this.overlayX = newX;
         this.overlayGui.setLocation(newX, this.overlayGui.getY());
     }
-    
+
     public void setOverlayY(int newY) {
-        
+
         //this.jSpinnerOverlayY.setValue(newY);
         //this.overlayY = newY;
         this.overlayGui.setLocation(this.overlayGui.getX(), newY);
     }
-    
+
     public int getOverlayX() {
-        
+
         //return (Integer) this.jSpinnerOverlayX.getValue();
         return this.overlayGui.getX();
     }
-    
+
     public int getOverlayY() {
-        
+
         //return (Integer) this.jSpinnerOverlayY.getValue();
         return this.overlayGui.getY();
     }
-    
+
     public void setSettingsOverlayX(int newX) {
-        
+
         //this.settingsOverlayX = newX;
         this.settingsOverlayGui.setLocation(newX, this.settingsOverlayGui.getY());
     }
-    
+
     public void setSettingsOverlayY(int newY) {
-        
+
         //this.settingsOverlayY = newY;
         this.settingsOverlayGui.setLocation(this.settingsOverlayGui.getX(), newY);
     }
-    
+
     public int getSettingsOverlayX() {
-        
+
         return this.settingsOverlayGui.getX();
     }
-    
+
     public int getSettingsOverlayY() {
-        
+
         return this.settingsOverlayGui.getY();
     }
-    
+
     public void setSoundPlaying(boolean play) {
-        
+
         this.apiManager.setPlaySounds(play);
         this.jCheckBoxPlaySounds.setSelected(play);
     }
-    
+
     public void setEventOverlay(boolean play) {
-        
+
         this.apiManager.setPlaySounds(play);
         this.jCheckBoxPlaySounds.setSelected(play);
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -685,8 +783,7 @@ public class GW2EventerGui extends javax.swing.JFrame {
         });
         jPanel3.add(jComboBoxHomeWorld);
 
-        jComboBoxLanguage.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "DE", "EN", "ES", "FR" }));
-        jComboBoxLanguage.setSelectedIndex(1);
+        jComboBoxLanguage.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "DE", "EN" }));
         jComboBoxLanguage.setEnabled(false);
         jComboBoxLanguage.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -712,7 +809,7 @@ public class GW2EventerGui extends javax.swing.JFrame {
         jLabelSeconds.setText("sec");
         jPanel3.add(jLabelSeconds);
 
-        jCheckBoxAutoRefresh.setText("auto refresh");
+        jCheckBoxAutoRefresh.setText("World events");
         jCheckBoxAutoRefresh.setEnabled(false);
         jCheckBoxAutoRefresh.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1146,7 +1243,7 @@ public class GW2EventerGui extends javax.swing.JFrame {
     private void jCheckBoxAutoRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxAutoRefreshActionPerformed
 
         if (this.jCheckBoxAutoRefresh.isSelected()) {
-            
+
             this.apiManager.eventReaderStop();
 
             this.jLabelWorking.setVisible(true);
@@ -1156,10 +1253,10 @@ public class GW2EventerGui extends javax.swing.JFrame {
 
             String homeWorldSelected = (String) this.homeWorlds.get((String) this.jComboBoxHomeWorld.getSelectedItem());
 
-            this.apiManager.setRefreshTime((Integer)this.jSpinnerRefreshTime.getValue());
+            this.apiManager.setRefreshTime((Integer) this.jSpinnerRefreshTime.getValue());
 
-            this.apiManager.eventReaderStart((Integer)this.jSpinnerRefreshTime.getValue(),
-                this.jCheckBoxAutoRefresh.isSelected(), homeWorldSelected);
+            this.apiManager.eventReaderStart((Integer) this.jSpinnerRefreshTime.getValue(),
+                    this.jCheckBoxAutoRefresh.isSelected(), homeWorldSelected);
 
             this.resetLabels();
         } else {
@@ -1174,7 +1271,7 @@ public class GW2EventerGui extends javax.swing.JFrame {
         this.apiManager.eventReaderStop();
 
         this.jCheckBoxAutoRefresh.setSelected(true);
-        
+
         this.jLabelWorking.setVisible(true);
         this.jCheckBoxAutoRefresh.setEnabled(false);
         this.jButtonRefresh.setEnabled(false);
@@ -1182,10 +1279,10 @@ public class GW2EventerGui extends javax.swing.JFrame {
 
         String homeWorldSelected = (String) this.homeWorlds.get((String) this.jComboBoxHomeWorld.getSelectedItem());
 
-        this.apiManager.setRefreshTime((Integer)this.jSpinnerRefreshTime.getValue());
+        this.apiManager.setRefreshTime((Integer) this.jSpinnerRefreshTime.getValue());
 
-        this.apiManager.eventReaderStart((Integer)this.jSpinnerRefreshTime.getValue(),
-            this.jCheckBoxAutoRefresh.isSelected(), homeWorldSelected);
+        this.apiManager.eventReaderStart((Integer) this.jSpinnerRefreshTime.getValue(),
+                this.jCheckBoxAutoRefresh.isSelected(), homeWorldSelected);
 
         this.resetLabels();
     }//GEN-LAST:event_jButtonRefreshActionPerformed
@@ -1200,14 +1297,14 @@ public class GW2EventerGui extends javax.swing.JFrame {
         this.setTranslations();
 
         if (this.apiManager == null) {
-            
+
             this.apiManager = new ApiManager(this, this.jSpinnerRefreshTime,
-                this.jCheckBoxAutoRefresh.isSelected(), this.eventLabels,
-                this.language, this.worldID, this.homeWorlds,
-                this.jComboBoxHomeWorld, this.jLabelServer, this.jLabelWorking,
-                this.jCheckBoxPlaySounds.isSelected(), this.workingButton,
-                this.refreshSelector, this.eventLabelsTimer,
-                this.jComboBoxLanguage, this.overlayGui, this.jCheckBoxWvWOverlay);
+                    this.jCheckBoxAutoRefresh.isSelected(), this.eventLabels,
+                    this.language, this.worldID, this.homeWorlds,
+                    this.jComboBoxHomeWorld, this.jLabelServer, this.jLabelWorking,
+                    this.jCheckBoxPlaySounds.isSelected(), this.workingButton,
+                    this.refreshSelector, this.eventLabelsTimer,
+                    this.jComboBoxLanguage, this.overlayGui, this.jCheckBoxWvWOverlay);
         }
 
         this.apiManager.homeWorldsReload((String) this.jComboBoxLanguage.getSelectedItem());
@@ -1217,17 +1314,17 @@ public class GW2EventerGui extends javax.swing.JFrame {
     private void jComboBoxHomeWorldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxHomeWorldActionPerformed
 
         /*
-        if (this.jComboBoxHomeWorld.getSelectedItem() != null) {
-            if (this.matchIds.size() > 0) {
-                this.setMatchId();
-            }
-        }*/
+         if (this.jComboBoxHomeWorld.getSelectedItem() != null) {
+         if (this.matchIds.size() > 0) {
+         this.setMatchId();
+         }
+         }*/
     }//GEN-LAST:event_jComboBoxHomeWorldActionPerformed
 
     private void jLabelNewVersionMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelNewVersionMousePressed
 
         Desktop desktop = Desktop.isDesktopSupported() ? Desktop.getDesktop() : null;
-        
+
         if (desktop != null && desktop.isSupported(Desktop.Action.BROWSE)) {
             try {
                 desktop.browse(new URI("https://sourceforge.net/projects/gw2eventer/files/latest/download"));
@@ -1279,11 +1376,11 @@ public class GW2EventerGui extends javax.swing.JFrame {
             this.settingsOverlayGui.setWvWEnabled(true);
         }
     }//GEN-LAST:event_jCheckBoxWvWOverlayPropertyChange
-    
+
     private void setTranslations() {
-        
+
         String selectedLang = (String) this.jComboBoxLanguage.getModel().getSelectedItem();
-        
+
         try {
 
             this.jButtonRefresh.setText((String) getClass().getDeclaredField("LANG_RELOAD_BTN_" + selectedLang).get(null));
@@ -1294,13 +1391,13 @@ public class GW2EventerGui extends javax.swing.JFrame {
             this.jLabelWorking.setText((String) getClass().getDeclaredField("LANG_WORKING_" + selectedLang).get(null));
             this.jLabelTips.setText((String) getClass().getDeclaredField("LANG_TIP1_" + selectedLang).get(null));
             this.jLabelNewVersion.setText((String) getClass().getDeclaredField("LANG_NEWVERSION_" + selectedLang).get(null));
-            
+
             this.donateGui.setTranslations((String) getClass().getDeclaredField("LANG_DONATE1_" + selectedLang).get(null),
                     (String) getClass().getDeclaredField("LANG_DONATE2_" + selectedLang).get(null),
                     (String) getClass().getDeclaredField("LANG_DONATE3_" + selectedLang).get(null),
                     (String) getClass().getDeclaredField("LANG_COPY_CLIP_" + selectedLang).get(null),
                     (String) getClass().getDeclaredField("LANG_CANCLE_BTN_" + selectedLang).get(null));
-            
+
             this.feedbackGui.setTranslations((String) getClass().getDeclaredField("LANG_FEEDBACK_TITLE_" + selectedLang).get(null),
                     (String) getClass().getDeclaredField("LANG_FEEDBACK_FEEDBACK_" + selectedLang).get(null),
                     (String) getClass().getDeclaredField("LANG_FEEDBACK_FROM_" + selectedLang).get(null),
@@ -1313,10 +1410,10 @@ public class GW2EventerGui extends javax.swing.JFrame {
                     (String) getClass().getDeclaredField("LANG_INPUT_ERROR_TITLE_" + selectedLang).get(null),
                     (String) getClass().getDeclaredField("LANG_INPUT_ERROR_FROM_" + selectedLang).get(null),
                     (String) getClass().getDeclaredField("LANG_INPUT_ERROR_MSG_" + selectedLang).get(null));
-            
+
             this.overlayGui.setTranslations((String) getClass().getDeclaredField("LANG_OVERLAY_B_ACTIVE_" + selectedLang).get(null),
                     (String) getClass().getDeclaredField("LANG_OVERLAY_PRE_ACTIVE_" + selectedLang).get(null));
-            
+
             this.wvwOverlayGui.setTranslations((String) getClass().getDeclaredField("LANG_OVERLAY_WVW_COHERENT_" + selectedLang).get(null),
                     (String) getClass().getDeclaredField("LANG_ETERNAL_" + selectedLang).get(null),
                     (String) getClass().getDeclaredField("LANG_GREEN_" + selectedLang).get(null),
@@ -1326,34 +1423,34 @@ public class GW2EventerGui extends javax.swing.JFrame {
             Logger.getLogger(GW2EventerGui.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     public void setLastPushDate(Date lastPush) {
-        
+
         this.lastPush = lastPush;
     }
-    
+
     public Date getLastPushDate() {
-        
+
         return this.lastPush;
     }
-    
+
     public void setMatchId() {
-        
+
         Iterator it = this.matchIds.entrySet().iterator();
-            
+
         while (it.hasNext()) {
 
             Map.Entry pairs = (Map.Entry) it.next();
 
             String matchId = (String) pairs.getKey();
-            
+
             String[] redServers = (String[]) pairs.getValue();
             String redServerID = redServers[0];
             String blueServerId = redServers[1];
             String greenServerId = redServers[2];
-            
+
             String homwWorldId = (String) this.homeWorlds.get((String) this.jComboBoxHomeWorld.getSelectedItem());
-            
+
             if (homwWorldId.equals(redServerID)) {
                 this.matchId = matchId;
                 this.matchIdColor = "red";
@@ -1369,40 +1466,39 @@ public class GW2EventerGui extends javax.swing.JFrame {
             }
         }
     }
-    
+
     public String getMatchId() {
-        
+
         return this.matchId;
     }
-    
+
     public String getMatchIdColor() {
-        
+
         return this.matchIdColor;
     }
-    
+
     private void initSettingsOverlayGui() {
-        
+
         this.settingsOverlayGui.setIconImage(guiIcon);
         this.settingsOverlayGui.setSize(350, 44);
         this.settingsOverlayGui.setVisible(false);
-        
+
         this.settingsOverlayGui.setLocation(20, 220);
-        
+
         this.settingsOverlayGui.setBackground(new Color(0, 0, 0, 0));
         this.settingsOverlayGui.setAlwaysOnTop(true);
     }
-    
+
     private void initOverlayGui() {
-        
+
         this.overlayGui.setIconImage(guiIcon);
         this.overlayGui.setSize(250, 600);
         this.overlayGui.setVisible(false);
-        
+
         //this.overlayGui.setLocationRelativeTo(null);
         //this.overlayGui.setLocation(0, 200);
-        
         this.overlayGui.setLocation(20, 120);
-        
+
         this.overlayGui.setBackground(new Color(0, 0, 0, 0));
         this.overlayGui.setAlwaysOnTop(true);
         //this.overlayGui.getRootPane().putClientProperty("apple.awt.draggableWindowBackground", false);
@@ -1411,24 +1507,25 @@ public class GW2EventerGui extends javax.swing.JFrame {
         //this.overlayGui.getContentPane().add(new JTextField("text field north"), java.awt.BorderLayout.NORTH);
         //this.overlayGui.getContentPane().add(new JTextField("text field south"), java.awt.BorderLayout.SOUTH);
     }
-    
+
     private void initWvwOverlayGui() {
-        
+
         this.wvwOverlayGui.setIconImage(guiIcon);
         this.wvwOverlayGui.setSize(320, 500);
         this.wvwOverlayGui.setVisible(false);
-        
+
         this.wvwOverlayGui.setLocation(20, 270);
-        
+
         this.wvwOverlayGui.setBackground(new Color(0, 0, 0, 0));
     }
-    
+
     private void runTest() {
-        
+
         Thread t = new Thread() {
-            
-          @Override public void run() {
-              
+
+            @Override
+            public void run() {
+
                 RequestConfig requestConfig = RequestConfig.custom().setConnectTimeout(10 * 1000).build();
                 HttpClient client = HttpClientBuilder.create().setDefaultRequestConfig(requestConfig).build();
 
@@ -1438,71 +1535,69 @@ public class GW2EventerGui extends javax.swing.JFrame {
 
                 String line = "";
                 String out = "";
-              
+
                 String version = "";
-                
+
                 while (!this.isInterrupted()) {
-                    
+
                     try {
-                        
+
                         response = client.execute(request);
-                        
+
                         if (response.getStatusLine().toString().contains("200")) {
-                            
+
                             BufferedReader rd = new BufferedReader(new InputStreamReader(
                                     response.getEntity().getContent(), Charset.forName("UTF-8")));
-                            
+
                             line = "";
                             out = "";
-                            
+
                             while ((line = rd.readLine()) != null) {
-                                
+
                                 out = out + line;
                             }
 
                             JSONParser parser = new JSONParser();
-                            
+
                             Object obj;
-                            
+
                             try {
 
                                 obj = parser.parse(out);
-                                
+
                                 JSONArray array = (JSONArray) obj;
-                                
+
                                 JSONObject obj2 = (JSONObject) array.get(0);
                                 version = (String) obj2.get("version");
-                                
+
                                 JSONArray data = (JSONArray) obj2.get("data");
                                 obj2 = (JSONObject) data.get(0);
-                                
+
                                 //System.out.println(data.hashCode());
-                                
                                 JSONArray events = (JSONArray) obj2.get("events");
                                 JSONArray playdata = (JSONArray) obj2.get("playdata");
                                 JSONArray coords = (JSONArray) obj2.get("coords");
-                                
+
                                 for (int i = 0; i < events.size(); i++) {
-                                    
+
                                     obj2 = (JSONObject) events.get(i);
-                                    
+
                                     String id = (String) obj2.get("id");
                                     JSONArray data2 = (JSONArray) obj2.get("data");
-                                    
+
                                     //System.out.println(id);
-                                    
                                     for (int j = 0; j < data2.size(); j++) {
                                         //System.out.println((String) data2.get(j));
                                     }
                                 }
-                                
+
                                 this.interrupt();
                             } catch (ParseException ex) {
-                                
+
                                 Logger.getLogger(ApiManager.class.getName()).log(
                                         Level.SEVERE, null, ex);
                             }
-                            
+
                             request.releaseConnection();
                             //this.interrupt();
                         } else {
@@ -1517,46 +1612,110 @@ public class GW2EventerGui extends javax.swing.JFrame {
                         try {
                             Logger.getLogger(EventReader.class.getName()).log(
                                     Level.SEVERE, null, ex);
-                            
+
                             request.releaseConnection();
                             Thread.sleep(20000);
                         } catch (InterruptedException ex1) {
                             Logger.getLogger(EventAllReader.class.getName()).log(Level.SEVERE, null, ex1);
-                            
+
                             this.interrupt();
                         }
                     }
                 }
-          }
+            }
         };
-        
+
         t.start();
     }
-    
+
     private void runTips() {
-        
+
         Thread t = new Thread() {
-            
-          @Override public void run() {
-              
-              try {
-                  Thread.sleep(20000);
-                  jLabelTips.setVisible(false);
-              } catch (InterruptedException ex) {
-                  Logger.getLogger(GW2EventerGui.class.getName()).log(Level.SEVERE, null, ex);
-              }
-          }
+
+            @Override
+            public void run() {
+
+                try {
+                    Thread.sleep(20000);
+                    jLabelTips.setVisible(false);
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(GW2EventerGui.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
         };
-        
+
         t.start();
     }
-    
-    private void runPushService() {
-        
-        Thread t = new Thread() {
+
+    private void checkIniDir() {
+
+        String path = System.getProperty("user.home") + "\\.gw2eventer";
+        File f;
+
+        InputStream in;
+        Reader reader;
+
+        f = new File(path);
+
+        if (!f.exists() && !f.isDirectory()) {
+            f.mkdirs();
+        }
+
+        f = new File(path + "\\tts.bat");
+
+        if (!f.exists() && !f.isDirectory()) {
+
+            Writer writer = null;
+            BufferedWriter fout = null;
+
+            try {
+
+                writer = new OutputStreamWriter(new FileOutputStream(path + "\\tts.bat"), "ISO-8859-15");
+                fout = new BufferedWriter(writer);
+
+                fout.write("@echo off");
+                fout.newLine();
+                fout.write("%HOMEPATH%\\.gw2eventer\\tts.vbs");
+                fout.newLine();
+                fout.write("if exist %HOMEPATH%\\.gw2eventer\\tts.vbs del %HOMEPATH%\\.gw2eventer\\tts.vbs");
+            } catch (UnsupportedEncodingException ex) {
+                Logger.getLogger(GW2EventerGui.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (FileNotFoundException ex) {
+                Logger.getLogger(GW2EventerGui.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(GW2EventerGui.class.getName()).log(Level.SEVERE, null, ex);
+            } finally {
+                try {
+                    fout.close();
+                    writer.close();
+                } catch (IOException ex) {
+                    Logger.getLogger(GW2EventerGui.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+    }
+
+    public void writeAndSpeak(String sentence) {
+
+        if ((this.jCheckBoxPlaySounds.isSelected()) && (this.isWindows == true)) {
             
-          @Override public void run() {
-              
+            this.speakQueue.add(sentence);
+        
+            if ((this.speakThread == null) || (this.speakThread.getState() == Thread.State.TERMINATED)) {
+
+                this.speakThread = new Thread(this.speakRunnable);
+                this.speakThread.start();
+            }
+        }
+    }
+
+    private void runPushService() {
+
+        Thread t = new Thread() {
+
+            @Override
+            public void run() {
+
                 RequestConfig requestConfig = RequestConfig.custom().setConnectTimeout(10 * 1000).build();
                 HttpClient client = HttpClientBuilder.create().setDefaultRequestConfig(requestConfig).build();
 
@@ -1566,44 +1725,44 @@ public class GW2EventerGui extends javax.swing.JFrame {
 
                 String line = "";
                 String out = "";
-              
+
                 //HashMap result = new HashMap();
                 String date = "";
                 String enabled = "false";
                 String title = "";
                 String message = "";
-                
+
                 while (!this.isInterrupted()) {
-                    
+
                     try {
-                        
+
                         response = client.execute(request);
-                        
+
                         if (response.getStatusLine().toString().contains("200")) {
-                            
+
                             BufferedReader rd = new BufferedReader(new InputStreamReader(
                                     response.getEntity().getContent(), Charset.forName("UTF-8")));
-                            
+
                             line = "";
                             out = "";
-                            
+
                             while ((line = rd.readLine()) != null) {
-                                
+
                                 out = out + line;
                             }
 
                             JSONParser parser = new JSONParser();
-                            
+
                             Object obj;
-                            
+
                             try {
 
                                 obj = parser.parse(out);
-                                
+
                                 JSONArray array = (JSONArray) obj;
-                                
+
                                 for (int i = 0; i < array.size(); i++) {
-                                    
+
                                     JSONObject obj2 = (JSONObject) array.get(i);
                                     //result.put(obj2.get("version"), obj2.get("changelog"));
                                     date = (String) obj2.get("date");
@@ -1611,9 +1770,9 @@ public class GW2EventerGui extends javax.swing.JFrame {
                                     title = (String) obj2.get("title");
                                     message = (String) obj2.get("message");
                                 }
-                                
+
                                 if (!date.equals("") && enabled.equals("true")) {
-                                    
+
                                     try {
 
                                         Date dateData = new Date(Long.parseLong(date));
@@ -1632,14 +1791,14 @@ public class GW2EventerGui extends javax.swing.JFrame {
                                     clearPushMessage();
                                 }
                             } catch (ParseException ex) {
-                                
+
                                 Logger.getLogger(ApiManager.class.getName()).log(
                                         Level.SEVERE, null, ex);
                             }
-                            
+
                             request.releaseConnection();
                             //this.interrupt();
-                            
+
                             try {
                                 Thread.sleep(60000 * 5);
                             } catch (InterruptedException ex) {
@@ -1657,28 +1816,29 @@ public class GW2EventerGui extends javax.swing.JFrame {
                         try {
                             Logger.getLogger(EventReader.class.getName()).log(
                                     Level.SEVERE, null, ex);
-                            
+
                             request.releaseConnection();
                             Thread.sleep(20000);
                         } catch (InterruptedException ex1) {
                             Logger.getLogger(EventAllReader.class.getName()).log(Level.SEVERE, null, ex1);
-                            
+
                             this.interrupt();
                         }
                     }
                 }
-          }
+            }
         };
-        
+
         t.start();
     }
-    
+
     private void runUpdateService() {
-        
+
         Thread t = new Thread() {
-            
-          @Override public void run() {
-              
+
+            @Override
+            public void run() {
+
                 RequestConfig requestConfig = RequestConfig.custom().setConnectTimeout(10 * 1000).build();
                 HttpClient client = HttpClientBuilder.create().setDefaultRequestConfig(requestConfig).build();
 
@@ -1688,85 +1848,84 @@ public class GW2EventerGui extends javax.swing.JFrame {
 
                 String line = "";
                 String out = "";
-              
+
                 //HashMap result = new HashMap();
                 String version = "";
                 String changelog = "";
-                
+
                 while (!this.isInterrupted()) {
-                    
+
                     try {
-                        
+
                         response = client.execute(request);
-                        
+
                         if (response.getStatusLine().toString().contains("200")) {
-                            
+
                             BufferedReader rd = new BufferedReader(new InputStreamReader(
                                     response.getEntity().getContent(), Charset.forName("UTF-8")));
-                            
+
                             line = "";
                             out = "";
-                            
+
                             while ((line = rd.readLine()) != null) {
-                                
+
                                 out = out + line;
                             }
 
                             JSONParser parser = new JSONParser();
-                            
+
                             Object obj;
-                            
+
                             try {
 
                                 obj = parser.parse(out);
-                                
+
                                 JSONArray array = (JSONArray) obj;
-                                
+
                                 for (int i = 0; i < array.size(); i++) {
-                                    
+
                                     JSONObject obj2 = (JSONObject) array.get(i);
                                     //result.put(obj2.get("version"), obj2.get("changelog"));
                                     version = (String) obj2.get("version");
                                     changelog = (String) obj2.get("changelog");
                                 }
-                                
+
                                 if (!version.equals("")) {
                                     if (!version.equals(VERSION)) {
-                                        
+
                                         jLabelNewVersion.setVisible(true);
-                                        
+
                                         if (updateInformed == false) {
-                                            
+
                                             String mesTmp = "<html>Version: " + version
-                                                + "<p>Get it at http://gw2eventer.com</p>"
-                                                + "</html>";
-                                        
-                                        
+                                                    + "<p>Get it at http://gw2eventer.com</p>"
+                                                    + "</html>";
+
                                             showPushGui("New version is out", mesTmp, 110);
                                         }
-                                        
+
                                         updateInformed = true;
                                     }
                                 }
-                                
+
                                 try {
                                     request.releaseConnection();
                                     Thread.sleep(60000 * 45);
                                 } catch (InterruptedException ex) {
                                     Logger.getLogger(GW2EventerGui.class.getName()).log(Level.SEVERE, null, ex);
-                                    
+
                                     this.interrupt();
                                 }
                             } catch (ParseException ex) {
                                 try {
                                     Logger.getLogger(ApiManager.class.getName()).log(
                                             Level.SEVERE, null, ex);
-                                    
+
                                     request.releaseConnection();
                                     Thread.sleep(30000);
                                 } catch (InterruptedException ex1) {
                                     Logger.getLogger(GW2EventerGui.class.getName()).log(Level.SEVERE, null, ex1);
-                                    
+
                                     this.interrupt();
                                 }
                             }
@@ -1776,7 +1935,7 @@ public class GW2EventerGui extends javax.swing.JFrame {
                                 Thread.sleep(30000);
                             } catch (InterruptedException ex) {
                                 Logger.getLogger(EventAllReader.class.getName()).log(Level.SEVERE, null, ex);
-                                
+
                                 this.interrupt();
                             }
                         }
@@ -1784,42 +1943,42 @@ public class GW2EventerGui extends javax.swing.JFrame {
                         try {
                             Logger.getLogger(EventReader.class.getName()).log(
                                     Level.SEVERE, null, ex);
-                            
+
                             request.releaseConnection();
                             Thread.sleep(30000);
                         } catch (InterruptedException ex1) {
                             Logger.getLogger(EventAllReader.class.getName()).log(Level.SEVERE, null, ex1);
-                            
+
                             this.interrupt();
                         }
                     }
                 }
-          }
+            }
         };
-        
+
         t.start();
     }
-    
+
     public void setNewApiManager(ApiManager apiManager) {
-        
+
         this.apiManager = apiManager;
     }
-    
+
     private void showSoundSelector(int event) {
-        
+
         this.apiManager.showSoundSelectGui(this, event);
-    }    
-    
+    }
+
     public void showDonateGui() {
-        
+
         this.donateGui.setLocationRelativeTo(this);
         this.donateGui.setResizable(false);
         //this.donateGui.pack();
         this.donateGui.setVisible(true);
-    }  
-    
+    }
+
     private void showPushGui(String title, String content, int height) {
-        
+
         this.pushGui.setNewTitle(title);
         this.pushGui.setContent(content);
         this.pushGui.setLocationRelativeTo(null);
@@ -1827,71 +1986,72 @@ public class GW2EventerGui extends javax.swing.JFrame {
         this.pushGui.setPreferredSize(new Dimension(300, height));
         //this.pushGui.pack();
         this.pushGui.setVisible(true);
-    }  
-    
+    }
+
     private void setPushMessage(String title, String message) {
-        
+
         this.labelPushMessage.setText("<html><b><font style=\"color: red;\">" + title + "</font></b><br><font style=\"color: white;\">" + message + "</font></html>");
         this.labelPushMessage.setToolTipText(message);
-    } 
-    
+    }
+
     private void clearPushMessage() {
-        
+
         this.labelPushMessage.setText("");
         this.labelPushMessage.setToolTipText("");
-    } 
-    
+    }
+
     private void showFeedbackGui() {
-        
+
         this.feedbackGui.setLocationRelativeTo(this);
         //this.feedbackGui.pack();
-        
+
         this.feedbackGui.showGui();
-    }  
-    
+    }
+
     private void preventSleepMode() {
-        
+
         Thread t = new Thread() {
-            
-          @Override public void run() {
-              try {
-                  Point mouseLoc;
-                  Robot rob = new Robot();
-                  
-                  while (true) {
-                      try {
-                          Thread.sleep(55000);
-                      } catch (InterruptedException ex) {
-                          Logger.getLogger(GW2EventerGui.class.getName()).log(Level.SEVERE, null, ex);
-                          this.interrupt();
-                      }
-                      
-                      if (preventSystemSleep) {
-                          mouseLoc = MouseInfo.getPointerInfo().getLocation();
-                          rob.mouseMove(mouseLoc.x, mouseLoc.y);
-                      }
-                  }
-              } catch (AWTException ex) {
-                  Logger.getLogger(GW2EventerGui.class.getName()).log(Level.SEVERE, null, ex);
-              }
-          }
+
+            @Override
+            public void run() {
+                try {
+                    Point mouseLoc;
+                    Robot rob = new Robot();
+
+                    while (true) {
+                        try {
+                            Thread.sleep(55000);
+                        } catch (InterruptedException ex) {
+                            Logger.getLogger(GW2EventerGui.class.getName()).log(Level.SEVERE, null, ex);
+                            this.interrupt();
+                        }
+
+                        if (preventSystemSleep) {
+                            mouseLoc = MouseInfo.getPointerInfo().getLocation();
+                            rob.mouseMove(mouseLoc.x, mouseLoc.y);
+                        }
+                    }
+                } catch (AWTException ex) {
+                    Logger.getLogger(GW2EventerGui.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
         };
-        
+
         t.start();
     }
-    
+
     private void resetLabels() {
-        
+
         for (int i = 0; i < this.eventLabels.size(); i++) {
-            
+
             ((JLabel) this.eventLabels.get(i)).setEnabled(false);
             ((JLabel) this.eventLabels.get(i)).setText("x");
             //((JLabel) this.eventLabels.get(i)).setToolTipText("");
-            
+
             ((JLabel) this.eventLabelsTimer.get(i)).setVisible(false);
         }
     }
-    
+
     /**
      * @param args the command line arguments
      */
@@ -1903,21 +2063,21 @@ public class GW2EventerGui extends javax.swing.JFrame {
          */
         try {
             /*
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }*/
-            
+             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+             if ("Nimbus".equals(info.getName())) {
+             javax.swing.UIManager.setLookAndFeel(info.getClassName());
+             break;
+             }
+             }*/
+
             javax.swing.UIManager.setLookAndFeel(
                     javax.swing.UIManager.getSystemLookAndFeelClassName());
-            
+
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(GW2EventerGui.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-        
+
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {

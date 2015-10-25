@@ -82,8 +82,8 @@ public class SettingsOverlayGui extends javax.swing.JFrame {
         jLabelMenu = new javax.swing.JLabel();
         jToolBarMenu = new javax.swing.JToolBar();
         jLabel1 = new javax.swing.JLabel();
-        jCheckBoxSound = new javax.swing.JCheckBox();
         jCheckBoxEvents = new javax.swing.JCheckBox();
+        jCheckBoxSound = new javax.swing.JCheckBox();
         jCheckBoxWvW = new javax.swing.JCheckBox();
         jButtonMove = new javax.swing.JButton();
 
@@ -117,6 +117,19 @@ public class SettingsOverlayGui extends javax.swing.JFrame {
         jLabel1.setText("Settings ");
         jToolBarMenu.add(jLabel1);
 
+        jCheckBoxEvents.setForeground(new java.awt.Color(255, 255, 255));
+        jCheckBoxEvents.setText("Events ");
+        jCheckBoxEvents.setFocusable(false);
+        jCheckBoxEvents.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        jCheckBoxEvents.setOpaque(false);
+        jCheckBoxEvents.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jCheckBoxEvents.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBoxEventsActionPerformed(evt);
+            }
+        });
+        jToolBarMenu.add(jCheckBoxEvents);
+
         jCheckBoxSound.setForeground(new java.awt.Color(255, 255, 255));
         jCheckBoxSound.setSelected(true);
         jCheckBoxSound.setText("Sounds ");
@@ -130,19 +143,6 @@ public class SettingsOverlayGui extends javax.swing.JFrame {
             }
         });
         jToolBarMenu.add(jCheckBoxSound);
-
-        jCheckBoxEvents.setForeground(new java.awt.Color(255, 255, 255));
-        jCheckBoxEvents.setText("Events ");
-        jCheckBoxEvents.setFocusable(false);
-        jCheckBoxEvents.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        jCheckBoxEvents.setOpaque(false);
-        jCheckBoxEvents.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jCheckBoxEvents.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckBoxEventsActionPerformed(evt);
-            }
-        });
-        jToolBarMenu.add(jCheckBoxEvents);
 
         jCheckBoxWvW.setForeground(new java.awt.Color(255, 255, 255));
         jCheckBoxWvW.setText("WvW ");
