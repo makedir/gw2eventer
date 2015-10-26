@@ -182,28 +182,28 @@ public class WvWOverlayGui extends javax.swing.JFrame {
         this.idsToLabelGreen = new HashMap();
 
         //id: api, id: icon
-        this.idsToLabelCenter.put("1", new String[]{"3", "keep", "Overlook", "Center"});
-        this.idsToLabelCenter.put("2", new String[]{"18", "keep", "Valley", "Center"});
-        this.idsToLabelCenter.put("3", new String[]{"15", "keep", "Lowlands", "Center"});
-        this.idsToLabelCenter.put("4", new String[]{"20", "camp", "Golanta Clearing", "Center"});
-        this.idsToLabelCenter.put("5", new String[]{"6", "camp", "Pangloss Rise", "Center"});
-        this.idsToLabelCenter.put("6", new String[]{"1", "camp", "Speldan Clearcut", "Center"});
-        this.idsToLabelCenter.put("7", new String[]{"21", "camp", "Danelon Passage", "Center"});
-        this.idsToLabelCenter.put("8", new String[]{"12", "camp", "Umberglade Woods", "Center"});
-        this.idsToLabelCenter.put("9", new String[]{"10", "castle", "Stonemist Castle", "Center"});
-        this.idsToLabelCenter.put("10", new String[]{"8", "camp", "Rogue's Quarry", "Center"});
-        this.idsToLabelCenter.put("11", new String[]{"13", "tower", "Aldon's Ledge", "Center"});
-        this.idsToLabelCenter.put("12", new String[]{"9", "tower", "Wildcreek Run", "Center"});
-        this.idsToLabelCenter.put("13", new String[]{"19", "tower", "Jerrifer's Slough", "Center"});
-        this.idsToLabelCenter.put("14", new String[]{"16", "tower", "Klovan Gully", "Center"});
-        this.idsToLabelCenter.put("15", new String[]{"22", "tower", "Langor Gulch", "Center"});
-        this.idsToLabelCenter.put("16", new String[]{"17", "tower", "Quentin Lake", "Center"});
-        this.idsToLabelCenter.put("17", new String[]{"2", "tower", "Mendon's Gap", "Center"});
-        this.idsToLabelCenter.put("18", new String[]{"7", "tower", "Anzalias Pass", "Center"});
-        this.idsToLabelCenter.put("19", new String[]{"5", "tower", "Ogrewatch Cut", "Center"});
-        this.idsToLabelCenter.put("20", new String[]{"4", "tower", "Veloka Slope", "Center"});
-        this.idsToLabelCenter.put("21", new String[]{"11", "tower", "Durios Gulch", "Center"});
-        this.idsToLabelCenter.put("22", new String[]{"14", "tower", "Bravost Escarpment", "Center"});
+        this.idsToLabelCenter.put("1", new String[]{"3", "keep", "Overlook", "Center", "Aufsichtspunkt"});
+        this.idsToLabelCenter.put("2", new String[]{"18", "keep", "Valley", "Center", "Tal"});
+        this.idsToLabelCenter.put("3", new String[]{"15", "keep", "Lowlands", "Center", "Tiefland"});
+        this.idsToLabelCenter.put("4", new String[]{"20", "camp", "Golanta Clearing", "Center", "Golanta-Licht"});
+        this.idsToLabelCenter.put("5", new String[]{"6", "camp", "Pangloss Rise", "Center", "Pangloss-Anhöhe"});
+        this.idsToLabelCenter.put("6", new String[]{"1", "camp", "Speldan Clearcut", "Center", "Speldan Kahlschlag"});
+        this.idsToLabelCenter.put("7", new String[]{"21", "camp", "Danelon Passage", "Center", "Danelon-Passage"});
+        this.idsToLabelCenter.put("8", new String[]{"12", "camp", "Umberglade Woods", "Center", "Umberlichtung-Forst"});
+        this.idsToLabelCenter.put("9", new String[]{"10", "castle", "Stonemist Castle", "Center", "Schloss Steinnebel"});
+        this.idsToLabelCenter.put("10", new String[]{"8", "camp", "Rogue's Quarry", "Center", "Schurbenbruch"});
+        this.idsToLabelCenter.put("11", new String[]{"13", "tower", "Aldon's Ledge", "Center", "Aldons Vorsprung"});
+        this.idsToLabelCenter.put("12", new String[]{"9", "tower", "Wildcreek Run", "Center", "Wildbachstrecke"});
+        this.idsToLabelCenter.put("13", new String[]{"19", "tower", "Jerrifer's Slough", "Center", "Jerrifers Sumpfloch"});
+        this.idsToLabelCenter.put("14", new String[]{"16", "tower", "Klovan Gully", "Center", "Klovan-Senke"});
+        this.idsToLabelCenter.put("15", new String[]{"22", "tower", "Langor Gulch", "Center", "Langor-Schlucht"});
+        this.idsToLabelCenter.put("16", new String[]{"17", "tower", "Quentin Lake", "Center", "Quentinsee"});
+        this.idsToLabelCenter.put("17", new String[]{"2", "tower", "Mendon's Gap", "Center", "Mendons Spalt"});
+        this.idsToLabelCenter.put("18", new String[]{"7", "tower", "Anzalias Pass", "Center", "Anzalias-Pass"});
+        this.idsToLabelCenter.put("19", new String[]{"5", "tower", "Ogrewatch Cut", "Center", "Ogerwatch-Kanal"});
+        this.idsToLabelCenter.put("20", new String[]{"4", "tower", "Veloka Slope", "Center", "Veloka-Hang"});
+        this.idsToLabelCenter.put("21", new String[]{"11", "tower", "Durios Gulch", "Center", "Durios-Schlucht"});
+        this.idsToLabelCenter.put("22", new String[]{"14", "tower", "Bravost Escarpment", "Center", "Bravost-Abhang"});
 
         /*
          this.idsToLabel.put("23", new String[]{"6", "keep", "Garrison", "BlueHome"});
@@ -247,47 +247,47 @@ public class WvWOverlayGui extends javax.swing.JFrame {
          this.idsToLabel.put("61", new String[]{"12", "camp", "Greenwater Lowlands", "BlueHome"});
          */
         // neu
-        this.idsToLabelRed.put("99", new String[]{"2", "camp", "Hamm's Lab", "RedHome"});
-        this.idsToLabelRed.put("100", new String[]{"12", "camp", "Bauer Farmstead", "RedHome"});
-        this.idsToLabelRed.put("101", new String[]{"9", "camp", "McLain's Encampment", "RedHome"});
-        this.idsToLabelRed.put("102", new String[]{"1", "tower", "O'del Academy", "RedHome"});
-        this.idsToLabelRed.put("104", new String[]{"3", "tower", "Eternal Necropolis", "RedHome"});
-        this.idsToLabelRed.put("105", new String[]{"11", "tower", "Crankshaft Depot", "RedHome"});
-        this.idsToLabelRed.put("106", new String[]{"7", "keep", "Blistering Undercroft", "RedHome"});
-        this.idsToLabelRed.put("109", new String[]{"6", "camp", "Osprey's Palace", "RedHome"});
-        this.idsToLabelRed.put("110", new String[]{"10", "tower", "Parched Outpost", "RedHome"});
-        this.idsToLabelRed.put("113", new String[]{"5", "keep", "Stoic Rampart", "RedHome"});
-        this.idsToLabelRed.put("114", new String[]{"8", "keep", "Roy's Refuge", "RedHome"});
-        this.idsToLabelRed.put("115", new String[]{"4", "camp", "Boettiger's Hideaway", "RedHome"});
-        this.idsToLabelRed.put("116", new String[]{"13", "camp", "Dustwhisper Well", "RedHome"});
+        this.idsToLabelRed.put("99", new String[]{"2", "camp", "Hamm's Lab", "RedHome", "Hamms Labor"});
+        this.idsToLabelRed.put("100", new String[]{"12", "camp", "Bauer Farmstead", "RedHome", "Bauer-Gehöft"});
+        this.idsToLabelRed.put("101", new String[]{"9", "camp", "McLain's Encampment", "RedHome", "McLains Lager"});
+        this.idsToLabelRed.put("102", new String[]{"1", "tower", "O'del Academy", "RedHome", "O'del-Akademie"});
+        this.idsToLabelRed.put("104", new String[]{"3", "tower", "Eternal Necropolis", "RedHome", "Ewige Nekropole"});
+        this.idsToLabelRed.put("105", new String[]{"11", "tower", "Crankshaft Depot", "RedHome", "Kurbelwellen-Depot"});
+        this.idsToLabelRed.put("106", new String[]{"7", "keep", "Blistering Undercroft", "RedHome", "Brennende Gruft"});
+        this.idsToLabelRed.put("109", new String[]{"6", "camp", "Roy's Refuge", "RedHome", "Roys Zuflucht"});
+        this.idsToLabelRed.put("110", new String[]{"10", "tower", "Parched Outpost", "RedHome", "Verdörrter Außenposten"});
+        this.idsToLabelRed.put("113", new String[]{"5", "keep", "Stoic Rampart", "RedHome", "Stoischer Festungswall"});
+        this.idsToLabelRed.put("114", new String[]{"8", "keep", "Osprey's Palace", "RedHome", "Fischadler-Palast"});
+        this.idsToLabelRed.put("115", new String[]{"4", "camp", "Boettiger's Hideaway", "RedHome", "Boettigers Versteck"});
+        this.idsToLabelRed.put("116", new String[]{"13", "camp", "Dustwhisper Well", "RedHome", "Brunnen des Staubflüsterns"});
 
-        this.idsToLabelBlue.put("99", new String[]{"2", "camp", "Zakk's Lab", "BlueHome"});
-        this.idsToLabelBlue.put("100", new String[]{"12", "camp", "Gee Farmstead", "BlueHome"});
-        this.idsToLabelBlue.put("101", new String[]{"9", "camp", "Habib's Encampment", "BlueHome"});
-        this.idsToLabelBlue.put("102", new String[]{"1", "tower", "Kay'li Academy", "BlueHome"});
-        this.idsToLabelBlue.put("104", new String[]{"3", "tower", "Undying Necropolis", "BlueHome"});
-        this.idsToLabelBlue.put("105", new String[]{"11", "tower", "Flywheel Depot", "BlueHome"});
-        this.idsToLabelBlue.put("106", new String[]{"7", "keep", "Torrid Undercroft", "BlueHome"});
-        this.idsToLabelBlue.put("109", new String[]{"6", "camp", "Shrike's Palace", "BlueHome"});
-        this.idsToLabelBlue.put("110", new String[]{"10", "tower", "Barren Outpost", "BlueHome"});
-        this.idsToLabelBlue.put("113", new String[]{"5", "keep", "Hardened Rampart", "BlueHome"});
-        this.idsToLabelBlue.put("114", new String[]{"8", "keep", "Oliver's Refuge", "BlueHome"});
-        this.idsToLabelBlue.put("115", new String[]{"4", "camp", "Berdrow's Hideaway", "BlueHome"});
-        this.idsToLabelBlue.put("116", new String[]{"13", "camp", "Lastgasp Well", "BlueHome"});
+        this.idsToLabelBlue.put("99", new String[]{"2", "camp", "Zakk's Lab", "BlueHome", "Zakks Labor"});
+        this.idsToLabelBlue.put("100", new String[]{"12", "camp", "Gee Farmstead", "BlueHome", "Gee-Gehöft"});
+        this.idsToLabelBlue.put("101", new String[]{"9", "camp", "Habib's Encampment", "BlueHome", "Habibs Lager"});
+        this.idsToLabelBlue.put("102", new String[]{"1", "tower", "Kay'li Academy", "BlueHome", "Kay'li-Akademie"});
+        this.idsToLabelBlue.put("104", new String[]{"3", "tower", "Undying Necropolis", "BlueHome", "Unsterbliche Nekropole"});
+        this.idsToLabelBlue.put("105", new String[]{"11", "tower", "Flywheel Depot", "BlueHome", "Schwungrad-Depot"});
+        this.idsToLabelBlue.put("106", new String[]{"7", "keep", "Torrid Undercroft", "BlueHome", "Glühende Gruft"});
+        this.idsToLabelBlue.put("109", new String[]{"6", "camp", "Oliver's Refuge", "BlueHome", "Olivers Zuflucht"});
+        this.idsToLabelBlue.put("110", new String[]{"10", "tower", "Barren Outpost", "BlueHome", "Öder Außenposten"});
+        this.idsToLabelBlue.put("113", new String[]{"5", "keep", "Hardened Rampart", "BlueHome", "Stahlharter Festungswall"});
+        this.idsToLabelBlue.put("114", new String[]{"8", "keep", "Shrike's Palace", "BlueHome", "Würger-Palast"});
+        this.idsToLabelBlue.put("115", new String[]{"4", "camp", "Berdrow's Hideaway", "BlueHome", "Berdrows Versteck"});
+        this.idsToLabelBlue.put("116", new String[]{"13", "camp", "Lastgasp Well", "BlueHome", "Brunnden des Letzten Schnaufers"});
 
-        this.idsToLabelGreen.put("99", new String[]{"2", "camp", "Lesh's Lab", "GreenHome"});
-        this.idsToLabelGreen.put("100", new String[]{"12", "camp", "Barrett Farmstead", "GreenHome"});
-        this.idsToLabelGreen.put("101", new String[]{"9", "camp", "Patrick's Encampment", "GreenHome"});
-        this.idsToLabelGreen.put("102", new String[]{"1", "tower", "Y'lan Academy", "GreenHome"});
-        this.idsToLabelGreen.put("104", new String[]{"3", "tower", "Deathless Necropolis", "GreenHome"});
-        this.idsToLabelGreen.put("105", new String[]{"11", "tower", "Sparkplug Depot", "GreenHome"});
-        this.idsToLabelGreen.put("106", new String[]{"7", "keep", "Scorching Undercroft", "GreenHome"});
-        this.idsToLabelGreen.put("109", new String[]{"6", "camp", "Harrier's Palace", "GreenHome"});
-        this.idsToLabelGreen.put("110", new String[]{"10", "tower", "Withered Outpost", "GreenHome"});
-        this.idsToLabelGreen.put("113", new String[]{"5", "keep", "Impassive Rampart", "GreenHome"});
-        this.idsToLabelGreen.put("114", new String[]{"8", "keep", "Norfolk's Refuge", "GreenHome"});
-        this.idsToLabelGreen.put("115", new String[]{"4", "camp", "Hughe's Hideaway", "GreenHome"});
-        this.idsToLabelGreen.put("116", new String[]{"13", "camp", "Smashedhope Well", "GreenHome"});
+        this.idsToLabelGreen.put("99", new String[]{"2", "camp", "Lesh's Lab", "GreenHome", "Leshs Labor"});
+        this.idsToLabelGreen.put("100", new String[]{"12", "camp", "Barrett Farmstead", "GreenHome", "Barrett-Gehöft"});
+        this.idsToLabelGreen.put("101", new String[]{"9", "camp", "Patrick's Encampment", "GreenHome", "Patricks Lager"});
+        this.idsToLabelGreen.put("102", new String[]{"1", "tower", "Y'lan Academy", "GreenHome", "Y'lan-Akademie"});
+        this.idsToLabelGreen.put("104", new String[]{"3", "tower", "Deathless Necropolis", "GreenHome", "Todlose Nekropole"});
+        this.idsToLabelGreen.put("105", new String[]{"11", "tower", "Sparkplug Depot", "GreenHome", "Zündfunken-Depot"});
+        this.idsToLabelGreen.put("106", new String[]{"7", "keep", "Scorching Undercroft", "GreenHome", "Versengende Gruft"});
+        this.idsToLabelGreen.put("109", new String[]{"6", "camp", "Norfolk's Refuge", "GreenHome", "Norfolks Zuflucht"});
+        this.idsToLabelGreen.put("110", new String[]{"10", "tower", "Withered Outpost", "GreenHome", "Welker Außenposten"});
+        this.idsToLabelGreen.put("113", new String[]{"5", "keep", "Impassive Rampart", "GreenHome", "Unbeeindruckter Festungswall"});
+        this.idsToLabelGreen.put("114", new String[]{"8", "keep", "Harrier's Palace", "GreenHome", "Weihen Palast"});
+        this.idsToLabelGreen.put("115", new String[]{"4", "camp", "Hughe's Hideaway", "GreenHome", "Hughes Versteck"});
+        this.idsToLabelGreen.put("116", new String[]{"13", "camp", "Smashedhope Well", "GreenHome", "Brunnen der Zerschlagenen Hoffnung"});
 
         this.eventLog = new Object[]{null, null, null};
 
@@ -562,8 +562,14 @@ public class WvWOverlayGui extends javax.swing.JFrame {
                     int labelNumber = Integer.parseInt(((String[]) currentIdsToLabel.get(id))[0]);
 
                     String labelType = ((String[]) currentIdsToLabel.get(id))[1];
-                    String labelName = ((String[]) currentIdsToLabel.get(id))[2];
-
+                    String labelName;
+                    
+                    if (mainGui.getLanguage().equals("EN")) {
+                        labelName = ((String[]) currentIdsToLabel.get(id))[2];
+                    } else {
+                        labelName = ((String[]) currentIdsToLabel.get(id))[4];
+                    }
+                    
                     String labelHome = ((String[]) currentIdsToLabel.get(id))[3];
 
                     EventTimerLabel currentTimer = null;
@@ -1112,7 +1118,13 @@ public class WvWOverlayGui extends javax.swing.JFrame {
                         int labelNumber = Integer.parseInt(((String[]) currentIdsToLabel.get(id))[0]);
 
                         String labelType = ((String[]) currentIdsToLabel.get(id))[1];
-                        String labelToolTip = ((String[]) currentIdsToLabel.get(id))[2];
+                        String labelToolTip;
+                        
+                        if (mainGui.getLanguage().equals("EN")) {
+                            labelToolTip = ((String[]) currentIdsToLabel.get(id))[2];
+                        } else {
+                            labelToolTip = ((String[]) currentIdsToLabel.get(id))[4];
+                        }
                         
                         String labelHome = ((String[]) currentIdsToLabel.get(id))[3];
                         
@@ -1192,8 +1204,14 @@ public class WvWOverlayGui extends javax.swing.JFrame {
                         int labelNumber = Integer.parseInt(((String[]) currentIdsToLabel.get(id))[0]);
 
                         String labelType = ((String[]) currentIdsToLabel.get(id))[1];
-                        String labelToolTip = ((String[]) currentIdsToLabel.get(id))[2];
+                        String labelToolTip;
 
+                        if (mainGui.getLanguage().equals("EN")) {
+                            labelToolTip = ((String[]) currentIdsToLabel.get(id))[2];
+                        } else {
+                            labelToolTip = ((String[]) currentIdsToLabel.get(id))[4];
+                        }
+                        
                         String labelHome = ((String[]) currentIdsToLabel.get(id))[3];
                         
                         if (labelHome.equals(this.activeMap)) {
